@@ -1,11 +1,11 @@
 import { Select } from "antd";
-import { useCardStore } from "../stores/CardStore";
+import { useGroupStore } from "../stores/GroupStore";
 
 export function GroupSelector() {
-    const cardStore = useCardStore();
+    const groupStore = useGroupStore();
     const options: any[] = [];
 
-    Object.keys(cardStore.info).forEach(key => {
+    Object.keys(groupStore.info).forEach(key => {
         options.push({
             value: key,
             label: key,
@@ -13,7 +13,7 @@ export function GroupSelector() {
     });
 
     const onChange = (value: string) => {
-        cardStore.changeGroup( value );
+        groupStore.changeGroup( value );
     };
 
     // const onSearch = (value: string) => {
@@ -34,7 +34,7 @@ export function GroupSelector() {
             // onSearch={onSearch}
             filterOption={filterOption}
             options={options}
-            defaultValue={cardStore.groupPtr}
+            defaultValue={groupStore.groupPtr}
         />
     )
 }

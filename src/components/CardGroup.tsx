@@ -1,37 +1,29 @@
 import { Card } from "./Card.tsx";
 import { ControlHeader } from "./ControlHeader.tsx";
-import { useCardStore } from "../stores/CardStore.ts";
+import { useGroupStore } from "../stores/GroupStore.ts";
 import { FooterControl } from "./FooterControl.tsx";
 import { useSettingStore } from "../stores/SettingStore.ts";
 import { shuffle } from "../utils/array.ts";
 import { GetInfoFromSearchParams } from "./GetInfoFromSearchParams.tsx";
-import { useEffect, useState } from "react";
+import { useCardStore } from "../stores/CardStore.ts";
 
 interface ICardGroupProps {
     onGroupDone: () => void;
 }
 
 export function CardGroup({ onGroupDone }: ICardGroupProps) {
-    const [index, setIndex] = useState(0);
     const cardStore = useCardStore();
+    const groupStore = useGroupStore();
     const settingStore = useSettingStore();
-    const stack = cardStore.stack();
+    const stack = groupStore.stack();
 
     const nextCard = () => {
-        const newIndex = index + 1;
+        cardStore.nextCard();
 
-        if (newIndex >= cards.length) {
+        if( cardStore.cardPtr === cardStore.cards.length - 1 ) {
             onGroupDone?.();
-            setIndex(0);
-            return;
         }
-
-        setIndex( newIndex );
     }
-
-    useEffect(() => {
-        cardStore.setCardPtr( index );
-    }, [index]);
 
     let cards = (stack?.cards ?? []).slice(0);
 
@@ -46,11 +38,10 @@ export function CardGroup({ onGroupDone }: ICardGroupProps) {
     //     if( ! stack ) return;
     //     const newCardPtr = get().cardPtr + 1
     //     if( newCardPtr > stack.cards.length - 1 ) return;
-    //     set({ cardPtr: newCardPtr })
+    //  IGroupStore   set({ cardPtr: newCardPtr })
     // }
 
-    const card = cards[ index ];
-
+    const card = cardStore.card();
     return (
         <div className="card-group">
             <ControlHeader />
@@ -59,7 +50,7 @@ export function CardGroup({ onGroupDone }: ICardGroupProps) {
             {
                 card &&
                 <Card
-                    card={card}
+                    card={ card }
                     onCardDone={nextCard}
                 />
             }

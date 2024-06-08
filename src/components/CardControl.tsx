@@ -11,6 +11,7 @@ interface ICardControlProps {
 export function CardControl({ index, setIndex, total, onCardDone }: ICardControlProps) {
     function updateIndex( newIndex: number  ) {
         if (index >= total - 1) {
+            setIndex(0);
             return onCardDone?.();
         }
 

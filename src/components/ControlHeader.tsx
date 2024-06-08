@@ -1,7 +1,7 @@
-import { useCardStore } from "../stores/CardStore";
 import { GroupSelector } from "./GroupSelector";
 import { StackSelector } from "./StackSelector";
 import { SearchInput } from "./SearchInput";
+import { useCardStore } from "../stores/CardStore";
 
 export function ControlHeader() {
     const cardStore = useCardStore();
@@ -12,7 +12,7 @@ export function ControlHeader() {
                 <span className="info card-number-info">
                     <span className="current-card-number">{ cardStore.cardPtr + 1 }</span>
                     /
-                    <span className="total-card-number">{ cardStore.stack()?.cards?.length ?? 0 }</span>
+                    <span className="total-card-number">{ cardStore.cards.length }</span>
                 </span>
                 
                 <span>Cards</span>

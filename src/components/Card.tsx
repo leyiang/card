@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { RenderCard } from "./RenderCard";
 import { CardControl } from "./CardControl";
 import { joinClass } from "../utils/component";
-import { useCardStore } from "../stores/CardStore";
 
 export interface ICardProps {
     card: string[];
@@ -16,15 +15,10 @@ export interface ICardProps {
 export function Card({ card, onCardDone, noInteraction=false, startIndex = 0, compact = false}: ICardProps) {
     const [index, setIndex] = useState( startIndex );
     const cardEl = useRef(null);
-    const cardStore = useCardStore();
 
     useEffect(() => {
         setIndex( startIndex );
     }, [card]);
-
-    useEffect(() => {
-        cardStore.setContentPtr( index );
-    }, [index]);
 
     const style = {
         "--total": card.length,

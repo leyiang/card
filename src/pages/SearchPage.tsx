@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useCardStore } from "../stores/CardStore";
+import { useGroupStore } from "../stores/GroupStore";
 import { ICard } from "../types/card-type";
 import { Card } from "../components/Card";
 import { SearchInput } from "../components/SearchInput";
@@ -8,7 +8,7 @@ export function SearchPage() {
     const [searchParams] = useSearchParams();
 
     // Search Value
-    const cardStore = useCardStore();
+    const groupStore = useGroupStore();
     const raw = searchParams.get("v") ?? "";
     const needle = raw;
     // const needle = raw.replace("\\", "\\\\");
@@ -24,8 +24,8 @@ export function SearchPage() {
 
     const searchResult = [] as Search[];
 
-    Object.keys(cardStore.info).forEach(key => {
-        const group = cardStore.info[key];
+    Object.keys(groupStore.info).forEach(key => {
+        const group = groupStore.info[key];
         group.forEach(stack => {
             stack.cards.forEach((card, cardPtr) => {
                 let toSearch = card.slice(0).map(content => content.replaceAll(" ", "").toLocaleLowerCase());

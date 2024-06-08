@@ -1,9 +1,14 @@
-import { useCardStore } from "../stores/CardStore";
+import { useGroupStore } from "../stores/GroupStore";
 import { OrderControl } from "./OrderControl";
 import { PersistControl } from "./PersistControl";
 
 export function FooterControl() {
-    const cardStore = useCardStore();
+    const groupStore = useGroupStore();
+
+    const id = [
+        groupStore.groupPtr,
+        groupStore.stack().id,
+    ].join("-");
 
     return (
         <footer className="flex flex-col">
@@ -12,7 +17,7 @@ export function FooterControl() {
                 <PersistControl />
             </div>
 
-            <span className="mt-2 text-gray-700">{ cardStore.getID() }</span>
+            <span className="mt-2 text-gray-700">{ id }</span>
         </footer>
     )
 }

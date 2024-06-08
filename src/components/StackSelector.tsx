@@ -1,11 +1,11 @@
 import { Select } from "antd";
-import { useCardStore } from "../stores/CardStore";
+import { useGroupStore } from "../stores/GroupStore";
 
 export function StackSelector() {
-    const cardStore = useCardStore();
+    const groupStore = useGroupStore();
     const options: any[] = [];
 
-    (cardStore.group() ?? []).forEach( (stack, i) => {
+    (groupStore.group() ?? []).forEach( (stack, i) => {
         options.push({
             value: i,
             label: stack.label,
@@ -15,7 +15,7 @@ export function StackSelector() {
     const onChange = (value: number) => {
         console.log( value );
         
-        cardStore.changeStack( value );
+        groupStore.changeStack( value );
     };
 
     // const onSearch = (value: string) => {
@@ -27,7 +27,7 @@ export function StackSelector() {
 
     return (
         <Select
-            key={ 'grp-ptr-' + cardStore.groupPtr }
+            key={ 'grp-ptr-' + groupStore.groupPtr }
             // showSearch
             className="w-[200px]"
             placeholder="Select a Groiup"

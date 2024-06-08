@@ -1,11 +1,11 @@
 import { useSearchParams } from "react-router-dom";
-import { useCardStore } from "../stores/CardStore";
+import { useGroupStore } from "../stores/GroupStore";
 
 export function GetInfoFromSearchParams() {
     const [search] = useSearchParams();
-    const cardStore = useCardStore();
+    const groupStore = useGroupStore();
 
-    if( search.get("group") ) cardStore.changeGroup( search.get("group")! );
+    if( search.get("group") ) groupStore.changeGroup( search.get("group")! );
 
     return null;
 }
