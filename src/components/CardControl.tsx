@@ -1,18 +1,17 @@
 import { useEventListener } from "ahooks";
-import { useEffect } from "react";
 
 interface ICardControlProps {
     index: number;
     total: number;
     setIndex: (index: number) => void;
-    onCardDone: () => void;
+    onCardDone?: () => void;
     elRef: React.MutableRefObject<null>;
 }
 
-export function CardControl({ index, setIndex, total, onCardDone, elRef }: ICardControlProps) {
+export function CardControl({ index, setIndex, total, onCardDone }: ICardControlProps) {
     function updateIndex( newIndex: number  ) {
         if (index >= total - 1) {
-            return onCardDone();
+            return onCardDone?.();
         }
 
         setIndex( newIndex );

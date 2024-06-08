@@ -1,19 +1,23 @@
-import { useEventListener } from "ahooks";
 import React, { useEffect, useRef, useState } from "react";
 import { RenderCard } from "./RenderCard";
 import { CardControl } from "./CardControl";
+import { joinClass } from "../utils/component";
 
 export interface ICardProps {
     card: string[];
-    onCardDone: () => void;
+    onCardDone?: () => void;
+    noInteraction?: boolean;
+    startIndex?: number;
+
+    compact?: boolean;
 }
 
-export function Card({ card, onCardDone }: ICardProps) {
-    const [index, setIndex] = useState(0);
+export function Card({ card, onCardDone, noInteraction=false, startIndex = 0, compact = false}: ICardProps) {
+    const [index, setIndex] = useState( startIndex );
     const cardEl = useRef(null);
 
     useEffect(() => {
-        setIndex(0);
+        setIndex( startIndex );
     }, [card]);
 
     const style = {
@@ -23,17 +27,24 @@ export function Card({ card, onCardDone }: ICardProps) {
 
     return (
         <>
-            <CardControl
-                index={index}
-                setIndex={setIndex}
-                total={ card.length }
-                onCardDone={ onCardDone }
-                elRef={ cardEl }
-            />
+            {
+                (! noInteraction) &&
+
+                <CardControl
+                    index={index}
+                    setIndex={setIndex}
+                    total={ card.length }
+                    onCardDone={ onCardDone }
+                    elRef={ cardEl }
+                />
+            }
 
             <div
                 id="card"
-                className={index === 0 ? "" : "answer"}
+                className={joinClass([
+                    index === 0 ? "" : "answer",
+                    compact ? "card-compact" : ""
+                ])}
                 style={style}
                 ref={ cardEl }
             >

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* body, html, #root, .page {
   margin: 0;
   height: 100%;
@@ -289,4 +293,10 @@ footer:hover {
   right: 2rem;
   top: 17px;
   font-size: 1rem;
+}
+
+#card.card-compact {
+  width: 400px;
+  height: 200px;
+  min-height: unset;
 }
