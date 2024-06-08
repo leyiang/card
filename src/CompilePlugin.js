@@ -9,12 +9,16 @@ export function CompileSlash() {
         async transform(code, id) {
             const execa = util.promisify( exec );
             if (id.endsWith('.ts')) {
-                // Perform your custom modifications here
                 const { stdout } = await execa("cat " + id);
+                let i = 0;
 
-                code = stdout.replace(regexp, ( origin ) => {
-                    return "String.raw" + origin;
+                const data = stdout.match(regexp);
+
+                code = code.replace(regexp, ( origin ) => {
+                    return "String.raw" + data[i++];
                 });
+
+                console.log( code );
             }
             return {
                 code: code,
