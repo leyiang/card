@@ -8,11 +8,22 @@ interface ICardStore {
     groupPtr: ICardInfoKey;
     stackPtr: number;
 
+    cardPtr: number;
+    contentPtr: number;
+
     group: () => ICardGroup | null;
     stack: () => ICardStack | null;
 
     changeGroup: (groupPtr: ICardInfoKey) => void;
     changeStack: (stackPtr: number) => void;
+
+    // Just to sync these local-params
+    // no function in the store
+    setCardPtr: (cardPtr: number) => void;
+    setContentPtr: (contentPtr: number) => void;
+
+    // Get Current Card ID
+    getID: () => string;
 }
 
 export const useCardStore = create<ICardStore>()((set, get) => ({
@@ -20,6 +31,26 @@ export const useCardStore = create<ICardStore>()((set, get) => ({
 
     groupPtr: Object.keys(CardInfos)[0],
     stackPtr: 0,
+
+    cardPtr: 0,
+    contentPtr: 0,
+
+    setCardPtr( cardPtr ) {
+        set({ cardPtr });
+    },
+
+    setContentPtr( contentPtr ) {
+        set({ contentPtr });
+    },
+
+    getID() {
+        return [
+            get().groupPtr,
+            get().stack()?.id ?? "<ns-id>",
+            get().cardPtr,
+            get().contentPtr,
+        ].join("-");
+    },
 
     group() {
         return get().info[

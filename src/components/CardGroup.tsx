@@ -5,7 +5,7 @@ import { FooterControl } from "./FooterControl.tsx";
 import { useSettingStore } from "../stores/SettingStore.ts";
 import { shuffle } from "../utils/array.ts";
 import { GetInfoFromSearchParams } from "./GetInfoFromSearchParams.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ICardGroupProps {
     onGroupDone: () => void;
@@ -13,6 +13,10 @@ interface ICardGroupProps {
 
 export function CardGroup({ onGroupDone }: ICardGroupProps) {
     const [index, setIndex] = useState(0);
+    const cardStore = useCardStore();
+    const settingStore = useSettingStore();
+    const stack = cardStore.stack();
+
     const nextCard = () => {
         const newIndex = index + 1;
 
@@ -23,12 +27,12 @@ export function CardGroup({ onGroupDone }: ICardGroupProps) {
         }
 
         setIndex( newIndex );
-        // cardStore.nextCard();
     }
 
-    const cardStore = useCardStore();
-    const settingStore = useSettingStore();
-    const stack = cardStore.stack();
+    useEffect(() => {
+        cardStore.setCardPtr( index );
+    }, [index]);
+
     let cards = (stack?.cards ?? []).slice(0);
 
     if( settingStore.order === "backward" ) {
