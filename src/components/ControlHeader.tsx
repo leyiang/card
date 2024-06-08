@@ -10,7 +10,7 @@ export function ControlHeader() {
         <header className="flex items-center">
             <p className="round info-wrap">
                 <span className="info card-number-info">
-                    <span className="current-card-number">{0}</span>
+                    <span className="current-card-number">{ cardStore.cardPtr + 1 }</span>
                     /
                     <span className="total-card-number">{ cardStore.stack()?.cards?.length ?? 0 }</span>
                 </span>
