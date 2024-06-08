@@ -1,54 +1,43 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { RenderCard } from "./RenderCard";
 import { CardControl } from "./CardControl";
 import { joinClass } from "../utils/component";
+import { useCardStore } from "../stores/CardStore";
 
 export interface ICardProps {
     card: string[];
-    onCardDone?: () => void;
     noInteraction?: boolean;
     startIndex?: number;
 
     compact?: boolean;
 }
 
-export function Card({ card, onCardDone, noInteraction=false, startIndex = 0, compact = false}: ICardProps) {
-    const [index, setIndex] = useState( startIndex );
+export function Card({ card, noInteraction=false, startIndex = 0, compact = false}: ICardProps) {
     const cardEl = useRef(null);
-
-    useEffect(() => {
-        setIndex( startIndex );
-    }, [card]);
+    const cardStore = useCardStore();
 
     const style = {
         "--total": card.length,
-        "--current": index + 1,
+        "--current": cardStore.contentPtr + 1,
     } as React.CSSProperties;
 
     return (
         <>
             {
                 (! noInteraction) &&
-
-                <CardControl
-                    index={index}
-                    setIndex={setIndex}
-                    total={ card.length }
-                    onCardDone={ onCardDone }
-                    elRef={ cardEl }
-                />
+                <CardControl />
             }
 
             <div
                 id="card"
                 className={joinClass([
-                    index === 0 ? "" : "answer",
+                    cardStore.contentPtr === 0 ? "" : "answer",
                     compact ? "card-compact" : ""
                 ])}
                 style={style}
                 ref={ cardEl }
             >
-                <RenderCard data={card[index]} />
+                <RenderCard data={card[ cardStore.contentPtr ]} />
             </div>
         </>
     );

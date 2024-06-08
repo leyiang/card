@@ -1,29 +1,19 @@
 import { useEventListener } from "ahooks";
+import { useEffect } from "react";
+import { useCardStore } from "../stores/CardStore";
 
 interface ICardControlProps {
-    index: number;
-    total: number;
-    setIndex: (index: number) => void;
-    onCardDone?: () => void;
-    elRef: React.MutableRefObject<null>;
 }
 
-export function CardControl({ index, setIndex, total, onCardDone }: ICardControlProps) {
-    function updateIndex( newIndex: number  ) {
-        if (index >= total - 1) {
-            setIndex(0);
-            return onCardDone?.();
-        }
-
-        setIndex( newIndex );
-    }
+export function CardControl({}: ICardControlProps) {
+    const cardStore = useCardStore();
 
     function prev() {
-        updateIndex( index - 1 );
+        // updateIndex( index - 1 );
     }
 
     function next() {
-        updateIndex( index + 1 );
+        cardStore.nextContent();
     }
 
     useEventListener("keydown", e => {
@@ -32,11 +22,30 @@ export function CardControl({ index, setIndex, total, onCardDone }: ICardControl
         if (e.key === "ArrowRight") next();
     });
 
+    useEffect(() => {
+        // Disable space for input select
+        const keydown = (e: KeyboardEvent) => {
+            if( e.key === " " && e.target instanceof HTMLInputElement ) {
+                e.stopImmediatePropagation();
+                //@ts-ignore
+                document.activeElement?.blur();
+
+                next();
+            }
+        }
+
+        document.addEventListener("keydown", keydown, true);
+
+        return () => {
+            document.removeEventListener("keydown", keydown);
+        }
+    }, []);
+
     useEventListener("click", e => {
         if( e.target instanceof HTMLElement && e.target.closest("#card") ) {
             next();
         }
     });
-
+    
     return null;
 }

@@ -8,22 +8,13 @@ import { GetInfoFromSearchParams } from "./GetInfoFromSearchParams.tsx";
 import { useCardStore } from "../stores/CardStore.ts";
 
 interface ICardGroupProps {
-    onGroupDone: () => void;
 }
 
-export function CardGroup({ onGroupDone }: ICardGroupProps) {
+export function CardGroup({}: ICardGroupProps) {
     const cardStore = useCardStore();
     const groupStore = useGroupStore();
     const settingStore = useSettingStore();
     const stack = groupStore.stack();
-
-    const nextCard = () => {
-        cardStore.nextCard();
-
-        if( cardStore.cardPtr === cardStore.cards.length - 1 ) {
-            onGroupDone?.();
-        }
-    }
 
     let cards = (stack?.cards ?? []).slice(0);
 
@@ -47,15 +38,7 @@ export function CardGroup({ onGroupDone }: ICardGroupProps) {
             <ControlHeader />
             <GetInfoFromSearchParams />
 
-            {
-                card &&
-                <Card
-                    card={ card }
-                    onCardDone={nextCard}
-                />
-            }
-
-
+            <Card card={ card } />
             <FooterControl />
         </div>
     )
