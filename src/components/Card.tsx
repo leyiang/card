@@ -12,7 +12,7 @@ export interface ICardProps {
     compact?: boolean;
 }
 
-export function Card({ card, noInteraction=false, startIndex = 0, compact = false}: ICardProps) {
+export function Card({ card, noInteraction=false, startIndex = -1, compact = false}: ICardProps) {
     const cardEl = useRef(null);
     const cardStore = useCardStore();
 
@@ -20,6 +20,12 @@ export function Card({ card, noInteraction=false, startIndex = 0, compact = fals
         "--total": card.length,
         "--current": cardStore.contentPtr + 1,
     } as React.CSSProperties;
+
+    let index = cardStore.contentPtr;
+
+    if( startIndex > -1 && startIndex < card.length && noInteraction ) {
+        index = startIndex;
+    }
 
     return (
         <>
@@ -37,7 +43,7 @@ export function Card({ card, noInteraction=false, startIndex = 0, compact = fals
                 style={style}
                 ref={ cardEl }
             >
-                <RenderCard data={card[ cardStore.contentPtr ]} />
+                <RenderCard data={card[ index ]} />
             </div>
         </>
     );
