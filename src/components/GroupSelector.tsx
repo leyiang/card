@@ -1,9 +1,11 @@
 import { Select } from "antd";
 import { useGroupStore } from "../stores/GroupStore";
+import { useEffect, useState } from "react";
 
 export function GroupSelector() {
     const groupStore = useGroupStore();
     const options: any[] = [];
+    const [value, setValue] = useState( groupStore.groupPtr );
 
     Object.keys(groupStore.info).forEach(key => {
         options.push({
@@ -13,9 +15,13 @@ export function GroupSelector() {
     });
 
     const onChange = (value: string) => {
+        setValue( value );
         groupStore.changeGroup( value );
     };
 
+    useEffect(() => {
+        setValue( groupStore.groupPtr)
+    }, [groupStore.groupPtr]);
     // const onSearch = (value: string) => {
     //     console.log('search:', value);
     // };
@@ -34,7 +40,7 @@ export function GroupSelector() {
             // onSearch={onSearch}
             filterOption={filterOption}
             options={options}
-            defaultValue={groupStore.groupPtr}
+            value={ value }
         />
     )
 }

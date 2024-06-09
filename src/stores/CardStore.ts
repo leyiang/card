@@ -14,6 +14,7 @@ interface ICardStore {
     nextCard: () => void;
     setCardPtr: (newCardPtr: number) => void;
 
+    prevContent: () => void;
     nextContent: () => void;
     setContentPtr: (newContentPtr: number) => void;
 }
@@ -64,6 +65,8 @@ export const useCardStore = create<ICardStore>()((set, get) => ({
     },
 
     setContentPtr( newContentPtr: number ) {
+        if( newContentPtr < 0 ) newContentPtr = get().card.length - 1;
+
         if( newContentPtr >= get().card().length ) {
             set({
                 contentPtr: 0,
@@ -74,6 +77,10 @@ export const useCardStore = create<ICardStore>()((set, get) => ({
         }
 
         set({ contentPtr: newContentPtr });
+    },
+
+    prevContent() {
+        get().setContentPtr( get().contentPtr - 1 );
     },
 
     nextContent() {

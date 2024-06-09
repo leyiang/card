@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RenderCard } from "./RenderCard";
 import { CardControl } from "./CardControl";
 import { joinClass } from "../utils/component";
 import { useCardStore } from "../stores/CardStore";
+import { useSearchParams } from "react-router-dom";
 
 export interface ICardProps {
     card: string[];
@@ -13,6 +14,7 @@ export interface ICardProps {
 }
 
 export function Card({ card, noInteraction=false, startIndex = -1, compact = false}: ICardProps) {
+    const [index, setIndex] = useState(0);
     const cardEl = useRef(null);
     const cardStore = useCardStore();
 
@@ -21,11 +23,19 @@ export function Card({ card, noInteraction=false, startIndex = -1, compact = fal
         "--current": cardStore.contentPtr + 1,
     } as React.CSSProperties;
 
-    let index = cardStore.contentPtr;
+    const [search] = useSearchParams();
 
-    if( startIndex > -1 && startIndex < card.length && noInteraction ) {
-        index = startIndex;
-    }
+    useEffect(() => {
+        setIndex( cardStore.contentPtr );
+        
+        if( search.get("content") ) {
+            setIndex( Number(search.get("content") ) )
+        } else {
+            if( startIndex > -1 && startIndex < card.length && noInteraction ) {
+                setIndex( startIndex );
+            }
+        }
+    }, []);
 
     return (
         <>

@@ -9,7 +9,10 @@ export function GetInfoFromSearchParams() {
     const cardStore = useCardStore();
 
     useEffect(() => {
-        if( search.get("group") ) groupStore.changeGroup( search.get("group")! );
+        if( search.get("group") ) {
+            groupStore.changeGroup( search.get("group")! );
+        }
+
         const stack = search.get("stack");
         if( stack ) {
             const group = groupStore.group();

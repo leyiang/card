@@ -48,7 +48,6 @@ export const useGroupStore = create<IGroupStore>()((set, get) => ({
             console.error("Try to switch a non-exist group");
             return;
         }
-        if( groupPtr === get().groupPtr ) return;
 
         set({
             groupPtr,

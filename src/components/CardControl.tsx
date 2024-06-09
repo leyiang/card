@@ -9,7 +9,7 @@ export function CardControl({}: ICardControlProps) {
     const cardStore = useCardStore();
 
     function prev() {
-        // updateIndex( index - 1 );
+        cardStore.prevContent();
     }
 
     function next() {
