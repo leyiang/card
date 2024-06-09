@@ -8,12 +8,11 @@ export function GetInfoFromSearchParams() {
     const groupStore = useGroupStore();
     const cardStore = useCardStore();
 
-    useEffect(() => {
-        if( search.get("group") ) {
-            groupStore.changeGroup( search.get("group")! );
+    function loadPersist(group: string | null, stack: string | null, card: string | null, content: string | null) {
+        if( group ) {
+            groupStore.changeGroup( group );
         }
 
-        const stack = search.get("stack");
         if( stack ) {
             const group = groupStore.group();
             const id_list = group.map(stack => stack.id);
@@ -24,9 +23,6 @@ export function GetInfoFromSearchParams() {
             }
         }
 
-        const card = search.get("card");
-        const content = search.get("content");
-
         if( card ) {
             const cardPtr = Number( card );
             cardStore.setCardPtr( cardPtr );
@@ -36,6 +32,15 @@ export function GetInfoFromSearchParams() {
             const contentPtr = Number( content );
             cardStore.setContentPtr( contentPtr );
         }
+    }
+
+    useEffect(() => {
+        loadPersist(
+            search.get("group"),
+            search.get("stack"),
+            search.get("card"),
+            search.get("content")
+        );
     }, [] );
 
     return null;
