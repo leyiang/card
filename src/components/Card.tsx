@@ -26,17 +26,16 @@ export function Card({ card, noInteraction=false, startIndex = -1, compact = fal
     const [search] = useSearchParams();
 
     useEffect(() => {
-        setIndex( cardStore.contentPtr );
 
         if( search.get("content") ) {
             setIndex( Number(search.get("content") ) )
             console.log("search branch");
-            
+        } else if( startIndex > -1 && startIndex < card.length && noInteraction ) {
+            setIndex( startIndex );
         } else {
-            if( startIndex > -1 && startIndex < card.length && noInteraction ) {
-                setIndex( startIndex );
-            }
+            setIndex( cardStore.contentPtr );
         }
+
     }, [ cardStore.contentPtr ]);
 
     return (
@@ -55,7 +54,7 @@ export function Card({ card, noInteraction=false, startIndex = -1, compact = fal
                 style={style}
                 ref={ cardEl }
             >
-                <RenderCard data={card[ index ]} />
+                { card[index] && <RenderCard data={card[ index ]} /> }
             </div>
         </>
     );

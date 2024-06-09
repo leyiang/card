@@ -57,7 +57,10 @@ export const useCardStore = create<ICardStore>()((set, get) => ({
             newCardPtr = get().cards.length - 1;
         }
 
-        set({ cardPtr: newCardPtr })
+        set({
+            cardPtr: newCardPtr,
+            contentPtr: 0,
+        })
     },
 
     nextCard() {
@@ -79,14 +82,12 @@ export const useCardStore = create<ICardStore>()((set, get) => ({
 
             return;
         } else if( newContentPtr >= get().card().length ) {
-            set({
-                contentPtr: 0,
-            });
-
             get().nextCard();
             return;
         }
 
+        console.log("Set Content Ptr", newContentPtr );
+        
         set({ contentPtr: newContentPtr });
     },
 
