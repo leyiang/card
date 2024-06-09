@@ -20,11 +20,19 @@ export function RenderCard({ data }: IRenderCardProps) {
 
     if( data.startsWith("text:") ) {
         data = data.substring(5);
+
+        // Manually break by line-break
+        // change \n with <br />
+        const chunks = data.split("\\n");
         
         return (
-            <div>
-                { data }
-            </div>
+            <article>
+                {
+                    chunks.map( (line, i) => (
+                        <p key={ "render-line-" + i }>{ line }</p>
+                    ))
+                }
+            </article>
         )
     }
 
