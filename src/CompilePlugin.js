@@ -1,7 +1,36 @@
 import { exec } from 'child_process';
 import util from "util";
 
-const regexp = /`[^`]*`/g;
+const rawStringRE = /`[^`]*`/g;
+
+
+const funcRules = [
+    {
+        reg: /lim\(([^,()]+),([^,()]+)(?:,([^,()]+))?(?:,([^,()]+))?\)/g,
+        to: `\\lim_{%3\\to %1}%4(%3)=%2`,
+        defaults: [null, null, 'x', 'f']
+    },
+
+    { reg: /\$d/g, to: `\\delta` },
+    { reg: /\$e/g, to: `\\epsilon` },
+]
+function compileFunc( raw ) {
+    funcRules.forEach( rule => {
+        raw = raw.replace( rule.reg, (_, ...groups) => {
+            groups = groups.slice(0, -2);
+
+            const to = rule.to.replace(/%(\d+)/g, (_, index) => {
+                const i = index - 1;
+                const content = groups[i] ?? rule.defaults[i];
+                return content ?? 'error';
+            });
+
+            return to;
+        });
+    });
+
+    return raw;
+}
 
 export function CompileSlash() {
     return {
@@ -12,13 +41,14 @@ export function CompileSlash() {
                 const { stdout } = await execa("cat " + id);
                 let i = 0;
 
-                const data = stdout.match(regexp);
+                const data = stdout.match(rawStringRE);
 
-                code = code.replace(regexp, ( origin ) => {
+                code = code.replace(rawStringRE, ( origin ) => {
                     return "String.raw" + data[i++];
                 });
 
-                console.log( code );
+
+                code = compileFunc( code );
             }
             return {
                 code: code,
