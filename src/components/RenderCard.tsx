@@ -18,6 +18,16 @@ export function RenderCard({ data }: IRenderCardProps) {
         );
     }
 
+    if( data.startsWith("text:") ) {
+        data = data.substring(5);
+        
+        return (
+            <div>
+                { data }
+            </div>
+        )
+    }
+
     data = `\\[\\displaylines{${ data }}\\]`;
 
     const config = {
