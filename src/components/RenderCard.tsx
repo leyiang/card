@@ -1,4 +1,5 @@
 import { MathJax, MathJaxContext } from "better-react-mathjax";
+import { useEffect, useState } from "react";
 
 interface IRenderCardProps {
     data: string;
@@ -44,9 +45,20 @@ export function RenderCard({ data }: IRenderCardProps) {
         }
     };
 
+    const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setShow( true );
+        }, 50 );
+    }, [] );
+    
     // Render MathJax
     return (
-        <div className="card-latex">
+        <div
+            className="card-latex"
+            style={{ opacity: show ? 1 : 0 }}
+        >
             <MathJaxContext config={config}>
                 <MathJax dynamic>{data}</MathJax>
             </MathJaxContext>
