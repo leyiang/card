@@ -65,9 +65,20 @@ export const useCardStore = create<ICardStore>()((set, get) => ({
     },
 
     setContentPtr( newContentPtr: number ) {
-        if( newContentPtr < 0 ) newContentPtr = get().card.length - 1;
+        if( newContentPtr < 0 ) {
+            let ptr = get().cardPtr - 1;
 
-        if( newContentPtr >= get().card().length ) {
+            if( ptr < 0 ) {
+                ptr = get().cards.length - 1;
+            }
+
+            set({
+                cardPtr: ptr,
+                contentPtr: get().cards[ptr].length - 1,
+            });
+
+            return;
+        } else if( newContentPtr >= get().card().length ) {
             set({
                 contentPtr: 0,
             });

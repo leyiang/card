@@ -27,15 +27,17 @@ export function Card({ card, noInteraction=false, startIndex = -1, compact = fal
 
     useEffect(() => {
         setIndex( cardStore.contentPtr );
-        
+
         if( search.get("content") ) {
             setIndex( Number(search.get("content") ) )
+            console.log("search branch");
+            
         } else {
             if( startIndex > -1 && startIndex < card.length && noInteraction ) {
                 setIndex( startIndex );
             }
         }
-    }, []);
+    }, [ cardStore.contentPtr ]);
 
     return (
         <>
