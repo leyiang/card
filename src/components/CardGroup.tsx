@@ -33,12 +33,13 @@ export function CardGroup({}: ICardGroupProps) {
     // }
 
     const card = cardStore.card();
+    
     return (
         <div className="card-group">
             <ControlHeader />
             <GetInfoFromSearchParams />
 
-            <Card card={ card } />
+            { card && <Card card={ card } /> }
             <FooterControl />
         </div>
     )
