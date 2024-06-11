@@ -11,6 +11,16 @@ const funcRules = [
         defaults: [null, null, 'x', 'f']
     },
 
+    {
+        reg: /mat2\(([^,]+),([^,]+),([^,]+),([^,]+)\)/g,
+        to: `\\begin{bmatrix} %1 & %2 \\\\ %3 & %4 \\end{bmatrix}`,
+    },
+
+    {
+        reg: /vec\(([^,]+),([^,]+)\)/g,
+        to: `\\begin{bmatrix} %1 \\\\ %2 \\end{bmatrix}`,
+    },
+
     { reg: /\$d/g, to: `\\delta` },
     { reg: /\$e/g, to: `\\epsilon` },
 ]
@@ -21,7 +31,7 @@ function compileFunc( raw ) {
 
             const to = rule.to.replace(/%(\d+)/g, (_, index) => {
                 const i = index - 1;
-                const content = groups[i] ?? rule.defaults[i];
+                const content = groups[i] ?? rule.defaults?.[i] ?? "";
                 return content ?? 'error';
             });
 
