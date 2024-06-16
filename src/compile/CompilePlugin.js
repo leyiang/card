@@ -1,41 +1,27 @@
 import { exec } from 'child_process';
 import util from "util";
+import { funcRules } from "./rules"
 
 const rawStringRE = /`[^`]*`/g;
 
-
-const funcRules = [
-    {
-        reg: /lim\(([^,()]+),([^,()]+)(?:,([^,()]+))?(?:,([^,()]+))?\)/g,
-        to: `\\lim_{%3\\to %1}%4(%3)=%2`,
-        defaults: [null, null, 'x', 'f']
-    },
-
-    {
-        reg: /mat2\(([^,]+),([^,]+),([^,]+),([^,]+)\)/g,
-        to: `\\begin{bmatrix} %1 & %2 \\\\ %3 & %4 \\end{bmatrix}`,
-    },
-
-    {
-        reg: /vec\(([^,]+),([^,]+)\)/g,
-        to: `\\begin{bmatrix} %1 \\\\ %2 \\end{bmatrix}`,
-    },
-
-    { reg: /\$d/g, to: `\\delta` },
-    { reg: /\$e/g, to: `\\epsilon` },
-]
 function compileFunc( raw ) {
-    funcRules.forEach( rule => {
+    Object.values(funcRules).forEach( rule => {
+        // console.log( rule );
+        console.log( raw );
         raw = raw.replace( rule.reg, (_, ...groups) => {
             groups = groups.slice(0, -2);
 
-            const to = rule.to.replace(/%(\d+)/g, (_, index) => {
-                const i = index - 1;
-                const content = groups[i] ?? rule.defaults?.[i] ?? "";
-                return content ?? 'error';
-            });
+            if( typeof rule.to === "function" ) {
+                return rule.to(...groups); 
+            } else {
+                const to = rule.to.replace(/%(\d+)/g, (_, index) => {
+                    const i = index - 1;
+                    const content = groups[i] ?? rule.defaults?.[i] ?? "";
+                    return content ?? 'error';
+                });
 
-            return to;
+                return to;
+            }
         });
     });
 
