@@ -149,7 +149,7 @@ body, html {
 }
 
 header {
-  --offset: 60px;
+  --offset: 24px;
   position: absolute;
   top: var(--offset);
   left: var(--offset);
@@ -301,4 +301,8 @@ footer:hover {
   /* border: 1px solid #F00; */
   object-fit: contain;
   max-height: 400px;
+}
+
+mjx-container {
+  margin: 0!important;
 }
