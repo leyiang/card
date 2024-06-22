@@ -20,10 +20,15 @@ export const funcRules = {
         to: `\\begin{bmatrix} %1 & %2 \\end{bmatrix}`,
     },
 
+    ddxn: { reg: /\$ddxn\(([^(),]+)(?:,([^()]+)\))?/g, to: `\\frac{d^{%1}%2}{dx^{%1}}` },
     ddx: { reg: /\$ddx/g, to: `\\frac{d}{dx} ` },
+
+    theta: { reg: /\$th/g, to: `\\theta` },
     delta: { reg: /\$d/g, to: `\\delta` },
     Delta: { reg: /\$D/g, to: `\\Delta ` },
     epsilon: { reg: /\$e/g, to: `\\epsilon` },
+
+    text: { reg: /\$t\(([^()]+)\)/g, to: `\\textrm{%1}` },
 }
 
 injectLimit( funcRules );
