@@ -1,5 +1,5 @@
-import { MathJax, MathJaxContext } from "better-react-mathjax";
-import { useEffect, useState } from "react";
+import { RenderLatex } from "./renderList/RenderLatex";
+import { RenderText } from "./renderList/RenderText";
 
 interface IRenderCardProps {
     data: string;
@@ -8,60 +8,56 @@ interface IRenderCardProps {
 export function RenderCard({ data }: IRenderCardProps) {
     // Render Image
     if (data.startsWith("image:")) {
-        const raw = data.substring(6);
+        let caption = null;
+        let mode = "math" as "math" | "text";
+        let raw = data.substring(6);
+
+        if(/^image:.*\(.*\)$/.test(data)) {
+            raw = raw.replace(/\((.*)\)$/g, (_, text) => {
+                caption = text;
+                mode = "math";
+                return "";
+            });
+        }
+
+        if(/^image:.*\[.*\]$/.test(data)) {
+            
+            raw = raw.replace(/\[(.*)\]$/g, (_, text) => {
+                caption = text;
+                mode = "text";
+                return "";
+            });
+        }
+
+
         const src = `/images/${raw}`;
 
         return (
-            <img
-                src={src}
-                className="card-img"
-            />
+            <div className="flex flex-col w-full text-center">
+                <img
+                    src={src}
+                    className="card-img mb-4"
+                />
+
+                {
+                    caption &&
+                    (
+                        mode == "math"
+                            ? <RenderLatex data={ caption } />
+                            : <RenderText text={ caption } />
+                    )
+                }
+            </div>
         );
     }
 
     if( data.startsWith("text:") ) {
         data = data.substring(5);
-
-        // Manually break by line-break
-        // change \n with <br />
-        const chunks = data.split("\\n");
-        
-        return (
-            <article>
-                {
-                    chunks.map( (line, i) => (
-                        <p key={ "render-line-" + i }>{ line }</p>
-                    ))
-                }
-            </article>
-        )
+        return <RenderText text={ data } />
     }
-
-    data = `\\[\\displaylines{${ data }}\\]`;
-
-    const config = {
-        options: {
-            enableMenu: false,
-        }
-    };
-
-    const [show, setShow] = useState(false);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setShow( true );
-        }, 50 );
-    }, [] );
-    
+ 
     // Render MathJax
     return (
-        <div
-            className="card-latex"
-            style={{ opacity: show ? 1 : 0 }}
-        >
-            <MathJaxContext config={config}>
-                <MathJax dynamic>{data}</MathJax>
-            </MathJaxContext>
-        </div>
+        <RenderLatex data={data}/>
     );
 }
