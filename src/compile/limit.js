@@ -40,7 +40,14 @@ export function injectLimit(rule) {
             return "999";
             // return funcRules.lim.to(base, value, funcName, varName, true);
         }
-    }
+    },
+
+    rule["inv"] = {
+        reg: getReg("inv", 2),
+        to: (num="x", top="1") => {
+            return `\\frac{${top}}{${num}}`;
+        }
+    },
 
     rule["case1c"] = {
         // Case for 2 col
