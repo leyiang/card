@@ -69,10 +69,10 @@ body, html {
 }
 
 #card {
-  width: 700px;
+  min-width: 700px;
   /*height: 500px;*/
   display: inline-flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   box-shadow: 0 0.25rem 1rem 0 var(--shadow-with-opacity);
   background-color: #FFF;
@@ -91,8 +91,10 @@ body, html {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 
-  max-height: 90%;
-  max-width: 95%;
+  max-height: 80vh;
+  /* box-sizing: border-box; */
+  overflow-y: auto;
+  max-width: 98%;
 
   min-width: 700px;
   min-height: 500px;
@@ -301,8 +303,37 @@ footer:hover {
   /* border: 1px solid #F00; */
   object-fit: contain;
   max-height: 400px;
+  max-width: 700px;
 }
 
 mjx-container {
   margin: 0!important;
+}
+
+#card article {
+  max-width: 700px;
+  margin: auto 0;
+}
+
+#card .card-latex {
+  margin: auto 0;
+}
+
+.card-group {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+mjx-assistive-mml {
+  right: 0px;
+  bottom: 0px;
+}
+
+mjx-mtd {
+  padding: .1em 0 !important;
+}
+
+.img-wrap {
+  margin: auto 0;
 }
