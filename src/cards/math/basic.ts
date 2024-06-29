@@ -23,22 +23,7 @@ export default {
         [
             `$t(Gauss-Jordan)消元法从[A|I]开始 \\ 对A消元的同时变化也生效在I上 \\ 最后我们得到了[I|A^{-1}] \\ 请解释它的原因`,
             `消元操作可以看做多个消元矩阵对乘上AI \\ 我们把所有消元矩阵合在一起看: E \\ [EA | EI]=[I|EI] \\ EA=I, E=A^{-1} \\ EI=A^{-1}`
-        ],
-
-        [
-            `矩阵相乘的几个方法`,
-            `image:mat_mult_1.png[点乘法]`,
-            `*A乘上B的每一列* \\
-            AB = A[b_1...b_p] =[Ab_1...Ab_p] \\
-            b_1代表矩阵B的第一列 \\
-            Ab_1=mat2(a,b,c,d)vec(e,f) \\
-            Ab_1代表AB结果中的第一列`,
-
-            `*A的每一行乘上B* \\
-            [$t(row i of )A]mat2(a,b,c,d)=[$t(row i of )AB] \\
-            A的第一行乘B=AB的第一行`,
-            `image:mat_mult_4.png[行乘列再相加]`
-        ],
+        ], 
 
         [`(AB)_{ij}=? \\ 矩阵相乘结果的第ij个元素`, `($t(row i of ) A) \cdot ($t(col j of ) B)`],
         [
@@ -146,9 +131,9 @@ export default {
 
         [
             `g=f^{-1}, 已知f' \\ g'(x)=?`,
-            `g'(x)=\frac{1}{f'(y)}=\frac{1}{f'(g(x))}`,
+            `g(x)=y, 根据反函数定义: f(y)=x \\ g'(x)=\frac{1}{f'(y)}=\frac{1}{f'(g(x))}`,
+            `反函数定义得: f(g(x))=x \\ 同时求导 $ddx f(g(x))=$ddx x \\ f'(g(x))g'(x)=1 \\ g'(x)=\frac{1}{f'(g(x))}`,
             `image:inverse_derivative.png(反函数的斜率=原函数斜率的倒数)`,
-            `反函数定义得: f(g(x))=x \\ 同时求导 $ddx f(g(x))=$ddx x \\ f'(g(x))g'(x)=1 \\ g'(x)=\frac{1}{f'(g(x))}`
         ],
 
         [
@@ -180,8 +165,9 @@ export default {
         ],
         [
             `为什么可导必连续?`,
-            `image:derivative_continous.png(f'(c)=lims(c)\frac{f(x)-f(c)}{x-c}, 对不连续的点: \\ x\to c\:时, f'(c)\to\infty(DNE))`,
-            `切线，是对函数某一点的线性近似`
+            `image:derivative_continous.png(f'(c)=lims(c)\frac{f(x)-f(c)}{x-c}, 对不连续的点: \\ x\to c\:时, f'(c)\to\infty(DNE) \\ 红线的斜率就是上述极限的值,在逐渐接近垂直线)`,
+            // https://www.khanacademy.org/math/ap-calculus-ab/ab-differentiation-1-new/ab-2-4/v/differentiability
+            `切线,是对函数某一点的线性近似 \\ 将函数图像上某点无限放大 \\ 图像看起来就像是直线 \\ 这条线就是在这点的切线`
         ],
         [`可导判断(数学定义)`, `lims(a^-)\frac{f(x)-f(a)}{x-a}=lims(a^+)\frac{f(x)-f(a)}{x-a} \\\\ 左导数的定义=右导数的定义`],
         [`可导判断(几何)`, `对于x=a来说 \\ 从左侧趋近的斜率=右侧趋近的斜率 \\\\ 可以想像下|x|的图形 \\ 其在x=0处左右两边的斜率: \\ -1和1(导数不存在)`],
@@ -195,9 +181,28 @@ export default {
 
         [`矩阵性质：\\ A^{-1}=? \\ A^0=?`, `A^{-1}=\textrm{inverse matrix of} A \\ A^0=I \textrm{(Identity Matrix)}`],
 
-        [`矩阵相乘: \\ A=(m\times n)的矩阵 \\ B=(n\times p)的矩阵 \\ AB的行列为?`, `AB=(m\times p)`],
-        [`矩阵相乘的要求: \\ AB(行列要求)`, `A的行数=B的列数`],
+        [
+            `A=(m\times n), B=(q\times p) \\
+            矩阵相乘的要求是什么? \\
+            相乘的结果的大小为?
+            `,
+            `A=(m\times n), B=(q\times p) \\ A的行数=B的列数, 也就是n=q \\ AB=(m\times p)`
+        ],
 
+        [
+            `矩阵相乘的几个方法`,
+            `image:mat_mult_1.png[点乘法]`,
+            `*A乘上B的每一列* \\
+            AB = A[b_1...b_p] =[Ab_1...Ab_p] \\
+            b_1代表矩阵B的第一列 \\
+            Ab_1=mat2(a,b,c,d)vec(e,f) \\
+            Ab_1代表AB结果中的第一列`,
+
+            `*A的每一行乘上B* \\
+            [$t(row i of )A]mat2(a,b,c,d)=[$t(row i of )AB] \\
+            A的第一行乘B=AB的第一行`,
+            `image:mat_mult_4.png[行乘列再相加]`
+        ],
         [
             `矩阵乘法(按列): \\ mat2(a,b,c,d) mat2(e,f,g,h)=?`,
             `vec(a,c) vecRow(e,f) + vec(b,d) vecRow(g,h) \\
@@ -250,7 +255,6 @@ export default {
                 DNE, M=0 \textrm{ and } L\neq0,
                 \textrm{看情况}, M=0 \textrm{ and } L=0
             )`,
-            `如果M\neq0, =\frac{L}{M} \\ 如果M=0, lims(a)\frac{f(x)}{g(x)} DNE`
         ],
 
         [`(点乘规则) \:\: A \cdot B=? \\ A=vec(A_1,A_2), B=vecRow(B_1,B_2)`, `=A_1 B_1 + A_2 B_2 \\ (矩阵点乘出来是个数)`],
@@ -259,20 +263,40 @@ export default {
         // up is linear
         [`中值定理(严格定义)`, `如果f(x)在[a,b]上连续 \\ 对于f(a)与f(b)之间的任意一点M \\ 都至少有一个c\in(a,b) \\ 使得f(c)=M`],
         [`什么叫在[a,b]上连续？`, `1. 在(a, b)上每点都连续 \\ 2. 在a点上右连续 \\ 3. 在b点上左连续`],
-        [`中值定理(直观理解) \\ f(x)在(a,b)上连续`,
-            `因为在[a,b]上连续 \\ f(x)的图像从a点画到b点 \\ 那么对于f(a)与f(b)之间的任意w \\ f(x)的图像一定经过w \\ 也就是f(x)=M一定有解`,
+        [
+            `中值定理(直观理解) \\ f(x)在(a,b)上连续`,
+            `因为在[a,b]上连续 \\
+            f(x)的图像从a点画到b点 \\
+            那么对于f(a)与f(b)之间的任意w \\
+            f(x)的图像一定经过w \\
+            也就是f(x)=w一定有解(至少有一个)`,
             "image:test.svg",
         ],
-        [`假设f与g都是连续函数 \\ f+g, f-g, f*g, \frac{f}{g} 是连续的吗？`, `+, -, *都为连续函数 \\ \frac{f}{g} 在其定义区间上连续(g\neq0)`],
+        [`假设f与g都是连续函数 \\
+        f+g, f-g, f*g, \frac{f}{g} 是连续的吗？`, `+, -, *都为连续函数 \\
+        \frac{f}{g} 在其定义区间上连续(g\neq0)`],
         [`什么是连续函数`, `text:函数定义域内每个点都连续\n称该函数为连续的`],
         [`列出间断点的情况`, `text:第一类间断点: \n 可去间断点：该点极限存在，但极限值与函数值不同 \n 跳跃间断点：左右极限都存在，但两边不相等`,
             "text:第二类间断点: \n 不属于第一类的都归到第二类(如无穷、振荡间断点)"
         ],
-        [`说点a在f(x)上是连续的 \\ 我们能得到什么?`, `a点极限值存在 \\ a点函数值存在 \\ 且极限值=函数值`],
-        [`左、右连续性的定义`, `左连续：lim(a^-,L)=f(a) \\ 右连续：lim(a^+,L)=f(a)`],
-        [`什么是连续性(直观理解)`, `对于一点来说: \\ 这点的函数值于其极限值是相同的。\\ 对于区间来说：\\ 从区间左边画到右边，笔不用抬起来`],
+        [`说点a在f(x)上是连续的 \\
+        我们能得到什么?`, `a点极限值存在 \\
+        a点函数值存在 \\
+        且极限值=函数值`],
+        [`左、右连续性的定义`, `左连续：lim(a^-,L)=f(a) \\
+        右连续：lim(a^+,L)=f(a)`],
+        [`什么是连续性(直观理解)`, `对于一点来说: \\
+        这点的函数值于其极限值是相同的 \\
+        对于区间来说:\\
+        从区间左边画到右边, 笔不用抬起来`],
 
-        [`极限的严格定义`, `\lim_{x\to a}f(x)=L的严格定义: \\ (\forall \epsilon>0) (\exists \delta>0) \\ (\forall x) (0<|x-a|<\delta) \Longrightarrow |f(x)-L|<\epsilon`],
+        [
+            `极限的严格定义`,
+            `\lim_{x\to a}f(x)=L的严格定义: \\ 
+            (\forall \epsilon>0) (\exists \delta>0) \\ 
+            (0<|x-a|<\delta) \Longrightarrow |f(x)-L|<\epsilon`
+        ],
+
         [
             `列举极限的运算法则 \\ \lim_{x\to a}f(x)=L \\ \lim_{x\to a}g(x)=M`,
             `\lim_{x\to a}f(x)+\lim_{x\to a}g(x)=L+M \\

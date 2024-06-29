@@ -1,7 +1,7 @@
 import { ICardStack } from "../../types/card-type";
 
 export default {
-    id: "network-basic",
+    id: "network_basic",
     label: "网络基础知识",
 
     cards: [
