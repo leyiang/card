@@ -2,7 +2,7 @@ import { injectLimit } from "./limit";
 
 export const funcRules = {
     mat2: {
-        reg: /mat2\(([^,]+),([^,]+),([^,]+),([^,]+)\)/g,
+        reg: /mat2\(([^,]+),([^,]+),([^,]+),([^,)]+)\)/g,
         to: `\\begin{bmatrix} %1 & %2 \\\\ %3 & %4 \\end{bmatrix}`,
     },
 
@@ -10,6 +10,12 @@ export const funcRules = {
         reg: /mat2x3\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/g,
         to: `\\begin{bmatrix} %1 & %2 \\\\ %3 & %4 \\\\ %5 & %6 \\end{bmatrix}`,
     },
+
+    mat3: {
+        reg: /mat3\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,)]+)\)/g,
+        to: `\\begin{bmatrix} %1 & %2 & %3 \\\\ %4 & %5 & %6 \\\\ %7 & %8 & %9 \\end{bmatrix}`,
+    },
+
     vec: {
         reg: /vec\(([^,]+),([^,]+)\)/g,
         to: `\\begin{bmatrix} %1 \\\\ %2 \\end{bmatrix}`,
