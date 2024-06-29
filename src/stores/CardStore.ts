@@ -29,8 +29,6 @@ function roundComplete() {
  */
 export const useCardStore = create<ICardStore>()((set, get) => {
 
-    console.log( 123 );
-    
     return {
         cards: [
             ["<card-not-set>"]

@@ -20,7 +20,10 @@ export const useSettingStore = create<ISettingStore>()(
             persistID: "",
 
             setPersist( persist: boolean ) {
-                set({ persist });
+                set({
+                    persist,
+                    persistID: ""
+                });
             },
 
             setPersistID( id: string ) {

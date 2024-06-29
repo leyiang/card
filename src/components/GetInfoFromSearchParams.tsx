@@ -2,11 +2,13 @@ import { useSearchParams } from "react-router-dom";
 import { useGroupStore } from "../stores/GroupStore";
 import { useEffect } from "react";
 import { useCardStore } from "../stores/CardStore";
+import { useSettingStore } from "../stores/SettingStore";
 
 export function GetInfoFromSearchParams() {
     const [search] = useSearchParams();
     const groupStore = useGroupStore();
     const cardStore = useCardStore();
+    const settingStore = useSettingStore();
 
     function loadPersist(group: string | null, stack: string | null, card: string | null, content: string | null) {
         if( group ) {
@@ -35,12 +37,25 @@ export function GetInfoFromSearchParams() {
     }
 
     useEffect(() => {
-        loadPersist(
-            search.get("group"),
-            search.get("stack"),
-            search.get("card"),
-            search.get("content")
-        );
+        if( settingStore.persist ) {
+            const raw = settingStore.persistID;
+            // const raw = "math-math_basic-4-0";
+            const info = raw.split("-");
+
+            loadPersist(
+                info[0],
+                info[1],
+                info[2],
+                info[3],
+            );
+        } else {
+            loadPersist(
+                search.get("group"),
+                search.get("stack"),
+                search.get("card"),
+                search.get("content")
+            );
+        }
     }, [] );
 
     return null;

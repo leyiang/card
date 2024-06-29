@@ -1,7 +1,7 @@
 import { ICardStack } from "../../types/card-type";
 
 export default {
-    id: "math-basic",
+    id: "math_basic",
     label: "数学基础",
 
     cards: [
