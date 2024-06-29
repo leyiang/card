@@ -3,7 +3,6 @@ import { RenderCard } from "./RenderCard";
 import { CardControl } from "./CardControl";
 import { joinClass } from "../utils/component";
 import { useCardStore } from "../stores/CardStore";
-import { useSearchParams } from "react-router-dom";
 
 export interface ICardProps {
     card: string[];
@@ -23,19 +22,12 @@ export function Card({ card, noInteraction=false, startIndex = -1, compact = fal
         "--current": cardStore.contentPtr + 1,
     } as React.CSSProperties;
 
-    const [search] = useSearchParams();
-
     useEffect(() => {
-
-        if( search.get("content") ) {
-            setIndex( Number(search.get("content") ) )
-            console.log("search branch");
-        } else if( startIndex > -1 && startIndex < card.length && noInteraction ) {
+        if( startIndex > -1 && startIndex < card.length && noInteraction ) {
             setIndex( startIndex );
         } else {
             setIndex( cardStore.contentPtr );
         }
-
     }, [ cardStore.contentPtr ]);
 
     return (
@@ -54,6 +46,7 @@ export function Card({ card, noInteraction=false, startIndex = -1, compact = fal
                 style={style}
                 ref={ cardEl }
             >
+                {/* { index } */}
                 { card[index] && <RenderCard data={card[ index ]} /> }
             </div>
         </>

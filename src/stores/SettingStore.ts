@@ -7,6 +7,9 @@ interface ISettingStore {
 
     setPersist: (persist: boolean) => void;
     setOrder: (order: ISettingStore["order"]) => void;
+
+    setPersistID: (persist: string) => void;
+    persistID: string;
 }
 
 export const useSettingStore = create<ISettingStore>()(
@@ -14,9 +17,14 @@ export const useSettingStore = create<ISettingStore>()(
         (set) => ({
             persist: false,
             order: "random",
+            persistID: "",
 
             setPersist( persist: boolean ) {
                 set({ persist });
+            },
+
+            setPersistID( id: string ) {
+                set({ persistID: id })
             },
 
             setOrder( order: ISettingStore["order"] ) {
