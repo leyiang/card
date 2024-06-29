@@ -1,3 +1,4 @@
+import { RenderImage } from "./renderList/RenderImage";
 import { RenderLatex } from "./renderList/RenderLatex";
 import { RenderText } from "./renderList/RenderText";
 
@@ -8,47 +9,7 @@ interface IRenderCardProps {
 export function RenderCard({ data }: IRenderCardProps) {
     // Render Image
     if (data.startsWith("image:")) {
-        let caption = null;
-        let mode = "math" as "math" | "text";
-        let raw = data.substring(6);
-
-        if(/^image:.*\(.*\)$/.test(data)) {
-            raw = raw.replace(/\((.*)\)$/g, (_, text) => {
-                caption = text;
-                mode = "math";
-                return "";
-            });
-        }
-
-        if(/^image:.*\[.*\]$/.test(data)) {
-            
-            raw = raw.replace(/\[(.*)\]$/g, (_, text) => {
-                caption = text;
-                mode = "text";
-                return "";
-            });
-        }
-
-
-        const src = `/images/${raw}`;
-
-        return (
-            <div className="flex flex-col w-full text-center">
-                <img
-                    src={src}
-                    className="card-img mb-4"
-                />
-
-                {
-                    caption &&
-                    (
-                        mode == "math"
-                            ? <RenderLatex data={ caption } />
-                            : <RenderText text={ caption } />
-                    )
-                }
-            </div>
-        );
+        return <RenderImage data={data} />;
     }
 
     if( data.startsWith("text:") ) {

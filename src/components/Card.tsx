@@ -3,7 +3,6 @@ import { RenderCard } from "./RenderCard";
 import { CardControl } from "./CardControl";
 import { joinClass } from "../utils/component";
 import { useCardStore } from "../stores/CardStore";
-import { useSettingStore } from "../stores/SettingStore";
 
 export interface ICardProps {
     card: string[];
