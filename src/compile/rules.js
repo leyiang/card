@@ -3,6 +3,7 @@ import { injectLimit } from "./limit";
 export const funcRules = {
     mat2: {
         reg: /mat2\(([^,]+),([^,]+),([^,]+),([^,)]+)\)/g,
+        // to: `\\begin{bmatrix} %1  &  %2 \\\\ %3 & %4 \\end{bmatrix}`,
         to: `\\begin{bmatrix} %1 & %2 \\\\ %3 & %4 \\end{bmatrix}`,
     },
 
@@ -33,8 +34,13 @@ export const funcRules = {
     delta: { reg: /\$d/g, to: `\\delta` },
     Delta: { reg: /\$D/g, to: `\\Delta ` },
     epsilon: { reg: /\$e/g, to: `\\epsilon` },
+    times: { reg: /\$x/g, to: `\\times` },
 
     text: { reg: /\$t\(([^()]+)\)/g, to: `\\textrm{%1}` },
+    r_set: { reg: /\$R/g, to: `\\mathbb{R}` },
+    bold: { reg: /\*\(([^()]+)\)/g, to: `\\textbf{%1}` },
+
+    neighbour: { reg: /Un\(([^,]+),([^,]+)\)/g, to: `\\mathring{U}(%1, %2)` }
 }
 
 injectLimit( funcRules );

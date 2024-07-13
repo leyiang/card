@@ -42,6 +42,13 @@ export function injectLimit(rule) {
         }
     },
 
+    rule["pinv"] = {
+        reg: getReg("pinv", 1),
+        to: (num="x") => {
+            return `\\frac{\\pi}{${num}}`;
+        }
+    },
+
     rule["inv"] = {
         reg: getReg("inv", 2),
         to: (num="x", top="1") => {
