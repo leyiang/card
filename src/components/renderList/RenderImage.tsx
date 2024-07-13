@@ -31,6 +31,9 @@ export function RenderImage({ data }: IRenderImage) {
     const src = `/images/${raw}`;
 
     function zoomImage(e: React.MouseEvent) {
+        // Ctrl + click to open image in new tag
+        if( ! e.ctrlKey ) return;
+        
         e.stopPropagation();
 
         const url = "http://" + window.location.host + src;
