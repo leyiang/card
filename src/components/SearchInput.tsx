@@ -14,7 +14,7 @@ export function SearchInput({ inputValue = "" }: ISearchInput ) {
 
     return (
         <Search
-            className="ml-auto w-[200px]"
+            className="w-[200px]"
             placeholder="Search card here"
             onSearch={onSearch}
             defaultValue={ inputValue }

@@ -1,9 +1,11 @@
 import { Select } from "antd";
 import { useGroupStore } from "../stores/GroupStore";
 import { useEffect, useState } from "react";
+import { usePersistStore } from "../stores/PersistStore";
 
 export function GroupSelector() {
     const groupStore = useGroupStore();
+    const persistStore = usePersistStore();
     const options: any[] = [];
     const [value, setValue] = useState( groupStore.groupPtr );
 
@@ -17,6 +19,7 @@ export function GroupSelector() {
     const onChange = (value: string) => {
         setValue( value );
         groupStore.changeGroup( value );
+        persistStore.setGroupID( value );
     };
 
     useEffect(() => {

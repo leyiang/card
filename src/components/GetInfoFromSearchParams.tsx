@@ -3,12 +3,14 @@ import { useGroupStore } from "../stores/GroupStore";
 import { useEffect } from "react";
 import { useCardStore } from "../stores/CardStore";
 import { useSettingStore } from "../stores/SettingStore";
+import { usePersistStore } from "../stores/PersistStore";
 
 export function GetInfoFromSearchParams() {
     const [search] = useSearchParams();
     const groupStore = useGroupStore();
     const cardStore = useCardStore();
     const settingStore = useSettingStore();
+    const persistStore = usePersistStore();
 
     function loadPersist(group: string | null, stack: string | null, card: string | null, content: string | null) {
         if( group ) {
@@ -37,6 +39,17 @@ export function GetInfoFromSearchParams() {
     }
 
     useEffect(() => {
+        if( search.size > 0 ) {
+            loadPersist(
+                search.get("group"),
+                search.get("stack"),
+                search.get("card"),
+                search.get("content")
+            );
+
+            return;
+        }
+        
         if( settingStore.persist ) {
             const raw = settingStore.persistID;
             // const raw = "math-math_basic-4-0";
@@ -48,15 +61,21 @@ export function GetInfoFromSearchParams() {
                 info[2],
                 info[3],
             );
-        } else {
-            loadPersist(
-                search.get("group"),
-                search.get("stack"),
-                search.get("card"),
-                search.get("content")
-            );
+
+            return;
         }
-    }, [] );
+
+        // Recover from previous groupID
+        if( persistStore.groupID ) {
+            // Set store
+            groupStore.changeGroup( persistStore.groupID );
+        }
+
+        if( persistStore.stackID ) {
+            // Set store
+            groupStore.changeStack( Number( persistStore.stackID ));
+        }
+    }, [ search ] );
 
     return null;
 }
