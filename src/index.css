@@ -331,9 +331,24 @@ mjx-assistive-mml {
 }
 
 mjx-mtd {
-  padding: .1em 0 !important;
+  padding-block: .1em !important;
 }
 
 .img-wrap {
   margin: auto 0;
+}
+
+.mjx-b {
+  position: relative;
+  color: #1b99ad;
+}
+
+.mjx-b::after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
