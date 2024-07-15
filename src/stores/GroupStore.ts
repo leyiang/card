@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { ICardGroup, ICardInfoKey, ICardInfos, ICardStack } from "../types/card-type";
 import { CardInfos } from "../cards/info";
+import { usePersistStore } from "./PersistStore";
 
 interface IGroupStore {
     info: ICardInfos;
@@ -25,7 +26,7 @@ export const useGroupStore = create<IGroupStore>()((set, get) => ({
     info: CardInfos,
 
     groupPtr: Object.keys(CardInfos)[0],
-    stackPtr: 0,
+    stackPtr: Number( usePersistStore.getState().stackID ) || 0,
 
     cardPtr: 0,
     contentPtr: 0,
