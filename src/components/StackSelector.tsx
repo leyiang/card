@@ -2,9 +2,11 @@ import { Select } from "antd";
 import { useGroupStore } from "../stores/GroupStore";
 import { usePersistStore } from "../stores/PersistStore";
 import { useEffect, useState } from "react";
+import { useCardStore } from "../stores/CardStore";
 
 export function StackSelector() {
     const groupStore = useGroupStore();
+    const cardStore = useCardStore();
     const persistStore = usePersistStore();
     const options: any[] = [];
     const [cur, setCur] = useState(0);
@@ -19,6 +21,7 @@ export function StackSelector() {
     const onChange = (value: number) => {
         groupStore.changeStack( value );
         persistStore.setStackID( value.toString() );
+        cardStore.setCardPtr( 0 );
     };
 
     // const onSearch = (value: string) => {

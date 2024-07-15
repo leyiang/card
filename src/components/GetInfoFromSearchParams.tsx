@@ -50,11 +50,14 @@ export function GetInfoFromSearchParams() {
             return;
         }
         
-        if( settingStore.persist ) {
+        if( settingStore.persist ) { 
             const raw = settingStore.persistID;
-            // const raw = "math-math_basic-4-0";
+            // console.log( raw );
+            
             const info = raw.split("-");
 
+            console.log( info );
+            
             loadPersist(
                 info[0],
                 info[1],

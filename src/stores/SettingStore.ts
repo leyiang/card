@@ -16,7 +16,7 @@ export const useSettingStore = create<ISettingStore>()(
     persist(
         (set) => ({
             persist: false,
-            order: "random",
+            order: "forward",
             persistID: "",
 
             setPersist( persist: boolean ) {

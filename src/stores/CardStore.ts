@@ -46,7 +46,7 @@ export const useCardStore = create<ICardStore>()((set, get) => {
         importCards(cards: ICard[]) {
             set({
                 cards: cards,
-                cardPtr: 0,
+                // cardPtr: 0,
                 // contentPtr: 0,
             });
         },

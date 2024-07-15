@@ -6,6 +6,7 @@ import { useSettingStore } from "../stores/SettingStore.ts";
 import { shuffle } from "../utils/array.ts";
 import { GetInfoFromSearchParams } from "./GetInfoFromSearchParams.tsx";
 import { useCardStore } from "../stores/CardStore.ts";
+import { useEffect, useState } from "react";
 
 interface ICardGroupProps {
 }
@@ -15,6 +16,7 @@ export function CardGroup({}: ICardGroupProps) {
     const groupStore = useGroupStore();
     const settingStore = useSettingStore();
     const stack = groupStore.stack();
+    const [card, setCard ] = useState( cardStore.card() );
 
     let cards = (stack?.cards ?? []).slice(0);
 
@@ -32,7 +34,11 @@ export function CardGroup({}: ICardGroupProps) {
     //  IGroupStore   set({ cardPtr: newCardPtr })
     // }
 
-    const card = cardStore.card();
+    useEffect(() => {
+        console.log( cardStore.cardPtr, "999" );
+        
+        setCard( cardStore.card() );
+    }, [ cardStore.cardPtr ] );
     
     return (
         <div className="card-group">
