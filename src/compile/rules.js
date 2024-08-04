@@ -27,20 +27,37 @@ export const funcRules = {
         to: `\\begin{bmatrix} %1 & %2 \\end{bmatrix}`,
     },
 
+    det2: {
+        reg: /det2\(([^()]+),([^()]+),([^()]+),([^()]+)\)/g,
+        to: `\\begin{vmatrix} %1 & %2 \\\\ %3 & %4 \\end{vmatrix}`,
+    },
+
+
     ddxn: { reg: /\$ddxn\(([^(),]+)(?:,([^()]+)\))?/g, to: `\\frac{d^{%1}%2}{dx^{%1}}` },
     ddx: { reg: /\$ddx/g, to: `\\frac{d}{dx} ` },
 
     theta: { reg: /\$th/g, to: `\\theta` },
     delta: { reg: /\$d/g, to: `\\delta` },
+    alpha: { reg: /\$a/g, to: `\\alpha` },
+    beta: { reg: /\$b/g, to: `\\beta` },
     Delta: { reg: /\$D/g, to: `\\Delta ` },
     epsilon: { reg: /\$e/g, to: `\\epsilon` },
+    xi: { reg: /\$xi/g, to: `\\xi` },
     times: { reg: /\$x/g, to: `\\times` },
 
     text: { reg: /\$t\(([^()]+)\)/g, to: `\\textrm{%1}` },
     r_set: { reg: /\$R/g, to: `\\mathbb{R}` },
     bold: { reg: /\*\(([^()]+)\)/g, to: `\\textbf{%1}` },
 
-    neighbour: { reg: /Un\(([^,]+),([^,]+)\)/g, to: `\\mathring{U}(%1, %2)` }
+    // COmment equal
+    ceq: { reg: /ceq\(([^()]+)\)/g, to: `\\stackrel{\\text{%1}}{=}` },
+
+    neighbour: { reg: /Un\(([^,]+),([^,]+)\)/g, to: `\\mathring{U}(%1, %2)` },
+
+    sim_infinite_small: {
+        reg: /simInfQ\(([^`]+)\)/g,
+        to: `等价无穷小(x\\to0时) \\\\ %1 \\sim \\: ?`,
+    }
 }
 
 injectLimit( funcRules );

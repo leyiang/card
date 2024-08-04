@@ -97,5 +97,11 @@ export function injectLimit(rule) {
             console.log( output);
             return output;
         },
+    },
+    rule["case8"] = {
+        reg: getReg("case8", 8),
+        to: (...args) => {
+            return rule["case2c"].to( ...args );
+        }
     }
 }
