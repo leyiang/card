@@ -20,49 +20,154 @@ export default {
         // ],
 
         [
-            `a(x)\to0, b(x)\to0 \\ \lim\frac{a(x)}{[b(x)]^k}=C\neq0 \\ \\ 
-           a(x)与b(x)的关系为?`,
-            `a(x)是b(x)的k阶无穷小`
+           `计算lims(+\infty)\ln(1+e^x)-x的极限`,
+            `法1: 提个x出来 \\
+            lims(+\infty)\ln(1+e^x)-x=lims(+\infty)\ln(e^x(inv(e^x)+1))-x \\
+            =lims(+\infty)\ln e^x+\ln(e^{-x}+1)-x \\
+            =lims(+\infty)x+\ln(e^{-x}+1)-x=lims(+\infty)\ln(1+e^{-x}) \\
+            =lims(+\infty)\ln(1)=0 \\
+            `,
+            `法2: 把x写成ln的形式 \\
+            lims(+\infty)\ln(1+e^x)-x=lims(+\infty)\ln(1+e^x)-\ln(e^x) \\
+            lims(+\infty)\ln(\frac{1+e^x}{e^x})=\ln1=0 \\
+            `
         ],
 
         [
-            `x\to x_0(或x\to\infty)时 \\ 
-            a(x)\to0, b(x)\to0 \\\\
-
-            \lim\frac{a(x)}{b(x)}=L \\
-            L=\infty,C,1,0时分别代表什么`,
-            `\lim\frac{a(x)}{b(x)}=L \\ 
-            \begin{cases}
-            a(x)是b(x)的*(低阶)无穷小 & L=\infty \\
-            a(x)是b(x)的*(同阶)无穷小  & L=C\neq 0 \\
-            a(x)和b(x)是*(等价)无穷小 & L=1 \\
-            a(x)和b(x)是*(高阶)无穷小 & L=0
-            \end{cases}`,
+           `斜渐近线的推论 \\ (如何快速判断斜渐近线?)`,
+            `斜渐进线:x\to\infty, 对应点与L的距离\to0 \\
+            则, 若f(x)可以写成ax+b+$a(x) \\
+            其中x\to\infty, $a(x)\to 0 \\
+            则y=ax+b为f(x)的斜渐近线
+            `
         ],
 
         [
-            `若a(x)是b(x)的高阶无穷小,记作?`,
-            `a(x)=o(b(x))`,
+           `函数的渐近线 \\
+           函数有哪几种渐近线?
+           `,
+            `水平渐进线(与x轴平行) \\
+            垂直渐进线(与x轴垂直) \\
+            斜渐进线(不平行也不垂直) \\
+            `,
+            `渐近线的本质含义`,
+            `若点M沿y=f(x)无限远离原点时 \\
+            它与某条直线L之间的距离趋近于0 \\
+            称直线L为y=f(x)的一条渐近线`,
+        ],
+        [
+            `斜渐进线的定义?`,
+            `lims(\infty)\frac{f(x)}{x}=a, 且lims(\infty)(f(x)-ax)=b \\
+            (或x\to-\infty, 或x\to+\infty) \\
+            则y=ax+b是f(x)的斜渐进线
+            `
+        ],
+        [
+            `垂直渐进线的定义?`,
+            `lims(x_0)f(x)=\infty, 或lims(x_0^-)=\infty,或lims(x_0^+)=\infty \\
+            x趋向*(定值)时, 极限值=\infty \\
+            x=x_0是f(x)的垂直渐进线 \\\\
+            如 x=0 是y=inv(x)垂直渐进线
+            `
         ],
 
         [
-            `若a(x)是b(x)的等价无穷小,记作?`,
-            `a(x)\sim b(x)`,
+            `水平渐进线的定义?`,
+            `lims(\infty)=A \\
+            x趋向无穷时,极限值存在 \\
+            y=A是f(x)的水平渐进线 \\\\
+            如: y=pinv(2), y=-pinv(2) \\
+            是y=\arctan(x)的两条水平渐进线
+            `
         ],
 
+        [
+           `给出x, \tan, \arctan的不等式关系`,
+            `(0<x<pinv(2)) \\
+            \arctan < x < \tan x
+            `
+        ],
+
+        [
+           `给出x, \sin, \arcsin的不等式关系`,
+            `(0<x<1) \\
+            \arcsin x > x > \sin x
+            `
+        ],
+
+        [
+           `如何化简: inv(|t|)inv(\sqrt{1+\frac{1}{t^2}})`,
+            `能这样化简吗? \\
+            当x>0时: inv(|t|)inv(\sqrt{1+\frac{1}{t^2}})=inv(t\sqrt{1+\frac{1}{t^2}}) \\
+            =inv(\sqrt{t^2}\sqrt{1+\frac{1}{t^2}}) *(这是有问题的!) \\
+            \sqrt{t^2}=|t|\neq t, 在t>0时没什么问题,*(但t<0时符号就错了)
+            `,
+            `正确做法(或者说不容易出错的做法): 把inv(t)提出来 \\
+            inv(|t|)inv(\sqrt{1+\frac{1}{t^2}})=inv(|t|)\frac{1}{\sqrt{\frac{1}{t^2}(inv(\frac{1}{t^2})+1)}} \\
+            =inv(|t|)\frac{1}{\sqrt{\frac{1}{t^2}}\sqrt{t^2+1}}=inv(|t|)\frac{1}{inv(|t|)\sqrt{t^2+1}}=\frac{1}{\sqrt{t^2+1}}
+            `,
+        ],
+
+        [
+            "曲率K=?",
+            `曲率K=\frac{\left|y''\right|}{\left(1+\left(y'\right)^2\right)^{\frac{3}{2}}} \\
+            由公式可得曲率>=0
+            `,
+            "曲率半径R=?",
+            "曲率半径R=\\frac{1}{K}"],
+
+        [
+            `如何证明f(x)在区间上有界?`,
+            `1.如果f(x)在[a,b]上连续, 则f(x)在[a,b]上有界 \\\\
+            2. 若f(x)在(a,b)上连续,且lims(a^+)f(x)与lims(b^-)都存在 \\
+            则f(x)在(a,b)上连续 \\
+            3. f'(x)在(a,b)上有界,\Rightarrow f(x)在(a,b)上有界 \\
+            `
+            // https://www.bilibili.com/video/BV14T4y1n7Ec?p=146
+            // https://youtu.be/tdvLePPSXAI?list=PLH_SiDrNHIUSMXnfNVzGydNZi1hVduhUb&t=4357
+        ],
+        [
+           `如何求解简单的一元3次方程?`,
+            `1. 用0、\pm1、\pm2观察根 \\
+            2.提取一个因式 \\
+            3. (x-t)(ax^2+bx+c), 求a,b,c \\
+            观察原式中x^3的系数可得a \\
+            类似地，求出b,c
+
+            `
+        ],
+
+        [
+           `1+2+3+\dotsb+n=?`,
+            `inv(2)n(n+1)`
+        ],
+
+        [
+           `1^2+2^2+3^2+\dotsb+n^2=?`,
+            `inv(6)n(n+1)(2n+1)`
+        ],
+
+ 
         [
             `选择题的排除法 \\ (怎么用、什么时候用)`,
             `当题目出现一般函数时 \\ (只提f(x),不给对应法则) \\
             代一个*(具体函数)进去,使其符合条件
             `,
             `image:example_1.png(这时令f(x)=-(x-a)^2,使条件成立 \\ 接着就可以用该函数排除选项 \\ 这个方法只能排除,*(不能确认)选项是对的)`,
+            `image:paichu_2.png(其中a和b是一般常数 \\
+            在原式中取a=0,算得极限值为e^{-b} \\
+            将a=0*(代入每个答案)中排除错误答案 \\
+            (a)e^{-b}不可能恒等于1,排除, (b)同理 \\
+            (c)将a=0代入e^{a-b},得e^{-b},和算得极限相同 \\ *(不用排除,也不能确认是正确答案) \\
+            (d)代入a=0得e^b, e^{-b}不可能恒等于e^b,排除 \\
+            排除了(a,b,d), 答案为(c)
+            )`,
             `为什么可以用排除法?`,
             `题目提到一般函数,表示的是所有符合条件的函数 \\
             我们找一个符合条件的函数, 等于找了一个反例 \\
             所以它只能排除,不能确认选项是对的
             `
         ],
- 
 
         [
             `已知数列x_n收敛(极限存在),可以得到?`,
@@ -93,16 +198,6 @@ export default {
             凑极限\\(凑出熟悉的、已知的极限) \\
             极限:有界*无穷小=0
             `,
-        ],
-
-        [
-            `如何证明f(x)在区间上有界?`,
-            `1.如果f(x)在[a,b]上连续, 则f(x)在[a,b]上有界 \\\\
-            2. 若f(x)在(a,b)上连续,且lims(a^+)f(x)与lims(b^-)都存在 \\
-            则f(x)在(a,b)上连续 \\
-            3. f'(x)在(a,b)上有界,\Rightarrow f(x)在(a,b)上有界 \\
-            `
-            // https://www.bilibili.com/video/BV14T4y1n7Ec?p=146
         ],
 
         [
@@ -223,13 +318,13 @@ export default {
         ],
 
         [`\textrm{幂函数的导数(Power Rule)} \\\\ $ddx x^n=?`, `$ddx x^n=nx^{n-1}`],
- 
+
 
         [`切线存在=导数存在吗?`, `只要切线不是垂直于x轴的线 \\ 这句话就成立 \\ (反例): y=\sqrt[3]{x} \textrm{ at } (0, 0)`],
         [`为什么说导数是切线的斜率?`, `对于割线来说，其斜率为 \\ \frac{f(x+$D x)-f(x)}{$Dx} \\ 当$Dx\to0时(割线的两点重合) \\ 该式就是切线的斜率,也正是导数的定义`],
 
         // ##form1#=#
-        
+
         [
             `a^3-b^3=?`,
             `(a-b)(a^2+ab+b^2)`,
@@ -239,16 +334,12 @@ export default {
         ],
 
         // up is linear
-        [`假设f与g都是连续函数 \\
-        f+g, f-g, f*g, \frac{f}{g} 是连续的吗？`, `+, -, *都为连续函数 \\
-        \frac{f}{g} 在其定义区间上连续(g\neq0)`],
-
         [
-            `列举极限的运算法则 \\ \lim_{x\to a}f(x)=L \\ \lim_{x\to a}g(x)=M`,
-            `\lim_{x\to a}f(x)+\lim_{x\to a}g(x)=L+M \\
-            \lim_{x\to a}f(x)-\lim_{x\to a}g(x)=L-M \\
-            \lim_{x\to a}f(x)*\lim_{x\to a}g(x)=L*M \\
-            \frac{lims(a)f(x)}{lims(a)g(x)}=\frac{L}{M} (M \neq 0)`
+            `假设f与g都是连续函数 \\
+        f+g, f-g, f*g, \frac{f}{g} 是连续的吗？`, `+, -, *都为连续函数 \\
+        \frac{f}{g} 在其定义区间上连续(g\neq0)`,
+            `连续函数的复合,仍为连续函数`,
+
         ],
 
         // [`\\lim_{h \\to 0}{(1+xh)^{\\frac{1}{h}}}`, "e^x"],

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { ICard } from "../types/card-type";
 import JSConfetti from "js-confetti";
+import { useSettingStore } from "./SettingStore";
 
 interface ICardStore {
     cards: ICard[],
@@ -24,6 +25,10 @@ function roundComplete() {
     jsConfetti.addConfetti()
 }
 
+function getCardPtr( id: string ) {
+    return 8;
+}
+
 /**
  * Ensure shuffled cards are sync
  */
@@ -34,8 +39,13 @@ export const useCardStore = create<ICardStore>()((set, get) => {
             ["<card-not-set>"]
         ],
 
-        cardPtr: 0,
-        contentPtr: 0,
+        cardPtr: useSettingStore.getState().persist
+           ? getCardPtr( useSettingStore.getState().persistID )
+           : 0,
+
+        contentPtr: useSettingStore.getState().persist
+           ? 9
+           : 0,
 
         card: () => {
             return get().cards[

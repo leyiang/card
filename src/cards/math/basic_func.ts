@@ -165,7 +165,7 @@ export default {
             `\tan^{-1} x 奇偶性`,
             `奇函数 \\ \tan^{-1}(-x)=-\tan^{-1}(x)`,
             `\tan^{-1} x \\ 定义域、值域`,
-            `定义域:$R \\ 值域: (-pinv(2),-pinv(2))`,
+            `定义域:$R \\ 值域: (-pinv(2),pinv(2))`,
             `\tan^{-1}图像`, `image:math_arctan_graph.png`,
             `$ddx \tan^{-1}(x)=?`, `inv(1+x^2)`,
             `\lim_{x \to +\infty}\tan^{-1}(x)=?`, `image:math_arctan_graph.png(\lim_{x \to +\infty}\tan^{-1}(x)=pinv(2))`,
@@ -204,11 +204,11 @@ export default {
         // ["$ddx  (e^x)", "e^x"],
         // ["\\frac{dy}{dx}=ky意味着什么?", "y=Ae^{kx}, A为常数"],
 
-        ["$ddx \\sinh(x)=?", "\\cosh(x)"],
-        ["$ddx \\cosh(x)=?", "\\sinh(x)"],
-        ["\\cosh^2(x)-\\sinh^2(x)=?", "1"],
-        ["\\sinh(x)=?", "\\frac{e^x-e^{-x}}{2}"],
-        ["\\cosh(x)=?", "\\frac{e^x+e^{-x}}{2}"],
+        [`$ddx \sinh(x)=?`, `\cosh(x)`],
+        [`$ddx \cosh(x)=?`, `\sinh(x)`],
+        [`\cosh^2(x)-\sinh^2(x)=?`, `1`],
+        [`\sinh(x)=?`, `\frac{e^x-e^{-x}}{2}`],
+        [`\cosh(x)=?`, `\frac{e^x+e^{-x}}{2}`],
 
 
         // sin pi/2, pi, 3pi/2 2pi
