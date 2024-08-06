@@ -50,7 +50,8 @@ export const funcRules = {
     bold: { reg: /\*\(([^()]+)\)/g, to: `\\textbf{%1}` },
 
     // COmment equal
-    ceq: { reg: /ceq\(([^()]+)\)/g, to: `\\stackrel{\\text{%1}}{=}` },
+    // ceq: { reg: /ceq\(([^()]+)\)/g, to: `\\stackrel{\\text{%1}}{=}` },
+    ceq: { reg: /ceq\(([^()]+)\)/g, to: `\\stackrel{%1}{=}` },
 
     neighbour: { reg: /Un\(([^,]+),([^,]+)\)/g, to: `\\mathring{U}(%1, %2)` },
 
