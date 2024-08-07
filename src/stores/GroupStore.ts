@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { ICardGroup, ICardInfoKey, ICardInfos, ICardStack } from "../types/card-type";
 import { CardInfos } from "../cards/info";
 import { usePersistStore } from "./PersistStore";
+import { useSettingStore } from "./SettingStore";
 
 interface IGroupStore {
     info: ICardInfos;
@@ -19,14 +20,22 @@ interface IGroupStore {
     cache: any;
 }
 
+function getGroupPtr( raw: string ) {
+    const items = raw.split("-");
+    return items[0] ?? "math";
+}
+
 /**
  * Ensure shuffled cards are sync
  */
 export const useGroupStore = create<IGroupStore>()((set, get) => ({
     info: CardInfos,
 
-    groupPtr: Object.keys(CardInfos)[0],
-    stackPtr: Number( usePersistStore.getState().stackID ) || 0,
+    groupPtr: useSettingStore.getState().persist
+        ? getGroupPtr( useSettingStore.getState().persistID )
+        : Object.keys(CardInfos)[0],
+ 
+        stackPtr: Number( usePersistStore.getState().stackID ) || 0,
 
     cardPtr: 0,
     contentPtr: 0,

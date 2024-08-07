@@ -36,6 +36,7 @@ export function CardGroup({}: ICardGroupProps) {
 
     useEffect(() => {
         console.log( cardStore.cardPtr, "999" );
+        console.log( cardStore.card() );
         
         setCard( cardStore.card() );
     }, [ cardStore.cardPtr ] );
