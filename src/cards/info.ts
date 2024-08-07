@@ -9,6 +9,7 @@ import intuitive from "./math/intuitive";
 import trig from "./math/trig";
 import limits from "./math/limits";
 import derivative from "./math/derivative";
+import integral from "./math/integral";
 
 export const CardInfos = {
     math: [
@@ -19,7 +20,8 @@ export const CardInfos = {
         intuitive,
         trig,
         limits,
-        derivative
+        derivative,
+        integral
     ],
     network: [
         NetworkBasic
