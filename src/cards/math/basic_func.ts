@@ -47,8 +47,6 @@ export default {
  
             //  \\ (单调性、定义域、值域、周期、奇偶性),
         [
-            `\sin x单调性`,
-            `无单调性`,
             `\sin x周期`,
             `周期为2\pi`,
             `\sin x 奇偶性`,
@@ -62,8 +60,6 @@ export default {
         ],
 
         [
-            `\cos x单调性`,
-            `无单调性`,
             `\cos x周期`,
             `周期为2\pi`,
             `\cos x 奇偶性`,
@@ -75,7 +71,7 @@ export default {
             `\cos图像`, `image:math_cos_graph.png`,
             `$ddx \cos(x)=?`, `$ddx \cos(x)=-\sin(x)`
         ],
-        
+
         [
             `\tan x单调性`,
             `(2k\pi-\frac{\pi}{2}, 2k\pi+\frac{\pi}{2})上单调增`,

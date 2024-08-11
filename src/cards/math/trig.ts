@@ -5,6 +5,22 @@ export default {
     label: "三角函数",
 
     cards: [
+        [`\tan \pi=?`,`\tan \pi=0`],
+        [`\sin \pi=?`,`\sin \pi=0`],
+        [`\cos \pi=?`,`\cos \pi=-1`],
+        [
+            `
+                \arctan(x)+$t(arccot)(x)=? \\\\
+                \arcsin(x)+\arccos(x)=? \\\\
+                $t(arcsec)(x)+$t(arccsc)(x)=?
+            `,
+            `
+                \arctan(x)+$t(arccot)(x)=pinv(2) \\\\
+                \arcsin(x)+\arccos(x)=pinv(2) \\\\
+                $t(arcsec)(x)+$t(arccsc)(x)=pinv(2)
+            `,
+        ],
+
         ["\\sin(A)\\cos(B)", "\\frac{1}{2}(\\sin(A-B)+\\sin(A+B))"],
         ["\\sin(A)\\sin(B)", "\\frac{1}{2}(\\cos(A-B)-\\cos(A+B))"],
         ["\\cos(A)\\cos(B)", "\\frac{1}{2}(\\cos(A-B)+\\cos(A+B))"],

@@ -20,6 +20,11 @@ export default {
         // ],
 
         [
+           `e^x与1+x的不等式关系`,
+            `e^x \geq 1+x`
+        ],
+
+        [
            `计算lims(+\infty)\ln(1+e^x)-x的极限`,
             `法1: 提个x出来 \\
             lims(+\infty)\ln(1+e^x)-x=lims(+\infty)\ln(e^x(inv(e^x)+1))-x \\

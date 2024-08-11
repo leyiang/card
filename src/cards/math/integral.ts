@@ -7,17 +7,377 @@ export default {
    cards: [
       // [
       //    ``,
-      //     ``
+      //    ``
       // ],
 
-      //   ["t=\\tan \\frac{x}{2} \\\\ dx=? \\sin x=? \\cos x=?", "x = 2\\arctan t \\\\ dx=\\frac{2}{1+t^2}dt, \\sin x = \\frac{2t}{1+t^2} \\\\ \\cos x=\\cos x=\\frac{1-t^2}{1+t^2}", "\\sin x=\\frac{2\\sin \\frac{x}{2}\\cos \\frac{x}{2}}{\\sin ^2\\frac{x}{2}+\\cos ^2\\frac{x}{2}} \\\\ 上下同除\\cos\\frac{x}{2} \\\\ \\sin x=\\frac{2\\tan \\frac{x}{2}}{1+\\tan ^2\\frac{x}{2}}=\\frac{2t}{1+t^2}"],
+      [
+         `判断 \int_a^b \frac{1}{(x-a)^p}dx 的敛散性`,
+         `\int_a^b \frac{1}{(x-a)^p}dx=case2c(p<1,收敛,p\geq1,发散)`,
+
+         `判断 \int_a^b \frac{1}{(b-x)^p}dx 的敛散性`,
+         `\int_a^b \frac{1}{(b-x)^p}dx=case2c(p<1,收敛,p\geq1,发散)`
+      ],
+
+      [
+         `有瑕点的比较判别法`,
+         `image:compare_method.png`
+      ],
+
+      [
+         `f(x)在(a,b]上连续 \\
+         点a为f(x)的瑕点(无界点) \\\\
+         \int_a^bf(x)dx=?
+            `,
+         `
+         \int_a^bf(x)dx=lims(a^+,t)\int_t^b f(x)dx \\
+         若极限存在, 则反常积分\int_a^bf(x)dx *(收敛), 反之则发散
+         `,
+
+         `f(x)在[a,b)上连续 \\
+         点b为f(x)的瑕点(无界点) \\\\
+         \int_a^bf(x)dx=?
+            `,
+            `
+         \int_a^bf(x)dx=lims(b^-,t)\int_a^t f(x)dx \\
+         若极限存在, 则反常积分\int_a^bf(x)dx *(收敛), 反之则发散
+         `,
+
+         `f(x)在[a,b]上除点c外连续 \\
+         点c为f(x)的瑕点(无界点) \:\: a<c<b \\\\
+         \int_a^bf(x)dx=?
+            `,
+            `
+         \int_a^bf(x)dx=\int_a^c f(x)dx+\int_c^bf(x)dx \\\\
+         拆出来的两个都收敛,则整体收敛
+         `,
+      ],
+
+      [
+         `\int_a^{+\infty} \frac{1}{x^p}dx \:\:\: (a>0) \\\\
+         *(判断敛散性)
+         `,
+         `\int_a^{+\infty} \frac{1}{x^p}dx=case2c(p>1, 收敛, p\leq 1, 发散) \:\:\: (a>0)`
+      ],
+
+      [
+         `反常积分敛散性判断 \\ (比较判别法的*(极限形式))`,
+         `设f(x),g(x)在[a,+\infty)上*(非负连续), 且lims(+\infty)\frac{f(x)}{g(x)}=\lambda \\
+            若\lambda \neq 0, \int_a^{+\infty}f(x)dx与\int_a^{+\infty}g(x)dx同敛散 \\\\
+            若\lambda = 0, \int_a^{+\infty}g(x)dx收敛\Rightarrow \int_a^{+\infty}f(x)dx收敛 \\
+            \lambda=0 *(说明g比f大), x\to+\infty时 \\\\
+            若\lambda = +\infty, \int_a^{+\infty}g(x)dx发散\Rightarrow \int_a^{+\infty}f(x)dx 发散 \\
+            `
+      ],
+
+      [
+         `反常积分敛散性判断 \\ (比较判别法)`,
+         `设f(x),g(x)在[a,+\infty]上连续 \\ 且(0\leq f(x)\leq g(x)) \\\\
+         \int_a^{+\infty}g(x)dx 收敛 \Rightarrow \int_a^{+\infty}f(x)dx收敛 \\
+         *(大的收敛,小的也收敛) \\\\
+
+         \int_a^{+\infty}f(x)dx 发散 \Rightarrow \int_a^{+\infty}g(x)dx 发散 \\
+         *(小的发散,大的也发散)
+         `
+      ],
+
+      [
+         `\int_a^{+\infty}f(x)dx的定义`,
+         `\int_a^{+\infty}f(x)dx=lims(+\infty,t)\int_a^t f(x)dx \\ \\
+         若极限存在,称该反常积分*(收敛) \\ (积分的值就是极限的值) \\\\
+         若极限不存在, 称该反常积分*(发散)
+         `,
+         `\int_{-\infty}^b f(x)dx的定义`,
+         `\int_{-\infty}^b f(x)dx=lims(-\infty,t)\int_t^b f(x)dx`,
+
+         `\int_{-\infty}^{+\infty} f(x)dx的定义`,
+         `\int_{-\infty}^{+\infty} f(x)dx=\int_{-\infty}^0 f(x)dx+\int_0^{+\infty} f(x)dx \\\\
+         拆成两个积分后,*(都收敛)才是收敛
+         `,
+      ],
+
+      [
+         `牛顿莱布尼茨公式的*(使用条件)`,
+         `1. 若f(x)在[a,b]上*(连续),F(x)是f(x)的一个原函数 \\
+         则I=\int_a^b f(x)dx=F(x)\Big|_a^b=F(b)-F(a) \\\\
+
+         2.若f(x)在[a,b]上*(可积)(有界,有限个间断点)  \\
+         I=F(b)-F(a) \\ \\
+
+         3.若f(x)在[a,b]上可积, 但f(x)在a或b*(没定义) \\
+         只要保证lims(b^-)F(x)或lims(a^+)F(x)存在 \\ \\
+         I=lims(b^-)F(x)-lims(a^+)F(x)
+         `
+      ],
+
+      [
+         `1+\cos x \\
+         (想办法三角代换)`,
+         `1+\cos x=2\cos^2 \frac{x}{2} \\\\
+         1+\cos x=1+\cos (2 \cdot \frac{x}{2}) \\
+         =1+2\cos^2(\frac{x}{2})-1=2\cos^2 \frac{x}{2} 
+         `
+      ],
+
+      [
+         `\int_0^{pinv(2)}f(\sin x)dx=? \\
+         (改变上下限)
+         `,
+         `image:integral_sin.png(
+            \int_0^{pinv(2)}f(\sin x)dx=\int_{pinv(2)}^\pi f(\sin x)dx \\
+            \int_0^\pi f(\sin x)dx=2\int_0^{pinv(2)} f(\sin x)dx 
+         )`
+      ],
+
+
+      [
+         `\int_0^{pinv(2)}f(\sin x)dx=\int_0^{pinv(2)}f(\cos x)dx \\\\
+         为什么在0到pinv(2)上的关于\sin x的积分=关于\cos x的积分?
+         `,
+         `*(区间再现) \\
+         \int_0^{pinv(2)}f(\sin x)dx ceq(t=\frac{\pi}{2}-x) \int_{pinv(2)}^0f(\sin (pinv(2)-t))\cdot -dt  \\
+         =\int_0^{pinv(2)} f(\cos t)) dt 
+         `
+      ],
+
+      [
+         `\int_0^a\sqrt{2ax-x^2}dx=?`,
+         `\int_0^a\sqrt{2ax-x^2}dx=\frac{\pi a^2}{4} \\ \\
+         被积函数 \Rightarrow y^2+x^2-2ax=0 \\
+         圆心为(a,0), 半径a 的圆的方程 \\ \\
+         被积函数有根号,所以只要y>0的一半  \\ 
+         被积区间为0到a, 所以*(上半圆的y一半)
+         `,
+         `\int_0^{2a}\sqrt{2ax-x^2}dx=?`,
+         `\int_0^{2a}\sqrt{2ax-x^2}dx=\frac{\pi a^2}{2} `,
+      ],
+      [
+         `\int_0^a\sqrt{a^2-x^2}dx=?`,
+         `\int_0^a\sqrt{a^2-x^2}dx=\frac{\pi a^2}{4} \\ \\
+         被积函数 \Rightarrow y^2+x^2=a^2 \\
+         (圆心为(0,0), 半径为a 的圆的方程) \\
+         被积函数有根号,所以只要y>0的一半  \\ 
+         被积区间为0到a, 所以*(上半圆的y一半) \\
+         也就是: \frac{\pi a^2}{4}
+         `
+      ],
+
+      [
+         `已知在[a,b]上f(x)\leq g(x) \\ 在什么情况下\int_a^b f(x)dx<\int_a^b g(x)dx?`,
+         `当f(x)\not\equiv g(x), 且b>a时(上限大于下限) \\
+         \int_a^b f(x)dx<\int_a^b g(x)dx \\
+         函数\leq 中的等号可以去掉
+         `
+      ],
+
+      [
+         `如何判断形如\frac{f(x)}{x} 和 \frac{f(x)-f(a)}{x-a}的正负?`,
+         `image:sign_graph.png(
+            *(割线法) \\
+            1. 判断区间内割线的趋势 (递增还是递减) \\
+            2. 找到相应的最值a \\
+            3. 可以判断出 \frac{f(x)}{x}>a或<a
+         )`,
+         `例: 判断\: \int_0^{pinv(2)}\frac{\sin x}{x}dx>1是否成立`,
+         `image:sec_line_1.png(
+            可以看到\frac{\sin x}{x}(也就是切线斜率)是递减的 \\
+            (下页继续)
+         )`,
+         `
+            最小的斜率在x=pinv(2)处, 斜率(也就是函数值)=\frac{\sin pinv(2)}{pinv(2)}=\frac{2}{\pi} \\
+            所以\frac{\sin x}{x}>\frac{2}{\pi} \:\:\: (0<x<pinv(2)) \\
+            所以 \int_0^{pinv(2)}\frac{\sin x}{x}dx>\int_0^{pinv(2)}\frac{2}{\pi}dx=1
+         `,
+      ],
+
+      [
+         `区间再现公式?`,
+         `\int_a^b f(a+b-x)dx=\int_a^b f(x)dx \\\\
+         证明: 令u=a+b-x, \:\:\: x=a+b-u \\
+         \int_a^b f(x)dx=\int_{a+b-a}^{a+b-b} f(a+b-u)\cdot -du \\
+         =-\int_b^a f(a+b-u)du=\int_a^b f(a+b-u)du
+         `
+      ],
+
+      [
+         `有关n次\sin, \cos的定积分公式`,
+         `image:def_equation.png`,
+         `证明: \int_0^\pi xf(\sin x)dx=pinv(2)\int_0^\pi f(\sin x)dx \\\\
+         \int_0^\pi xf(\sin x)dxceq(区间再现)\int_0^\pi (\pi-x)f(\sin (\pi-x))dx \\
+         (原式)=\pi\int_0^\pi f(\sin x)dx-\int_0^\pi xf(\sin x)dx \\
+         2\int_0^\pi xf(\sin x)dx=\pi\int_0^\pi f(\sin x)dx \\
+         \int_0^\pi xf(\sin x)dx=pinv(2)\int_0^\pi f(\sin x)dx \\
+         `
+      ],
+
+      [
+         `利用奇偶性求定积分: \int_{-a}^{a}f(x)dx=?`,
+         `如果f(x)是奇函数的话，积分值等于0 \\
+          如果f(x)是偶函数，积分等于2\int_0^{a}f(x)dx \\\\
+          想象一下函数的图像, 奇函数就抵消了 \\
+          偶函数就是翻倍
+          `,
+      ],
+
+      [
+         `利用周期性求定积分`,
+         `image:def_zhouqi.png(F(x)=\int_a^b f(x)dx, 若F(x+T)=F(x) \\
+         变上限积分以T为周期, 则 \\
+
+         \int_a^{a+T} f(x)dx=\int_0^T f(x)dx
+         )`
+      ],
+
+
+      [
+         `定积分*(分部积分法)`,
+         `\int_a^b udv=uv\Big|_a^b-\int_a^b vdu`
+      ],
+
+      [
+         `定积分换元法`,
+         `若f(x)在I上连续, 且对于 x=g(t), 若满足: \\
+         g(t)在[$a,$b](或[$b,$a])上有*(连续导数), 且R_g \subseteq I \\\\
+
+         则\int_a^b f(x)dx=\int_$a^$b f(g(t))g'(t)dt \\
+
+         其中g($a)=a, \:\: g($b)=b \\ \\
+         *(上下限不要忘了换!)
+         `
+      ],
+
+      [
+         `若f(x)有奇偶性, 则\int_0^x f(t)dt的奇偶性为?`,
+         `
+         *(奇偶性互换) \\
+         f(x)是奇函数(偶函数), 则\int_0^x f(t)dt是偶函数(奇函数) \\\\
+         令F(x)=\int_0^x f(t)dt,\:\:\: F(-x)=\int_0^{-x} f(t)dt \\
+         ceq(令t=-u)\int_0^{x} f(-u)\cdot-du \:\: *(这里使用了换元), t=-u \\
+         也就是t=\phi(u)=-u, 新的上限$b满足\phi($b)=-x \\
+         -$b=-x \Rightarrow $b=x \\
+         也就是: F(-x)=\int_0^{x} f(-u)\cdot-du=\int_0^{x} f(u)du=F(x)
+         `,
+         `已知, f(x) 与 \int_0^x f(t)dt 的奇偶性相反 \\\\
+         这里为什么用的是 0到x? \\ a到x不可以吗?`,
+
+         `\int_a^x f(t)dt=\int_a^0 f(t)dt+\int_0^x f(t)dt \\\\
+         其中a到0的定积分*(就是个数)(只用讨论\neq0的情况) \\
+         所以,如果f(x)*(是奇函数), 其变上限积分就是偶函数 \\
+         那么 \int_a^x f(t)dt这是偶函数, (偶+偶)=偶  \\
+         但如果f(x)是偶函数,变上限积分就是奇函数,*(这时就不成立了) \\
+         (偶+奇)= 非奇非偶
+         `,
+      ],
+
+      [
+         `\int_{a}^{b}f(x)dx, 上下限a, b能颠倒吗?`,
+         `\int_{a}^{b}f(x)dx=(-1)\int_{b}^{a}f(x)dx \\\\
+         *(可以,颠倒上下限要加负号)
+         `
+      ],
+
+      [
+         `\int_{a}^{c}f(x)dx + \int_{c}^{b}f(x)dx = ? \\\\
+         相同函数的积分,定积分可以合并吗
+         `,
+         `\int_{a}^{c}f(x)dx + \int_{c}^{b}f(x)dx = \int_{a}^{b}f(x)dx \\\\
+         定积分上下限连着,可以合并
+         `
+      ],
+
+      ["\\int_{a}^{a}f(x)dx=?", "0"],
+      [
+         `\int_{a}^{b}f(x)+g(x) \:\: dx=? \\
+         定积分能拆开吗?
+         `,
+         `\int_{a}^{b}f(x)dx + \int_{a}^{b}g(x)dx \\\\
+         *(定积分可以拆项做) \\
+         (上下限相同)
+         `
+      ],
+
+      [
+         `变上限积分的导数: (\int_a^x f(t)dt)'=?
+         `,
+         `设f(x)在[a,b]上连续, 则 \int_a^x f(t)dt在[a,b]上可导 \\ (\int_a^x f(t)dt)'=f(x) \\\\
+         变上限积分就是f(x)的一个原函数`,
+         `(\int_{\phi(x)}^{g(x)}f(t)dt)'=?`,
+         `(\int_{\phi(x)}^{g(x)}f(t)dt)'=f(g(x))g'(x)-f(\phi(x))\phi'(x)`,
+      ],
+
+      [
+         `积分中值定理`,
+         `若f(x)在[a,b]上连续, 则 \\
+         \int_a^b f(x)dx=f($xi)(b-a) \\
+         a < $xi < b
+         `,
+
+         `若f(x), g(x)在[a,b]上连续 \\
+         g(x)不变号 (在[a,b]上恒大于零或恒小于零) \\
+         \int_a^b f(x)g(x)dx=f($xi)\int_a^b g(x)dx \\
+         a\leq $xi \leq b`,
+      ],
+
+      [
+         `定积分的不等式`,
+         `若f(x)\leq g(x), 其中(a\leq b) \\
+         则\int_a^b f(x)dx \leq \int_a^b g(x)dx `,
+         `image:def_integral_compare.png(
+            (估值性) 若f(x)在[a,b]上连续,则 \\
+            m(b-a)\leq\int_a^b f(x)dx \leq M(b-a)
+         )`,
+         `\left | \int_a^b f(x)dx \right |\leq \int_a^b \left | f(x) \right | dx `,
+      ],
+
+      [
+         `定积分的几何意义`,
+         `image:def_integral.svg(
+             当f(x)>0时,积分结果是正的 \\
+             当f(x)<0时,积分结果是负的, \\
+             正的减负的
+         )`
+      ],
+
+      [
+         `可积的必要条件?`,
+         `函数在[a,b]上必须有界`
+      ],
+
+      [
+         `定积分存在的充分条件`,
+         `1. f(x)在[a,b]上连续 \\\\
+           2. f(x)在[a,b]上有界,且只有*(有限)个间断点 \\
+           第一、二类间断点都可以 \\ (在[a,b]上有界,不可能出现无穷间断点) \\\\
+           3. f(x)在[a,b]上仅有有限个第一类间断点
+              `
+      ],
+
+      [
+         `可积的定义`,
+         `\int_a^b f(x)dx=lims(0,\lambda) \sum_{i=1}^n f($xi_i)\Delta x_i \\ \\
+              不论小区间怎么分, 不论$xi_i怎么取 \\
+              极限值都一样,就称f(x)在[a,b]上可积 \\
+              极限存在=可积
+              `
+      ],
+
+      [
+         `定积分的定义?`,
+         `\int_a^b f(x)dx=lims(0,\lambda) \sum_{i=1}^n f($xi_i)\Delta x_i \\\\
+
+              其中\lambda 代表把a,b分段长度的最大值\to0 \\
+              $xi_i代表每段的函数值选点,可以任意选 \\
+              \Delta x_i=x_i-x_{i-1} 代表第i个分段长度 \\
+              *(注意:)\lambda\to0\neq n\to0
+          `
+         // https://youtu.be/AIei7kqhsfU?list=PLH_SiDrNHIUSMXnfNVzGydNZi1hVduhUb&t=3672
+      ],
 
       [
          `求解*(简单无理函数)积分的一般方法是? \\\\
          简单无理函数: R(x, \sqrt[n]{\frac{ax+b}{cx+d}}) \\
          可以开n次根号,但其中x需要是一次的
          `,
-          `R(x, \sqrt[n]{\frac{ax+b}{cx+d}}) \\\\
+         `R(x, \sqrt[n]{\frac{ax+b}{cx+d}}) \\\\
           一般方法: 令t=\sqrt[n]{\frac{ax+b}{cx+d}} \\
           式子就化为关于t的*(有理函数)积分`
       ],
@@ -49,10 +409,6 @@ export default {
          dx=d(2\arctan t)=\frac{2}{1+t^2}dt
          `,
       ],
-      [
-         `1. 万能代换:\tan \frac{x}{2}=t`
-      ],
-
       [
          `常见的可积函数`,
          `有理函数R(x) \\ 有理函數是通過*(多項式)的加減乘除得到的函數 \\
