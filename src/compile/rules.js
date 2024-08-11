@@ -7,6 +7,12 @@ export const funcRules = {
         to: `\\begin{bmatrix} %1 & %2 \\\\ %3 & %4 \\end{bmatrix}`,
     },
 
+    mat2p: {
+        reg: /mat2p\(([^,]+),([^,]+),([^,]+),([^,)]+)\)/g,
+        // to: `\\begin{bmatrix} %1  &  %2 \\\\ %3 & %4 \\end{bmatrix}`,
+        to: `\\begin{pmatrix} %1 & %2 \\\\ %3 & %4 \\end{pmatrix}`,
+    },
+
     mat2x3: {
         reg: /mat2x3\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/g,
         to: `\\begin{bmatrix} %1 & %2 \\\\ %3 & %4 \\\\ %5 & %6 \\end{bmatrix}`,
@@ -15,6 +21,11 @@ export const funcRules = {
     mat3: {
         reg: /mat3\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,)]+)\)/g,
         to: `\\begin{bmatrix} %1 & %2 & %3 \\\\ %4 & %5 & %6 \\\\ %7 & %8 & %9 \\end{bmatrix}`,
+    },
+
+    vecp: {
+        reg: /vecp\(([^,]+),([^,]+)\)/g,
+        to: `\\begin{pmatrix} %1 \\\\ %2 \\end{pmatrix}`,
     },
 
     vec: {
