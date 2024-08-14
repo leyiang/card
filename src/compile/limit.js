@@ -103,5 +103,19 @@ export function injectLimit(rule) {
         to: (...args) => {
             return rule["case2c"].to( ...args );
         }
-    }
+    },
+
+    rule["dint"] = {
+        reg: getReg("dint", 1),
+        to: (base="D") => {
+            return `\\iint \\limits_${ base }`;
+        }
+    };
+
+    rule["int"] = {
+        reg: getReg("int", 2),
+        to: (base="a", to="b") => {
+            return `\\int_{${base}}^{${ to }}`;
+        }
+    };
 }

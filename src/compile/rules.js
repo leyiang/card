@@ -54,6 +54,8 @@ export const funcRules = {
     Delta: { reg: /\$D/g, to: `\\Delta ` },
     epsilon: { reg: /\$e/g, to: `\\epsilon` },
     xi: { reg: /\$xi/g, to: `\\xi` },
+    sig: { reg: /\$sig/g, to: `\\sigma` },
+    phi: { reg: /\$phi/g, to: `\\varphi` },
     times: { reg: /\$x/g, to: `\\times` },
 
     text: { reg: /\$t\(([^()]+)\)/g, to: `\\textrm{%1}` },
