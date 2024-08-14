@@ -11,6 +11,46 @@ export default {
       // ],
 
       [
+         `image:dint_y.png(
+            dint(D)f(x,y)dxdy=? \:\: (y型区域)
+         )`,
+         `image:dint_y.png(
+            dint(D)f(x,y)dxdy=int(c,d)dy \int_{$phi_1(x)}^{$phi_2(x)}f(x,y)dx \\
+            从左往右的射线,确定进入点, $phi_1(x)到$phi_2(x)
+         )`,
+         `*(先对y求),再对x求积分 \\
+         dint(D)f(x,y)dxdy=int(c,d)dy \int_{$phi_1(x)}^{$phi_2(x)}f(x,y)dx \\\\
+         =int(c,d)\left [  \int_{$phi_1(x)}^{$phi_2(x)}f(x,y)dx \right ]dy 
+         `,
+      ],
+      [
+         `image:dint_x.png(
+            dint(D)f(x,y)dxdy=? \:\: (x型区域)
+         )`,
+         `image:dint_x.png(
+            dint(D)f(x,y)dxdy=int(a)dx \int_{$phi_1(x)}^{$phi_2(x)}f(x,y)dy \\
+            从下往上的射线,确定进入点, $phi_1(x)到$phi_2(x)
+         )`,
+         `*(先对y求),再对x求积分 \\
+         dint(D)f(x,y)dxdy=int(a)dx \int_{$phi_1(x)}^{$phi_2(x)}f(x,y)dy \\\\
+         =int(a)\left [  \int_{$phi_1(x)}^{$phi_2(x)}f(x,y)dy \right ]dx 
+         `,
+      ],
+
+      [
+         `dint(D) f(x,y)d$sig=? \\\\ 二重积分的定义`,
+         `dint(D) f(x,y)d$sig=lims(0,\lambda)\sum_{i=1}^n f($xi_i,\eta_i)\Delta $sig_i \\
+         其中d$sig代表分割后的底面积 \\ 便于计算可以把底面积分成矩形 \\
+         d$sig = dxdy
+         `,
+      ],
+
+      [
+         `\int inv(\sqrt{x})dx=?`,
+         `\int inv(\sqrt{x})dx=2\sqrt{x}+C`,
+      ],
+
+      [
          `判断 \int_a^b \frac{1}{(x-a)^p}dx 的敛散性`,
          `\int_a^b \frac{1}{(x-a)^p}dx=case2c(p<1,收敛,p\geq1,发散)`,
 
