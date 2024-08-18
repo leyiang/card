@@ -10,18 +10,24 @@ import trig from "./math/trig";
 import limits from "./math/limits";
 import derivative from "./math/derivative";
 import integral from "./math/integral";
+import linear_trick from "./math/linear_trick";
+import diff_equation from "./math/diff_equation";
+import trick from "./math/trick";
 
 export const CardInfos = {
     math: [
         basic,
+        integral,
+        linear_trick,
         key,
         basic_func,
         linear,
         intuitive,
         trig,
+        trick,
         limits,
         derivative,
-        integral
+        diff_equation,
     ],
     network: [
         NetworkBasic
