@@ -5,11 +5,19 @@ export default {
    label: "积分",
 
    cards: [
-      // [
-      //    ``,
-      //    ``
-      // ],
-
+      [
+         `F(x)=\int_a^x f(t)dt \\
+         f(t)在[a,b]上可积性与F(x)的关系
+         `,
+         `F(x)=\int_a^x f(t)dt \\\\
+         1. 若f(t)在[a,b]上可积, F(x)在[a,b]上连续 \\\\
+         2. 若f(t)在[a,b]上连续 \\ F(x)在[a,b]上可导, 且F'(x)=f(x)
+         `,
+         `若f(x)在x_0处不连续,F(x)在x_0处可导吗?`,
+         `x_0是f(x)是*(可去间断点), F(x)在x_0处可导 \\
+         F'(x_0)=lims(x_0)f(x) \\\\
+         若x_0是f(x)的跳跃间断点, F(x)在x_0处不可导`,
+      ],
       [
          `image:dint_y.png(
             dint(D)f(x,y)dxdy=? \:\: (y型区域)

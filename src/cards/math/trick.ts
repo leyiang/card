@@ -6,6 +6,13 @@ export default {
 
     cards: [
         [
+            `判断\int_0^\pi \frac{\sin^22t}{1+\cos^2t}dt的正负`,
+            `\int_0^\pi \frac{\sin^22t}{1+\cos^2t}dt \\\\
+            令f(x)=\frac{\sin^22t}{1+\cos^2t} \:\:\:\: 在0到\pi上: f(x)\ge 0 \\\\
+            且f(x)不恒为0, 所以其积分一定大于零
+            `,
+        ],
+        [
             `已知连续函数f(x)满足: \\
             f(x)=\int_0^{3x} f\left (\frac{t}{3} \right )dt+e^{2x} \\\\
             问:f(x)*(是否可导)?
