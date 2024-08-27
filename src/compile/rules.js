@@ -46,6 +46,8 @@ export const funcRules = {
 
     ddxn: { reg: /\$ddxn\(([^(),]+)(?:,([^()]+)\))?/g, to: `\\frac{d^{%1}%2}{dx^{%1}}` },
     ddx: { reg: /\$ddx/g, to: `\\frac{d}{dx} ` },
+    ppx: { reg: /\$ppx/g, to: `\\frac{\\partial}{\\partial x} ` },
+    ppy: { reg: /\$ppy/g, to: `\\frac{\\partial}{\\partial y} ` },
 
     theta: { reg: /\$th/g, to: `\\theta` },
     delta: { reg: /\$d/g, to: `\\delta` },
@@ -54,6 +56,7 @@ export const funcRules = {
     Delta: { reg: /\$D/g, to: `\\Delta ` },
     epsilon: { reg: /\$e/g, to: `\\epsilon` },
     xi: { reg: /\$xi/g, to: `\\xi` },
+    partial: { reg: /\$par/g, to: `\\partial` },
     sig: { reg: /\$sig/g, to: `\\sigma` },
     phi: { reg: /\$phi/g, to: `\\varphi` },
     times: { reg: /\$x/g, to: `\\times` },

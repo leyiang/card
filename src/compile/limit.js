@@ -15,6 +15,50 @@ function getBasicLim() {
 }
 
 export function injectLimit(rule) {
+    rule["ppd"] = {
+        reg: getReg("ppd", 2),
+        to: (sym="y", low_sym="x") => {
+            return `\\frac{\\partial ${ sym }}{\\partial ${ low_sym }}`;
+        }
+    };
+    rule["limdo"] = {
+        reg: getReg("limdo", 4),
+        to: (to_1="x_0", to_2="y_0", var_1="x", var_2="y") => {
+            return `
+                \\lim_{
+                    (${ var_1}, ${ var_2 }) \\to (${ to_1 }, ${ to_2 })
+                }
+            `;
+        }
+    };
+    rule["limdsp"] = {
+        reg: getReg("limdsp", 2),
+        to: (expr_1="0", expr_2="0") => {
+            return `
+                \\lim_{
+                    \\substack{
+                        ${ expr_1 } \\\\
+                        ${ expr_2 }
+                    }
+                }
+            `;
+        }
+    };
+
+    rule["limds"] = {
+        reg: getReg("limds", 2),
+        to: (to_1="0", to_2="0") => {
+            return `
+                \\lim_{
+                    \\substack{
+                        x \\to ${ to_1 } \\\\
+                        y \\to ${ to_2 } 
+                    }
+                }
+            `;
+        }
+    };
+
     rule["lims"] = {
         reg: getReg("lims", 2),
         to: (base="a", varName="x") => {
