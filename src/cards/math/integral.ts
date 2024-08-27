@@ -6,6 +6,14 @@ export default {
 
    cards: [
       [
+         `f(x)原函数的符号?`,
+         `f(x)一个原函数: \int_a^x f(t)dt \\
+         f(x)的所有函数: \int f(x)dx \\
+         \int_a^x f(t)dt + C \\\\
+         研究原函数性质(如:周期性)就写成变限积分
+         `,
+      ],
+      [
          `F(x)=\int_a^x f(t)dt \\
          f(t)在[a,b]上可积性与F(x)的关系
          `,

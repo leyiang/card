@@ -77,7 +77,10 @@ export default {
             则称f(x)在x_0可微, 称A$Dx为微分 \\
             记作: dy=A$Dx\approx $Dy
             `,
-            `image:weifen_1.png(dy是切线上的改变量 \\ $Dy是曲线上的改变量)`,
+            `image:weifen_1.png(
+                微分的真正含义: *(用直线近似曲线) \\
+                dy是切线上的改变量 \\ $Dy是曲线上的改变量
+            )`,
         ],
 
         [
@@ -291,7 +294,7 @@ export default {
         [
             `(1+$a(x))^{$b(x)}-1 \sim \: ?`,
             `若$a(x)\to 0, 且$a(x)$b(x)\to0 \\
-            (1+$a(x))^{$b(x)}-1 \sim \color{#1b99ad} $a(x)$b(x)
+            (1+$a(x))^{$b(x)}-1 \sim \color{blue} $a(x)$b(x)
             `
         ],
 

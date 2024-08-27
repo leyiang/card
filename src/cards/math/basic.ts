@@ -5,20 +5,12 @@ export default {
     label: "数学基础",
 
     cards: [
-        // [``, ``],
-        // [``, ``],
-        // [``, ``],
-        // [``, ``],
-        // [``, ``],
-        // [
-        //    ``,
-        //     ``
-        // ],
-        // [
-        //    ``,
-        //     ``
-        // ],
-
+        [
+            `韦达定理`,
+            `x_1+x_2=-\frac{b}{a} \\
+            x_1x_2=\frac{c}{a}
+            `,
+        ],
         [
            `e^x与1+x的不等式关系`,
             `e^x \geq 1+x`
@@ -271,29 +263,6 @@ export default {
             `x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}`,
         ],
 
-
-        [
-            `Q(a+bx+cx^2+dx^3+...)=? \\ $t(Quadratic Approximation)`,
-            `a+bx+cx^2 \\ 舍弃高于2次的项`,
-            // https://www.youtube.com/watch?v=vcwW2qWrlfY
-        ],
-
-        [
-            `Q(fg)=? \\ $t(Quadratic Approximation)`,
-            `Q(fg)=Q(Q(f)Q(g))`,
-            // https://www.youtube.com/watch?v=vcwW2qWrlfY
-        ],
-
-        [
-            `什么是Q(x)? \\ $t(Quadratic Approximation)`,
-            `二阶近似 \\ f(x)\approx Q(x)=f(a)+f'(a)(x-a)+\frac{f''(a)}{2}(x-a)^2`,
-            `f(x)\approx Q(x)=f(a)+f'(a)(x-a)+\frac{f''(a)}{2}(x-a)^2 \\ 前两项系数都为1, 为什么第3项系数是inv(2)`,
-            `二阶近似要求: \\
-            f(a)=Q(a) \\ 
-            f'(a)=Q'(a) \\ 
-            f''(a)=Q''(a) \\ 
-            加上系数inv(2)以抵消求导过程中的*2`
-        ],
         // {
         //     extra_info: "",
         //     //https://learning.edx.org/course/course-v1:MITx+18.01.1x+2T2018/block-v1:MITx+18.01.1x+2T2018+type@sequential+block@diff_8-sequential/block-v1:MITx+18.01.1x+2T2018+type@vertical+block@diff_8-tab13
