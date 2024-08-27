@@ -293,7 +293,6 @@ footer:hover {
 
 #card.card-compact {
   width: 400px;
-  height: 200px;
   min-height: unset;
 }
 
