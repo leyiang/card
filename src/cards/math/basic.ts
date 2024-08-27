@@ -13,7 +13,9 @@ export default {
         ],
         [
            `e^x与1+x的不等式关系`,
-            `e^x \geq 1+x`
+            `image:e_1_plus_x.png(
+                e^x \geq 1+x
+            )`
         ],
 
         [
@@ -292,10 +294,6 @@ export default {
         ],
 
         [`\textrm{幂函数的导数(Power Rule)} \\\\ $ddx x^n=?`, `$ddx x^n=nx^{n-1}`],
-
-
-        [`切线存在=导数存在吗?`, `只要切线不是垂直于x轴的线 \\ 这句话就成立 \\ (反例): y=\sqrt[3]{x} \textrm{ at } (0, 0)`],
-        [`为什么说导数是切线的斜率?`, `对于割线来说，其斜率为 \\ \frac{f(x+$D x)-f(x)}{$Dx} \\ 当$Dx\to0时(割线的两点重合) \\ 该式就是切线的斜率,也正是导数的定义`],
 
         // ##form1#=#
 
