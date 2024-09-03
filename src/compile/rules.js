@@ -51,6 +51,7 @@ export const funcRules = {
 
     mr_2: { reg: /\$mr-2/g, to: `\\:\\:` },
     mr_4: { reg: /\$mr-4/g, to: `\\:\\:\\:\\:` },
+    mr_8: { reg: /\$mr-8/g, to: `\\:\\:\\:\\:\\:\\:\\:\\:` },
 
     theta: { reg: /\$th/g, to: `\\theta` },
     delta: { reg: /\$d/g, to: `\\delta` },
