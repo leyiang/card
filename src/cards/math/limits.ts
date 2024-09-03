@@ -8,10 +8,10 @@ export default {
     cards: [
         getRandomItem([
             [
-                `simInfQ((1+x)^$a-1)`, `(1+x)^$a-1\sim $a x`,
+                `问法111 \\ simInfQ((1+x)^$a-1)`, `(1+x)^$a-1\sim $a x`,
             ],
             [
-                `simInfQ((1-x)^$a-1)`, `(1-x)^$a-1\sim -$a x`,
+                `问法222 \\ simInfQ((1-x)^$a-1)`, `(1-x)^$a-1\sim -$a x`,
             ]
         ]),
 
@@ -436,6 +436,20 @@ export default {
         [
             `lims(0)\frac{\sin x}{x}=?`,
             `lims(0)\frac{\sin x}{x}=1`,
+        ],
+
+        [
+            `计算lims(+\infty)\ln(1+e^x)-x的极限`,
+            `法1: 提个x出来 \\
+            lims(+\infty)\ln(1+e^x)-x=lims(+\infty)\ln(e^x(inv(e^x)+1))-x \\
+            =lims(+\infty)\ln e^x+\ln(e^{-x}+1)-x \\
+            =lims(+\infty)x+\ln(e^{-x}+1)-x=lims(+\infty)\ln(1+e^{-x}) \\
+            =lims(+\infty)\ln(1)=0 \\
+            `,
+            `法2: 把x写成ln的形式 \\
+            lims(+\infty)\ln(1+e^x)-x=lims(+\infty)\ln(1+e^x)-\ln(e^x) \\
+            lims(+\infty)\ln(\frac{1+e^x}{e^x})=\ln1=0 \\
+            `
         ],
     ]
 } as ICardStack;

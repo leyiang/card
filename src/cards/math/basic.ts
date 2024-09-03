@@ -1,18 +1,31 @@
 import { ICardStack } from "../../types/card-type";
+import { getRandomItem } from "../../utils/array";
 
 export default {
     id: "math_basic",
     label: "数学基础",
 
     cards: [
-        [
-            `a^2+b^2与ab的大小关系?`,
-            `a^2+b^2\ge 2|ab| \\\\
-            证明: \\
-            对于2ab: $mr-4 (a-b)^2\ge 0, 展开即可 \\
-            对于-2ab: $mr-4 (a+b)^2\ge 0, 展开即可 \\
-            `,
-        ],
+        getRandomItem([
+            [
+                `a^2-b^2与ab的大小关系?`,
+                `a^2-b^2与ab*(没有常用不等式关系) \\
+                结论是关于a^2+b^2和ab的! \\
+                a^2+b^2\ge 2|ab| \\\\
+                证明: \\
+                对于2ab: $mr-4 (a-b)^2\ge 0, 展开即可 \\
+                对于-2ab: $mr-4 (a+b)^2\ge 0, 展开即可 \\
+                `,
+            ],
+            [
+                `a^2+b^2与ab的大小关系?`,
+                `a^2+b^2\ge 2|ab| \\\\
+                证明: \\
+                对于2ab: $mr-4 (a-b)^2\ge 0, 展开即可 \\
+                对于-2ab: $mr-4 (a+b)^2\ge 0, 展开即可 \\
+                `,
+            ],
+        ]),
         [
             `如何把椭圆方程转为极坐标方程?`,
             `\frac{(x-h)^2}{a^2}+\frac{(y-k)^2}{b^2}=1 \\\\
@@ -35,12 +48,22 @@ export default {
             
             `
         ],
-        [
-            `辅助角公式? \\
-            a\sin x +b\cos x=?
-            `,
-            `a\sin x +b\cos x=\sqrt{a^2+b^2}\sin(x+$phi)`,
-        ],
+        getRandomItem([
+            [
+                `辅助角公式: \\
+                    a\sin x +b\cos x=?
+                `,
+                `a\sin x +b\cos x=\sqrt{a^2+b^2}\sin(x+$phi)`,
+            ],
+
+            [
+                `辅助角公式: \\
+                    \sqrt{a^2+b^2}\sin(x+$phi)=?
+                `,
+                `\sqrt{a^2+b^2}\sin(x+$phi)=a\sin x +b\cos x`,
+            ],
+        ]),
+
         [
             `*(乘积和)的平方和*(平方和)的乘积的大小关系?`,
             `(ax+by)^2\leq (a^2+b^2)(x^2+y^2) \\
@@ -50,10 +73,10 @@ export default {
         [
             `ab， a+b, a^2+b^2的大小关系 \\\\
             (均值不等式)`,
-            `\sqrt{ab}\leq \frac{a+b}{2} \leq \sqrt{ \frac{a^2+b^2}{2} } \\\\
+            `\sqrt[n]{ab}\leq \frac{a+b}{n} \leq \sqrt{ \frac{a^2+b^2}{n} } \\\\
             \sqrt{ab}\leq \frac{a+b}{2}  $mr-4 (其中需要保证 a>0, $mr-2 b>0) \\
             (只有这个需要确保a,b大于0, 其它组合都不需要) \\\\
-            其中只有两个数a,b, 所以是2次根号和除以2
+            其中n=变量个数, 这里只有ab, $mr-2 n=2
             `,
         ],
         [
@@ -62,69 +85,94 @@ export default {
                 r代表极点到点的距离 \\
                 $th 代表极轴转到点的角度 \\
                 r\ge0, $mr-4 0\le $th\le 2\pi
-            )`, 
+            )`,
         ],
         [
             `球方程的公式`,
-            `(x-x_0)^2+(y-y_0)^2+(z-z_0)^2=r^2 \\\\
-            圆心: (x_0,y_0,z_0) \\
-            半径: r
+            `(x-x_0)^2+(y-y_0)^2+(z-z_0)^2=r^2`,
+            `球心、半径是?`,
+            `
+                (x-x_0)^2+(y-y_0)^2+(z-z_0)^2=r^2 \\\\
+                球心: (x_0,y_0,z_0) $mr-8 半径: r
             `,
+
+            ...getRandomItem([
+                [
+                    `V=\frac{4}{3}\pi r^3 $mr-2 是球体积公式吗?`,
+                    `是的, 球体积公式: \\
+                    V=\frac{4}{3}\pi r^3
+                    `,
+                ],
+
+                [
+                    `V=\frac{3}{4}\pi r^3 $mr-2 是球体积公式吗?`,
+                    `错了! $mr-2 球体积公式是这个: \\
+                    V=\frac{4}{3}\pi r^3 \\
+                    *(3分之4才对)
+                    `,
+                ],
+            ])
         ],
         [
-            `韦达定理`,
-            `x_1+x_2=-\frac{b}{a} \\
-            x_1x_2=\frac{c}{a}
-            `,
+            `韦达定理是?`,
+            ...getRandomItem([
+                [
+                    `这个韦达定理吗? \\
+                    x_1+x_2=-\frac{b}{a} \\
+                    x_1x_2=\frac{c}{a}
+                    `,
+                    `正确! \\
+                    x_1+x_2=-\frac{b}{a} \\
+                    x_1x_2=\frac{c}{a}
+                    `,
+                ],
+
+                [
+                    `这个韦达定理吗? \\
+                    x_1+x_2=-\frac{c}{a} \\
+                    x_1x_2=\frac{b}{a}
+                    `,
+                    `错了! 这个才是韦达定理: \\
+                    x_1+x_2=-\frac{b}{a} \\
+                    x_1x_2=\frac{c}{a}
+                    `,
+                ],
+            ])
         ],
         [
-           `e^x与1+x的不等式关系`,
+            `e^x与1+x的不等式关系`,
             `image:e_1_plus_x.png(
                 e^x \geq 1+x \\
                 (仅在x=0处, e^x=1+x)
             )`
-        ],
+        ], 
 
         [
-           `计算lims(+\infty)\ln(1+e^x)-x的极限`,
-            `法1: 提个x出来 \\
-            lims(+\infty)\ln(1+e^x)-x=lims(+\infty)\ln(e^x(inv(e^x)+1))-x \\
-            =lims(+\infty)\ln e^x+\ln(e^{-x}+1)-x \\
-            =lims(+\infty)x+\ln(e^{-x}+1)-x=lims(+\infty)\ln(1+e^{-x}) \\
-            =lims(+\infty)\ln(1)=0 \\
-            `,
-            `法2: 把x写成ln的形式 \\
-            lims(+\infty)\ln(1+e^x)-x=lims(+\infty)\ln(1+e^x)-\ln(e^x) \\
-            lims(+\infty)\ln(\frac{1+e^x}{e^x})=\ln1=0 \\
+            `斜渐近线的推论 \\ (如何快速判断斜渐近线?)`,
+            ` \\
+            若f(x)可以写成ax+b+$a(x) \\
+            其中x\to\infty, $a(x)\to 0 \\\\
+            则y=ax+b为f(x)的斜渐近线 \\\\
+            (斜渐进线定义: $mr-2 x\to\infty, 对应点与L的距离\to0)
             `
         ],
 
         [
-           `斜渐近线的推论 \\ (如何快速判断斜渐近线?)`,
-            `斜渐进线:x\to\infty, 对应点与L的距离\to0 \\
-            则, 若f(x)可以写成ax+b+$a(x) \\
-            其中x\to\infty, $a(x)\to 0 \\
-            则y=ax+b为f(x)的斜渐近线
-            `
-        ],
+            `函数有哪几种渐近线?`,
 
-        [
-           `函数的渐近线 \\
-           函数有哪几种渐近线?
-           `,
             `水平渐进线(与x轴平行) \\
             垂直渐进线(与x轴垂直) \\
             斜渐进线(不平行也不垂直) \\
             `,
             `渐近线的本质含义`,
-            `若点M沿y=f(x)无限远离原点时 \\
-            它与某条直线L之间的距离趋近于0 \\
+            `若点M沿y=f(x)*(无限远离原点)时 \\
+            它与某条直线L之间的距离*(趋近于0) \\
             称直线L为y=f(x)的一条渐近线`,
         ],
         [
             `斜渐进线的定义?`,
             `lims(\infty)\frac{f(x)}{x}=a, 且lims(\infty)(f(x)-ax)=b \\
-            (或x\to-\infty, 或x\to+\infty) \\
+            (或x\to-\infty, 或x\to+\infty) \\\\
             则y=ax+b是f(x)的斜渐进线
             `
         ],
@@ -140,7 +188,7 @@ export default {
         [
             `水平渐进线的定义?`,
             `lims(\infty)=A \\
-            x趋向无穷时,极限值存在 \\
+            x趋向无穷时,极限值存在(*(趋向常数)) \\
             y=A是f(x)的水平渐进线 \\\\
             如: y=pinv(2), y=-pinv(2) \\
             是y=\arctan(x)的两条水平渐进线
@@ -148,42 +196,29 @@ export default {
         ],
 
         [
-           `给出x, \tan, \arctan的不等式关系`,
+            `给出x, \tan, \arctan的不等式关系`,
             `(0<x<pinv(2)) \\
             \arctan < x < \tan x
             `
         ],
 
         [
-           `给出x, \sin, \arcsin的不等式关系`,
+            `给出x, \sin, \arcsin的不等式关系`,
             `(0<x<1) \\
             \arcsin x > x > \sin x
             `
-        ],
-
-        [
-           `如何化简: inv(|t|)inv(\sqrt{1+\frac{1}{t^2}})`,
-            `能这样化简吗? \\
-            当x>0时: inv(|t|)inv(\sqrt{1+\frac{1}{t^2}})=inv(t\sqrt{1+\frac{1}{t^2}}) \\
-            =inv(\sqrt{t^2}\sqrt{1+\frac{1}{t^2}}) *(这是有问题的!) \\
-            \sqrt{t^2}=|t|\neq t, 在t>0时没什么问题,*(但t<0时符号就错了)
-            `,
-            `正确做法(或者说不容易出错的做法): 把inv(t)提出来 \\
-            inv(|t|)inv(\sqrt{1+\frac{1}{t^2}})=inv(|t|)\frac{1}{\sqrt{\frac{1}{t^2}(inv(\frac{1}{t^2})+1)}} \\
-            =inv(|t|)\frac{1}{\sqrt{\frac{1}{t^2}}\sqrt{t^2+1}}=inv(|t|)\frac{1}{inv(|t|)\sqrt{t^2+1}}=\frac{1}{\sqrt{t^2+1}}
-            `,
-        ],
+        ], 
 
         [
             "曲率K=?",
-            `曲率K=\frac{\left|y''\right|}{\left(1+\left(y'\right)^2\right)^{\frac{3}{2}}} \\
-            由公式可得曲率>=0
+            `曲率K=\frac{\left|y''\right|}{\left(1+\left(y'\right)^2\right)^{\frac{3}{2}}} \\\\
+            (由公式可得曲率>=0)
             `,
             "曲率半径R=?",
             "曲率半径R=\\frac{1}{K}"],
 
         [
-            `如何证明f(x)在区间上有界?`,
+            `如何证明f(x)在区间上有界? \\ (通过连续性说明)`,
             `1.如果f(x)在[a,b]上连续, 则f(x)在[a,b]上有界 \\\\
             2. 若f(x)在(a,b)上连续,且lims(a^+)f(x)与lims(b^-)都存在 \\
             则f(x)在(a,b)上连续 \\
@@ -193,7 +228,7 @@ export default {
             // https://youtu.be/tdvLePPSXAI?list=PLH_SiDrNHIUSMXnfNVzGydNZi1hVduhUb&t=4357
         ],
         [
-           `如何求解简单的一元3次方程?`,
+            `如何求解简单的一元3次方程?`,
             `1. 用0、\pm1、\pm2观察根 \\
             2.提取一个因式 \\
             3. (x-t)(ax^2+bx+c), 求a,b,c \\
@@ -204,36 +239,14 @@ export default {
         ],
 
         [
-           `1+2+3+\dotsb+n=?`,
+            `1+2+3+\dotsb+n=?`,
             `inv(2)n(n+1)`
         ],
 
         [
-           `1^2+2^2+3^2+\dotsb+n^2=?`,
+            `1^2+2^2+3^2+\dotsb+n^2=?`,
             `inv(6)n(n+1)(2n+1)`
-        ],
-
- 
-        [
-            `选择题的排除法 \\ (怎么用、什么时候用)`,
-            `当题目出现一般函数时 \\ (只提f(x),不给对应法则) \\
-            代一个*(具体函数)进去,使其符合条件
-            `,
-            `image:example_1.png(这时令f(x)=-(x-a)^2,使条件成立 \\ 接着就可以用该函数排除选项 \\ 这个方法只能排除,*(不能确认)选项是对的)`,
-            `image:paichu_2.png(其中a和b是一般常数 \\
-            在原式中取a=0,算得极限值为e^{-b} \\
-            将a=0*(代入每个答案)中排除错误答案 \\
-            (a)e^{-b}不可能恒等于1,排除, (b)同理 \\
-            (c)将a=0代入e^{a-b},得e^{-b},和算得极限相同 \\ *(不用排除,也不能确认是正确答案) \\
-            (d)代入a=0得e^b, e^{-b}不可能恒等于e^b,排除 \\
-            排除了(a,b,d), 答案为(c)
-            )`,
-            `为什么可以用排除法?`,
-            `题目提到一般函数,表示的是所有符合条件的函数 \\
-            我们找一个符合条件的函数, 等于找了一个反例 \\
-            所以它只能排除,不能确认选项是对的
-            `
-        ],
+        ], 
 
         [
             `已知数列x_n收敛(极限存在),可以得到?`,
@@ -242,7 +255,9 @@ export default {
 
         [
             `若f(x)在*(以a为中心)的某个*(去心邻域有界) \\ lims(a)f(x)是否存在?`,
-            `不一定存在,例如: f(x)=\sin(\frac{1}{x}) \\ |f(x)|<=1,但在x=0附近,f(x)疯狂振荡 \\ 局部有界,但极限不存在`
+            `不一定存在,例如: f(x)=\sin(\frac{1}{x}) \\
+            |f(x)|<=1,但在x=0附近,f(x)疯狂振荡 \\\\
+            局部有界,但*(极限不存在)`
         ],
 
         [
@@ -311,26 +326,11 @@ export default {
         ],
 
         [
-
-            `f(x)=f(a)+f'(c)(x-a) \\其中 c\in(a,x), 解释这个公式`,
-            `f(x)=f(a)+f'(c)(x-a) \\其中 c\in(a,x) \\ 这个看起来像是线性近似 \\ 但这其实是拉格朗日中值定理 \\
-            f'(c)=\frac{f(x)-f(a)}{x-a} \\ f'(c)(x-a)=f(x)-f(a) \\
-            f(x)=f(a)+f'(c)(x-a)
-            `
-            // https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/3fd61ef9eab29205d39ec29fce90c3c4_MIT18_01SCF10_Ses35a.pdf
-        ],
-        [
             `根据拉格朗日中值定理, 可以得到哪个不等式?`,
             `m\leq \frac{f(b)-f(a)}{b-a}\leq M \\\\
             m(b-a)\leq f(b)-f(a)\leq M(b-a)
             `
-        ],
-
-        [
-            `介绍牛顿迭代法`,
-            `image:newton_method.png(牛顿迭代法使用线性近似求解f(x)的根 \\ 首先猜一个可能的根x_0 \\ 其切线与x轴的交点x_1为下一个猜测)`,
-            `x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}`,
-        ],
+        ], 
 
         // {
         //     extra_info: "",
@@ -356,13 +356,12 @@ export default {
         [`高阶导数的写法($t(notation))?`, `二阶导: f''(x) \\\\ n阶导: f^{(n)}(x) $t(   或   ) $ddxn(n,f)`],
         [
             `什么是拐点($t(inflection points))?`,
-            `凹凸性转换的分界点 \\ 若x=a是f(x)的一个拐点: f''(a) = 0 \\ 点a处有点像直线,没有弯曲`,
+            `凹凸性转换的分界点 \\ 若x=a是f(x)的一个拐点: f''(a) = 0 \\\\
+            (点a处有点像直线,没有弯曲)`,
             `image:inflection_points.png(点-2,1,3处都是拐点)`
         ],
 
         [`\textrm{幂函数的导数(Power Rule)} \\\\ $ddx x^n=?`, `$ddx x^n=nx^{n-1}`],
-
-        // ##form1#=#
 
         [
             `a^3-b^3=?`,
@@ -372,7 +371,6 @@ export default {
             `(a-b)(a^{n-1}+a^{n-2}b+...+ab^{n-2}+b^{n-1})`
         ],
 
-        // up is linear
         [
             `假设f与g都是连续函数 \\
         f+g, f-g, f*g, \frac{f}{g} 是连续的吗？`, `+, -, *都为连续函数 \\
@@ -380,11 +378,5 @@ export default {
             `连续函数的复合,仍为连续函数`,
 
         ],
-
-        // [`\\lim_{h \\to 0}{(1+xh)^{\\frac{1}{h}}}`, "e^x"],
-        // ["\\lim_{n \\to \\infty}{(1+\\frac{1}{n})^{n}}", "e"],
-        // ["\\lim_{h \\to 0}{(1+h)^{\\frac{1}{h}}}", "e"],
-        // [`\frac{10}{4x} \approx 2^{12}`, "123"],
-        // ["image:linear_a2_2.png", "Ans"],
     ]
 } as ICardStack;

@@ -51,5 +51,10 @@ export default {
             `image:linear_approx.png(t=20处的导数0.4(切线斜率) \\ 可以看到x(30)其实就是求斜线上x=30的值)`,
             `f(x)\approx f(a)+f'(a)(x-a)`
         ],
+        [
+            `介绍牛顿迭代法`,
+            `image:newton_method.png(牛顿迭代法使用线性近似求解f(x)的根 \\ 首先猜一个可能的根x_0 \\ 其切线与x轴的交点x_1为下一个猜测)`,
+            `x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}`,
+        ],
     ]
 } as ICardStack;
