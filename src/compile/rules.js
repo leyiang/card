@@ -49,6 +49,9 @@ export const funcRules = {
     ppx: { reg: /\$ppx/g, to: `\\frac{\\partial}{\\partial x} ` },
     ppy: { reg: /\$ppy/g, to: `\\frac{\\partial}{\\partial y} ` },
 
+    mr_2: { reg: /\$mr-2/g, to: `\\:\\:` },
+    mr_4: { reg: /\$mr-4/g, to: `\\:\\:\\:\\:` },
+
     theta: { reg: /\$th/g, to: `\\theta` },
     delta: { reg: /\$d/g, to: `\\delta` },
     alpha: { reg: /\$a/g, to: `\\alpha` },

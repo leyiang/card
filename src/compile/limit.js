@@ -152,7 +152,7 @@ export function injectLimit(rule) {
     rule["dint"] = {
         reg: getReg("dint", 1),
         to: (base="D") => {
-            return `\\iint \\limits_${ base }`;
+            return `\\iint \\limits_{${ base }}`;
         }
     };
 
