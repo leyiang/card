@@ -41,12 +41,19 @@ export default {
             `|x|<a, |y|<b`,
 
             `椭圆的面积?`,
+
             `
-            椭圆公式: \frac{x^2}{a^2}+\frac{y^2}{b^2}=1 \\
-            S=\pi ab \\
-            
-            
-            `
+                椭圆公式: \frac{x^2}{a^2}+\frac{y^2}{b^2}=1 \\
+                S=\pi ab \\
+            `,
+
+            `根据椭圆方程作图: \\
+            \frac{1}{2}x^{2}+2y^{2}=2
+            `,
+            `image:draw_ellipse.png(
+                首先写成标准式: $mr-2 \frac{x^2}{2^2}+\frac{y^{2}}{1^2}=1 \\
+                |x|\leq 2且|y|\leq 1
+            )`,
         ],
         getRandomItem([
             [
@@ -145,7 +152,7 @@ export default {
                 e^x \geq 1+x \\
                 (仅在x=0处, e^x=1+x)
             )`
-        ], 
+        ],
 
         [
             `斜渐近线的推论 \\ (如何快速判断斜渐近线?)`,
@@ -207,7 +214,7 @@ export default {
             `(0<x<1) \\
             \arcsin x > x > \sin x
             `
-        ], 
+        ],
 
         [
             "曲率K=?",
@@ -246,7 +253,7 @@ export default {
         [
             `1^2+2^2+3^2+\dotsb+n^2=?`,
             `inv(6)n(n+1)(2n+1)`
-        ], 
+        ],
 
         [
             `已知数列x_n收敛(极限存在),可以得到?`,
@@ -330,7 +337,7 @@ export default {
             `m\leq \frac{f(b)-f(a)}{b-a}\leq M \\\\
             m(b-a)\leq f(b)-f(a)\leq M(b-a)
             `
-        ], 
+        ],
 
         // {
         //     extra_info: "",
