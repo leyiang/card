@@ -1,14 +1,19 @@
 import { ICardStack } from "../../types/card-type";
+import { getRandomItem } from "../../utils/array";
 
 export default {
     id: "math_limit",
     label: "极限",
 
     cards: [
-        // [
-        //     ``,
-        //     ``,
-        // ],
+        getRandomItem([
+            [
+                `simInfQ((1+x)^$a-1)`, `(1+x)^$a-1\sim $a x`,
+            ],
+            [
+                `simInfQ((1-x)^$a-1)`, `(1-x)^$a-1\sim -$a x`,
+            ]
+        ]),
 
         [
             `若f(x)=\phi(x)|x-a| \\
@@ -197,7 +202,7 @@ export default {
             `只可洛到f(x)的n-1阶导 \\ f(x)n阶可导不代表n阶导函数连续`,
             `设f(x)二阶可导, f(0)=0,f'(0)=1,f''(0)=2 \\ 
             求极限 lims(0)\frac{f(x)-x}{x^2}, *(经典错误:) \\
-            
+
             lims(0)\frac{f(x)-x}{x^2}=lims(0)\frac{f'(x)-1}{2x}=lims(0)\frac{f''(x)}{2}=\frac{f''(0)}{2} \\
             二阶可导\color{red}不代表二阶导函数连续
             `,
@@ -295,7 +300,14 @@ export default {
             `(1+$a(x))^{$b(x)}-1 \sim \: ?`,
             `若$a(x)\to 0, 且$a(x)$b(x)\to0 \\
             (1+$a(x))^{$b(x)}-1 \sim \color{blue} $a(x)$b(x)
-            `
+            `,
+            `证明: (1+$a(x))^{$b(x)}-1=e^{$b(x)\ln(1+$a(x))}-1 \\
+            如果$b(x)\ln(1+$a(x))=0的话: \\
+            (也就是: $b(x)$a(x)=0)\\\\
+            e^{$b(x)\ln(1+$a(x))}-1=$b(x)\ln(1+$a(x)) \\
+            如果$a(x)\to 0的话: \\
+            $b(x)\ln(1+$a(x))=$a(x)$b(x)
+            `,
         ],
 
         [
@@ -308,7 +320,6 @@ export default {
         ],
 
         [`simInfQ(a^x-1)`, `a^x-1 \sim x\ln(a)`],
-        [`simInfQ((1+x)^$a-1)`, `(1+x)^$a-1\sim $a x`],
         [`simInfQ(\tan(x)-\sin(x))`, `\tan(x)-\sin(x) \sim inv(2)x^3`],
         [`simInfQ(\arcsin(x)-x)`, `\arcsin(x)-x \sim inv(6)x^3`],
         [`simInfQ(\tan(x)-x)`, `\tan(x)-x \sim inv(3)x^3`],

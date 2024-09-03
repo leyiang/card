@@ -6,6 +6,23 @@ export default {
 
    cards: [
       [
+         `积分中值定理`,
+         `若f(x)在[a,b]上连续, 则 \\
+         \int_a^b f(x)dx=f($xi)(b-a) \\
+         a < $xi < b
+         `,
+
+         `若f(x), g(x)在[a,b]上连续 \\
+         g(x)不变号 (在[a,b]上恒大于零或恒小于零) \\
+         \int_a^b f(x)g(x)dx=f($xi)\int_a^b g(x)dx \\
+         a\leq $xi \leq b`,
+         `二重积分的中值定理?`,
+         `若f(x,y)在有界闭区域D上连续 \\
+         则至少存在一点($xi,n)\in D, 使得: \\
+         dint(D)f(x,y)d$sig = f($xi,n)A $mr-4 (A为D的面积 )
+         `,
+      ],
+      [
          `f(x)原函数的符号?`,
          `f(x)一个原函数: \int_a^x f(t)dt \\
          f(x)的所有函数: \int f(x)dx \\
@@ -93,7 +110,7 @@ export default {
          点b为f(x)的瑕点(无界点) \\\\
          \int_a^bf(x)dx=?
             `,
-            `
+         `
          \int_a^bf(x)dx=lims(b^-,t)\int_a^t f(x)dx \\
          若极限存在, 则反常积分\int_a^bf(x)dx *(收敛), 反之则发散
          `,
@@ -102,7 +119,7 @@ export default {
          点c为f(x)的瑕点(无界点) \:\: a<c<b \\\\
          \int_a^bf(x)dx=?
             `,
-            `
+         `
          \int_a^bf(x)dx=\int_a^c f(x)dx+\int_c^bf(x)dx \\\\
          拆出来的两个都收敛,则整体收敛
          `,
@@ -358,19 +375,6 @@ export default {
          变上限积分就是f(x)的一个原函数`,
          `(\int_{\phi(x)}^{g(x)}f(t)dt)'=?`,
          `(\int_{\phi(x)}^{g(x)}f(t)dt)'=f(g(x))g'(x)-f(\phi(x))\phi'(x)`,
-      ],
-
-      [
-         `积分中值定理`,
-         `若f(x)在[a,b]上连续, 则 \\
-         \int_a^b f(x)dx=f($xi)(b-a) \\
-         a < $xi < b
-         `,
-
-         `若f(x), g(x)在[a,b]上连续 \\
-         g(x)不变号 (在[a,b]上恒大于零或恒小于零) \\
-         \int_a^b f(x)g(x)dx=f($xi)\int_a^b g(x)dx \\
-         a\leq $xi \leq b`,
       ],
 
       [

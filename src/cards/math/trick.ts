@@ -6,6 +6,249 @@ export default {
 
     cards: [
         [
+            `若f(x,y)=y^2-4x^2+(1+$a)(x^4+x^2y^2+y^4) \\
+            若(x,y)\to 0,$a\to0 \\\\
+            已知f(0,0)=0 \\ 如何判断f(0,0)是否是极值?
+            `,
+            `*(判断极值可以只看一部分) \\
+            f(x,y)=y^2-4x^2+(1+$a)(x^4+x^2y^2+y^4) \\\\
+
+            (f与y=0)的切线: \\
+            f(x,0)=-4x^2+x^4+o(x^4) \\
+            x是在0的附近,所以f(x,0)<0的 \\\\
+
+            (f与x=0)的切线: \\
+            f(0,y)=y^2+y^4+o(y^4) \\
+            f(0,y) > 0 \\ \\
+            所以,在(0,0)附近,有的地方>0, 有的地方<0 \\
+            (0,0)不是极值
+            `,
+        ],
+        [
+            `
+            怎么解这个方程组? \\
+            \begin{cases}
+            y+8\lambda x=0 \\
+            x+2\lambda y=0 \\
+            4x^2+y^2-1=0 \\
+            \end{cases}`,
+
+            `
+            \begin{cases}
+            y+8\lambda x=0 $mr-4 (同乘y)\\
+            x+2\lambda y=0 $mr-4 (同乘4x)\\
+            4x^2+y^2-1=0 \\
+            \end{cases} =
+
+            \begin{cases}
+            y^2+8\lambda xy=0 \\
+            4x^2+8\lambda xy=0 \\
+            4x^2+y^2-1=0 \\
+            \end{cases} \\
+            这样就可以把\lambda 消掉,就好做了 \\
+            注意要判断y和4x*(都不为0) \\ \\
+            若x=0, 为了满足(1) \Rightarrow y=0 \\
+            但x=0且y=0与(3)冲突, $mr-2 所以x\neq 0 \\\\
+            若y=0, 为了满足(2)\Rightarrow x=0 \\
+            与上同，得出y\neq 0
+            `,
+
+            `
+            怎么解这个方程组? \\
+            \begin{cases}
+            yz+\lambda=0 \\
+            xz+\lambda=0 \\
+            xy+\lambda=0 \\
+            \end{cases} \\
+            `,
+
+            `
+            \begin{cases}
+            yz+\lambda=0 $mr-2 (乘上x)\\
+            xz+\lambda=0 $mr-2 (乘上y)\\
+            xy+\lambda=0 $mr-2 (乘上z)\\
+            \end{cases}
+            =\begin{cases}
+            xyz+\lambda x=0 \\
+            xyz+\lambda y=0 \\
+            xyz+\lambda z=0 \\
+            \end{cases} \\\\
+            解得: x=y=z
+            `,
+        ],
+        [
+            `说A和对角矩阵相似 \\
+            为什么等于在说: A可相似对角化?
+            `,
+            `令D=对角矩阵, 则A=PDP^{-1} \\
+            这就是相似对角化的定义
+            `,
+        ],
+        [
+            `z=\int_0^1|xy-t|f(t)dt \\
+            0\le x\le1, $mr-2 0\le y\le1 \\\\
+            想办法把绝对值对掉
+            `,
+            `
+            z=\int_0^1|xy-t|f(t)dt \\
+            0\le x\le1, $mr-2 0\le y\le1 \\
+            积分中有绝对值的,令*(绝对值里面=0) \\
+            再利用积分可拆性,在该点拆开,去掉绝对值 \\\\
+
+            xy-t=0, $mr-2 t=xy $mr-2 (在这点拆开) \\
+            z=\int_0^{xy}(xy-t)f(t)dt+\int_{xy}^1(t-xy)f(t)dt 
+            `,
+        ],
+        [
+            `复合函数求偏导*(如何代值)? \\
+            $phi(x)=f(x,2f(x,2x))
+            `,
+            `image:fuhe_piandao.png(
+                $phi(x)=f(x,2f(x,2x)) \\
+                *(重点:) $mr-2 $phi'(x)*(的一部分)=f_1'(x, 2f(x,2x)) \\
+                其中f对x求导要走两个路径(现在先走上面那条) \\
+                f_1'(x, 2f(x,2x)) 对f第一个位置求偏导 \\
+                *(偏导的里的值)和$phi一样,都是x,2f(x,2x)
+            )`,
+            `image:fuhe_piandao.png(
+                $phi(x)=f(x,2f(x,2x)) \\
+                (走下面的路径) *(重点:) $mr-2 $phi'(x)*(的一部分): \\
+                f_2'(x, 2f(x,2x))[2f(x,2x)]' \\
+                f_2'(x, 2f(x,2x)) 对f第二个位置求偏导 \\
+                偏导的里的值和$phi一样,都是x,2f(x,2x) \\
+                [f(x,2x)]'=f_1'(x,2x)+2f_2'(x,2x) \\
+                *(这里偏导里的值是)(x,2x) $mr-2 *(重要！)
+            )`,
+        ],
+        [
+            `已知ppd(f)>1, ppd(f,y)<-1,f(0,0)=0 \\
+            证明f(1,-1)>2(用拉格朗日证明)`,
+            `
+            已知ppd(f)>1, ppd(f,y)<-1,f(0,0)=0 \\
+            证明f(1,-1)>2(用拉格朗日证明) \\\\
+            令g(x)=f(x,y_0), u(y)=f(x_0,y) \\
+            f(1,-1)=f(1,-1)-f(0,0) \\
+            =f(1,-1)-f(0,-1)+f(0,-1)-f(0,0) \\
+            =g(1)-g(0)+u(-1)-u(0) \\
+            (其中y_0=-1, x_0=0) \\\\
+            ceq(拉格朗日)g'($xi)(1-0)+u'(\eta)(-1-0)\\
+            =g'($xi)-u'(\eta) $mr-2 其中g'=f_x'(x,y_0), u'=f_y'(x_0,y) \\
+            f(1,-1) >1-(-1)=2
+            `,
+        ],
+        [
+            `
+                判断\frac{x^2y+y^4}{x^2+y^2}的值, 当(x,y)\to(0,0)时 \\
+            `,
+            `
+               0 \le \left| \frac{x^2y+y^4}{x^2+y^2} \right| \le
+                \left| \frac{x^2y}{x^2+y^2} \right|
+               + \left| \frac{y^4}{x^2+y^2} \right| \\
+               (|a+b|\leq |a|+|b|) \\\\
+               其中\left| \frac{x^2y}{x^2+y^2} \right|=\frac{x^2}{x^2+y^2}|y| \leq |y| \\
+               其中\left| \frac{y^4}{x^2+y^2} \right|=\frac{y^2}{x^2+y^2} y^2 \leq y^2 \\\\
+
+               所以不等式右边 \leq |y|+y^2=0 \\
+
+               所以极限值=0
+
+            `,
+        ],
+        [
+            `通过极限表达式求偏导?`,
+            `
+                全微分定义: $D z=f(x+x_0,y+y_0)-f(x,y) \\
+                把$D z写成Ax+By+o(\rho), 就可找到偏导的值 \\
+                A就是x偏导, B就是y偏导, \rho=\sqrt{$D x^2+$D y^2}
+                \\\\
+                如: limdo(0,0)\frac{f(x,y)+3x-4y}{x^2+y^2}=2, 求x,y偏导的值 \\ 
+                limdo(0,0)\frac{f(x,y)+3x-4y}{\sqrt{x^2+y^2}}=limdo(0,0)\frac{f(x,y)+3x-4y}{x^2+y^2}\sqrt{x^2+y^2}=0 \\
+                极限乘上\rho,发现f(x,y)+3x-4y=o(\rho), $mr-2 可以看出f(0,0)=0 \\
+                $D z=-3x+4y+o(\rho)=f(0+x,0+y)-f(0,0) \\\\
+                所以-3是z在(0,0)对x的偏导, 4是对y的偏导
+           `,
+        ],
+        [
+            `求某点偏导怎么代入数值?`,
+            `假设对x求偏导, y就是个常数,可以把y先代入 \\\\
+            如: f(x,y)=\frac{x^2+y^2}{e^{xy}+xy\sqrt{x^2+y^2}} \\
+            要求f_x|_{(1,0)}, 先把y=0代入 \\
+            得到: \frac{x^2}{e^{0}+0}=x^2, 求导代入x=1即可`,
+
+           `注: 在求混合偏导的时候要注意! \\
+           若要求ppd(^2z,x\partial y) \Big |_{(1,\pi)}, 此时就*(不能代入)
+           `,
+        ],
+        [
+            `*(初步判断)多元函数极限*(是否存在)`,
+            `1. 通过幂次判断: \\
+            如果分子幂次*(小于等于)\leq 分母幂次, 极限大概率不存在 \\\\
+            如: limdo(0,0)\frac{xy}{x^2+y^2} (上下同为2次) \\
+            沿着kx趋近: $mr-2 limdsp(x\to0,y=kx)\frac{xy}{x^2+y^2}=\frac{kx^2}{x^2+k^2x^2}
+            =\frac{k}{1+k^2} \\
+            对于不同的斜率k,极限值不同 \\
+            也就是:不同的趋近方式,极限值不同 \\\\
+
+            若分子幂次*(高于)分母幂次,极限有可能存在
+            `,
+        ],
+        [
+            `多元函数极限`,
+            `1. 连续性(函数在p点有定义),直接代入 \\ \\
+            2.变量代换, 把多元换成一元 \\
+            如: \:\: limdo(0,0)\frac{\arcsin xy}{e^{xy}-1} \\
+            变量形式都一样,令u=xy,即可化成一元
+            `,
+            `3. 绝对值+夹逼 \\
+            如: limdo(0,0) \frac{xy^2}{x^2+y^2} \\
+            0\leq \left| \frac{xy^2}{x^2+y^2} \right| \leq \left| \frac{xy^2}{2xy} \right|=0 \\
+            两边都趋向0, 中间也一定趋向0 \\
+            所以极限值就是0 \\\\
+
+            问: 上面用夹逼算的*(不是绝对值吗)? \\
+            答: 有这个结论: 若\lim |f(x)|\to 0 $mr-2 \lim f(x)\to0 \\
+            绝对值*(趋向零), 去掉绝对值也*(趋向零)
+            `,
+        ],
+        [
+            `u=u(\sqrt{x^2+y^2}) \\ \\
+            ppd(^2u,x^2)=?
+            `,
+            `image:problem_1.png(
+                u=u(\sqrt{x^2+y^2}), 其中r=\sqrt{x^2+y^2} \\
+                ppd(u)=(先对r求导, u对r是一元) (r再对x求偏导) \\
+                =\frac{du}{dr}ppd(r)=\frac{du}{dr}\frac{2x}{2\sqrt{x^2+y^2}}=\frac{du}{dr}\frac{x}{r}
+            )`,
+
+            `
+                u=u(\sqrt{x^2+y^2}), 其中r=\sqrt{x^2+y^2} \\
+                ppd(u)=\frac{du}{dr}\frac{x}{r}, \:\:\:\: ppd(^2u,x^2)=(乘积求导) \\
+                先看: \frac{du}{dr},其结构与u相同 \\
+                ppd(\frac{du}{dr})=\frac{d(\frac{du}{dr})}{dr}ppd(r)=\frac{d^2u}{dr^2}ppd(r) \\\\
+                ppd(\frac{x}{r})=\frac{r-x ppd(r)}{r^2}=\frac{r-\frac{x^2}{r}}{r^2}
+                ceq(上下同乘r) \frac{r^2-x^2}{r^3}=\frac{y^2}{r^3} \\\\
+                ppd(^2u,x^2)=\frac{\partial}{\partial x}(ppd(u))=
+                \frac{\partial}{\partial x}(\frac{du}{dr}\frac{x}{r}) \\
+                ceq(乘积求导) \frac{d^2u}{dr^2}ppd(r)\frac{x}{r}+\frac{du}{dr}\frac{y^2}{r^3} =\frac{d^2u}{dr^2}\frac{x^2}{r^2}+\frac{du}{dr}\frac{y^2}{r^3} 
+            `,
+        ],
+        [
+            `若A是三阶矩阵, 其特征值为1,3,-2 \\
+            对应的特征向量: $a_1,$a_2,$a_3 \\
+            令P=[$a_1,2$a_3,-$a_2] \\\\
+            求P^{-1}AP=?`,
+            `若A是三阶矩阵, 其特征值为1,3,-2 \\
+            P^{-1}AP是对角化的形式 \\
+            P=[$a_1,2$a_3,-$a_2] 它是线性无关的,可以对角化 \\
+            所以P^{-1}AP是\Lambda的形式(特征值在对角上) \\\\
+            2$a_3对应的特征值是: \\
+            A(2$a_3)=2A$a_3=2\cdot(-2)$a_3=-4$a_3 \\
+            把向量写成2$a_3的形式: \\
+            A(2$a_3)=-2(2$a_3) \\
+            所以2$a_3*(对应的特征值)是: -2
+            `,
+        ],
+        [
             `已知y=e^{-x}, y=2xe^{-x},y=3e^x \\
             是3阶微分方程的3个特解 \\\\
             求出特征根`,
