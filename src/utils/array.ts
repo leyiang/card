@@ -35,3 +35,12 @@ export function cardAsk(question="", correct=false, ans="") {
         `,
     ]
 }
+
+export function withGap(contentList=[] as string[], gap="\\:\\:") {
+    return contentList.join( gap );
+}
+
+export function withLineBreak(contentList=[] as string[], lineBreakCount=1) {
+    const lineBreaks = Array( lineBreakCount ).fill("\\\\").join("");
+    return contentList.join( lineBreaks );
+}

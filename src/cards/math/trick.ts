@@ -6,6 +6,26 @@ export default {
 
     cards: [
         [
+            `\int_0^pinv(2)d$th \int_0^{2\sin $th}f(r\cos $th,r \sin$th)rdr \\\\
+            如何转换成直角坐标系的二重积分?
+            `,
+            `\int_0^pinv(2)d$th \int_0^{2\sin $th}f(r\cos $th,r \sin$th)rdr \\\\
+
+            重点一:*(把xy的方程写出来) \\
+            可以看到r=2\sin $th (两边乘r,*(凑y出来)) \\
+            r^2=2y, (其中r^2=x^2+y^2) \\
+            配方得到x^2+(y-1)^2=1
+            `,
+
+            `image:trick_1.png(
+                重点二: *(确定dy范围时注意细节) \\
+                x^2+(y-1)^2=1 $mr-4 把y解出来 \\
+                y=1\pm \sqrt{1-x^2} $mr-4 其中0 \le \sqrt{1-x^2} \le 1 \\
+                当y>1时, 取+号, y<1时取-号 \\
+                \int_0^1dx\int_{1- \sqrt{1-x^2}}^{1+ \sqrt{1-x^2}}f(x,y)dy
+            )`,
+        ],
+        [
             `选择题的排除法 \\ (怎么用、什么时候用)`,
             `当题目出现一般函数时 \\ (只提f(x),不给对应法则) \\
             代一个*(具体函数)进去,使其符合条件

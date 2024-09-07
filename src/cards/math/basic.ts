@@ -6,6 +6,27 @@ export default {
     label: "数学基础",
 
     cards: [
+        [
+            `\sin x 在[0,2\pi]上的反函数是?`,
+            `image:inverse_sin.png(
+                在[0,2\pi]上\sin 通不过水平线测试,没有反函数 \\
+                所以必须分段来看, [0,pinv(2)] $mr-2 (pinv(2), inv(2,3\pi)] $mr-2 (inv(2,3\pi),2\pi] \\
+                对于(pinv(2), inv(2,3\pi)]上的x， \arcsin是没定义的 \\
+                让x向左平移\pi个单位, 就变成了(-pinv(2), pinv(2)] \\
+                \sin(x-\pi)=-\sin(\pi-x)=-\sin x=-y \\ 
+                其中 \sin x=y, *(所以得到) \Rightarrow  \sin(x-\pi)=-y \\
+                x-\pi=-\arcsin y $mr-8 x=\pi-\arcsin y
+            )`,
+
+            `image:inverse_sin.png(
+                x = \begin{cases}
+                    \arcsin(y)      & x\in[0,inv(2)] \\
+                    \pi-\arcsin(y)  & x\in(inv(2), inv(2,3\pi)] \\
+                    2\pi+\arcsin(y) & x\in(inv(2,3\pi),2\pi] \\
+                \end{cases}
+            )`,
+        ],
+
         getRandomItem([
             [
                 `a^2-b^2与ab的大小关系?`,

@@ -1,10 +1,192 @@
 import { ICardStack } from "../../types/card-type";
+import { withGap, withLineBreak } from "../../utils/array";
 
 export default {
    id: "math_integral",
    label: "积分",
 
    cards: [
+      [
+         `重积分换元,积分区域计算 \\\\
+         D=\{(x,y) \mid 0\leq x \leq 1-y, $mr-2 0\leq y\leq 1\} \\
+         令\begin{cases} x+y&=u \\ y&=v \end{cases}, $mr-4 D_{uv}=?
+         `,
+         `image:change_var.png(
+            对表达式也换元, 如x+y=1 $mr-2 \Rightarrow $mr-2 u=1 \\
+            y=0 $mr-2 \Rightarrow $mr-2 v=0
+         )`,
+      ],
+      [
+         `重积分换元法 \\
+         dint(D_{xy})f(x,y)dxdy 换元u, v
+         `,
+         `
+         dint(D_{xy})f(x,y)dxdy \\
+          = dint(D_{uv})f(x(u,v),y(u,v))\left |\frac{\partial (x,y)}{\partial (u,v)} \right |dudv \\
+         `,
+
+         `
+         dint(D_{uv})f(x(u,v),y(u,v))\left |\frac{\partial (x,y)}{\partial (u,v)} \right |dudv \\\\
+         \frac{\partial (x,y)}{\partial (u,v)} =?
+         `,
+         `
+         dint(D_{uv})f(x(u,v),y(u,v))\left |\frac{\partial (x,y)}{\partial (u,v)} \right |dudv \\\\
+         \frac{\partial (x,y)}{\partial (u,v)}=
+
+        \begin{vmatrix}
+            ppd(x,u) & ppd(x,v) \\
+            ppd(y,u) & ppd(y,v)
+         \end{vmatrix} \\\\
+         换元时,计算雅可比行列式+*(绝对值)
+         `,
+      ],
+      [
+         `\int_0^{+\infty} e^{-x^2}dx=?`,
+         `image:gauss_integral.png(
+            \int_0^{+\infty} e^{-x^2}dx=\frac{\sqrt{\pi}}{2} $mr-4 (高斯积分)
+         )`,
+      ],
+      [
+         `
+         
+         令D=\{(x,y) \mid \sqrt{\small| x \small|}+\sqrt{\small| y \small|}\leq 1 \} \\
+          D_1是其在第一象限的部分 \\\\
+         为什么dint(D_1)\sqrt{x}d$sig=dint(D_1)\sqrt{y}d$sig
+         `,
+         `D=\{(x,y) \mid \sqrt{\small| x \small|}+\sqrt{\small| y \small|}\leq 1 \} \\\\
+         *(首先): D_1关于y=x对称(对调xy区域不变) \\\\
+         轮换对称性其中一条(对f没有要求): \\
+         *(只要积分区域)关于y=x*(对称) \\ 
+         dint(D)f(x,y)=dint(D)f(y,x) $mr-4 就可把xy交换 \\
+          (其中D是对称的,所以不变) \\
+          所以前页的等式成立
+
+         `,
+      ],
+      [
+         `f(x)=x^2\int_0^1 f(x)dx \\
+         通过上述关系式, 求出f(x)
+         `,
+         `
+         f(x)=x^2\int_0^1 f(x)dx \\
+         在上述定义中, 其实\int_0^1 f(x)dx 就是个*(常数) \\
+         把这个常数求出来,就能找到f(x) \\
+         令\int_0^1 f(x)dx=A $mr-4 \Rightarrow $mr-4 f(x)=Ax^2, \\两边*(同时求)0到1的*(定积分),即可求出A
+         `,
+      ],
+      [
+         `为什么下面这个二重积分=0? \\
+         \int_0^{2\pi}d$th\int_0^{\sqrt{2}}(r\sin$th+r\cos$th+r^2\sin$th\cos$th)rdr`,
+         `
+         \int_0^{2\pi}d$th\int_0^{\sqrt{2}}(r\sin$th+r\cos$th+r^2\sin$th\cos$th)rdr \\
+         拆开来算: \\
+         \int_0^{2\pi}d$th\int_0^{\sqrt{2}}(r\sin$th)rdr=\int_0^{2\pi}\sin$th d$th\int_0^{\sqrt{2}}r^2dr \\ \\
+         *(重要:) 其中\sin $th在0到2\pi上(一个周期)的积分是0 \\
+         后面对r的积分算出来是个*(常数), 所以整体是0 \\\\
+
+         \cos $th同理, 对\cos $th\sin $th来说,可以写成inv(2)\sin 2$th \\
+         \sin 2$th的周期是\pi, 所以在0到2\pi上的积分也是零
+         `,
+      ],
+      [
+         `dint(D)f(x,y)d$sig 在极坐标下的定义?`,
+         `image:ji.png(
+            dint(D)f(x,y)d$sig=
+            \int_$a^$b d$th\int_{r_1($th)}^{r_2($th)}f(r\cos$th, r\sin $th)rdrd$th
+         )`,
+      ],
+      [
+         `d$sig是什么? \\
+         在直角坐标系、极坐标系中等于什么?
+         `,
+         `d$sig是二重积分中区域D分割的一小块面积 \\
+         直角坐标系中: d$sig = dxdy \\
+         极坐标系中: d$sig=rdrd$th
+         `,
+      ],
+      [
+         `有哪些积不出函数? \\
+         (在二重积分交换积分次序)
+         `,
+
+         withLineBreak([
+            withGap([
+               `\frac{\sin x}{x}`,
+               `\frac{\cos x}{x}`,
+               `\frac{\tan x}{x}`,
+               `inv(\ln x)`,
+               `\sin x^2`,
+               `\cos x^2`,
+               `\tan x^2`,
+            ]),
+
+            withGap([
+               `\frac{\ln(1+x)}{x}`,
+               `\sin inv(x)`,
+               `\cos inv(x)`,
+               `\frac{e^x}{x}`,
+               `e^{ax^2+bx+c}(a\neq 0)`,
+            ])
+         ], 2) + ` \\\\
+            这些都没有初等函数形式的原函数
+         `,
+      ],
+
+      [
+         `若f(x)\sim g(x), 其变上限积分: \\
+         \int_0^x f(x)dx和\int_0^x g(x)dx有什么关系?`,
+         `\int_0^x f(x)dx \sim \int_0^x g(x)dx \\\\
+         证明: lims(0)\frac{\int_0^x f(x)dx } { \int_0^x g(x)dx } ceq(洛)
+         lims(0)\frac{ f(x) } { g(x) }=1
+          `,
+      ],
+      [
+         `二重积分的对称性 \\
+         若区域D关于x=a对称, dint(D)f(x,y)d$sig=?
+         `,
+         `dint(D)f(x,y)d$sig=\begin{cases}
+            2dint(D_1)f(x,y)d$sig  $mr-8 f(x,y)=f(2a-x,y) \\\\
+            0 $mr-4 $mr-8 $mr-8 $mr-8 f(x,y)=-f(2a-x,y)
+         \end{cases} \\\\
+
+            其中D_1是D在x=a右侧的部分
+         `,
+         `特别的, 若a=0, 则D关于y轴对称 \\\\
+         dint(D)f(x,y)d$sig=\begin{cases}
+            2dint(D_1)f(x,y)d$sig  $mr-8 f(x,y)=f(-x,y) \\\\
+            0 $mr-4 $mr-8 $mr-8 $mr-8 f(x,y)=-f(-x,y)
+         \end{cases} \\\\
+
+            其中D_1是D在y轴右侧的部分
+         `,
+         `若区域D关于y=a对称,其二重积分=?`,
+         `若区域D关于y=a对称 \\\\
+
+         dint(D)f(x,y)d$sig=\begin{cases}
+            2dint(D_1)f(x,y)d$sig  $mr-8 f(x,y)=f(x,2a-y) \\\\
+            0 $mr-4 $mr-8 $mr-8 $mr-8 f(x,y)=-f(x,2a-y)
+         \end{cases} \\\\
+
+         其中D_1是D在y=a的上半部分 \\
+         特别的,当a=0时, 区域关于x轴对称 
+         `,
+         
+         `若区域D关于原点对称, dint(D)f(x,y)d$sig=?`,
+         `D关于原点对称: \\
+         dint(D)f(x,y)d$sig=\begin{cases}
+            2dint(D_1)f(x,y)d$sig  $mr-8 f(x,y)=f(-x,-y) \\\\
+            0 $mr-4 $mr-8 $mr-8 $mr-8 f(x,y)=-f(-x,-y)
+         \end{cases} \\\\
+         `,
+
+         `若D关于y=x对称, 二重积分=?`,
+         `关于y=x对称: xy对调,D不变 \\
+         dint(D)f(x,y)d$sig=\begin{cases}
+            2dint(D_1)f(x,y)d$sig  $mr-8 f(x,y)=f(y,x) \\\\
+            0 $mr-4 $mr-8 $mr-8 $mr-8 f(x,y)=-f(y,x)
+         \end{cases} \\\\
+         `,
+      ],
       [
          `积分中值定理`,
          `若f(x)在[a,b]上连续, 则 \\
@@ -74,7 +256,9 @@ export default {
          `dint(D) f(x,y)d$sig=? \\\\ 二重积分的定义`,
          `dint(D) f(x,y)d$sig=lims(0,\lambda)\sum_{i=1}^n f($xi_i,\eta_i)\Delta $sig_i \\
          其中d$sig代表分割后的底面积 \\ 便于计算可以把底面积分成矩形 \\
-         d$sig = dxdy
+         d$sig = dxdy \\
+         其中dx, dy, d$sig 必须>0 \\
+         也就是: *(上限必须大于下限)
          `,
       ],
 
@@ -475,11 +659,6 @@ export default {
           (1) 部分分式法 \\
           (2) 加项减项凑微分
           `
-      ],
-
-      [
-         `有哪些积不出函数?`,
-         `e^{x^2}, \frac{\sin x}{x}, \frac{\cos x}{x} 是积不出的`
       ],
 
       [
