@@ -6,6 +6,18 @@ export default {
     label: "三角函数",
 
     cards: [
+        [
+            `\sec^{-1}(2)=?`,
+            `\sec^{-1}(2)=pinv(3)`,
+        ],
+        [
+            `\tan($a-$b)=?`,
+            `\tan($a-$b)=\frac{\tan $a-\tan $b}{1+\tan $a\tan $b}`,
+        ],
+        [
+            `\tan($a+$b)=?`,
+            `\tan($a+$b)=\frac{\tan $a+\tan $b}{1-\tan $a\tan $b}`,
+        ],
         getRandomItem([
             cardAns(`\tan \pi`, "0"),
             cardAns(`\arctan 0`, "0"),

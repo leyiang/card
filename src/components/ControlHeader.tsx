@@ -14,6 +14,14 @@ export function ControlHeader() {
         navigate("/");
     }
 
+    function getRandomSeed() {
+        const num = Math.floor(
+            Math.random() * 1000000
+        );
+
+        console.log("Generate Seed:", num );
+        localStorage.setItem("seed", num.toString() );
+    }
 
     return (
         <header className="flex items-center">
@@ -29,6 +37,7 @@ export function ControlHeader() {
             
             <GroupSelector />
             <StackSelector />
+            <Button onClick={getRandomSeed}>Random Seed</Button>
 
             <div className="ml-auto">
                 {

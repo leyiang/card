@@ -6,12 +6,26 @@ export default {
     label: "极限",
 
     cards: [
+        [
+            `\ln(x+\sqrt{1+x^2})泰勒展开`,
+            `\ln(x+\sqrt{1+x^2})=x-inv(6)x^3+o(x^3)`,
+        ],
+        getRandomItem([
+            [`simInfQ(\tan(x)-\sin(x))`, `\tan(x)-\sin(x) \sim inv(2)x^3`],
+            [`simInfQ(\sin(x)-\tan(x))`, `\sin(x)-\tan(x) \sim -inv(2)x^3`],
+        ]),
+
+        [`simInfQ(\arcsin(x)-x)`, `\arcsin(x)-x \sim inv(6)x^3`],
+        [`simInfQ(\tan(x)-x)`, `\tan(x)-x \sim inv(3)x^3`],
+        [`simInfQ(x-\arctan(x))`, `x-\arctan(x) \sim inv(3)x^3`],
+        [`simInfQ(x-\sin(x))`, `x-\sin(x) \sim inv(6)x^3`],
+
         getRandomItem([
             [
-                `问法111 \\ simInfQ((1+x)^$a-1)`, `(1+x)^$a-1\sim $a x`,
+                `simInfQ((1+x)^$a-1)`, `(1+x)^$a-1\sim $a x`,
             ],
             [
-                `问法222 \\ simInfQ((1-x)^$a-1)`, `(1-x)^$a-1\sim -$a x`,
+                `simInfQ((1-x)^$a-1)`, `(1-x)^$a-1\sim -$a x`,
             ]
         ]),
 
@@ -320,16 +334,11 @@ export default {
         ],
 
         [`simInfQ(a^x-1)`, `a^x-1 \sim x\ln(a)`],
-        [`simInfQ(\tan(x)-\sin(x))`, `\tan(x)-\sin(x) \sim inv(2)x^3`],
-        [`simInfQ(\arcsin(x)-x)`, `\arcsin(x)-x \sim inv(6)x^3`],
-        [`simInfQ(\tan(x)-x)`, `\tan(x)-x \sim inv(3)x^3`],
         [`simInfQ(\ln(x+\sqrt{1+x^2}))`, `\ln(x+\sqrt{1+x^2}) \sim x`],
         [`simInfQ(\arctan(x))`, `\arctan(x) \sim x`],
         [`simInfQ(x-\ln(1+x))`, `x-\ln(1+x) \sim inv(2)x^2`],
         [`simInfQ(e^x-1)`, `e^x-1 \sim x`],
         [`simInfQ(\tan(x))`, `\tan(x) \sim x`],
-        [`simInfQ(x-\arctan(x))`, `x-\arctan(x) \sim inv(3)x^3`],
-        [`simInfQ(x-\sin(x))`, `x-\sin(x) \sim inv(6)x^3`],
         [`simInfQ(1-\cos(x))`, `1-\cos(x) \sim inv(2)x^2`],
         [`simInfQ(\ln(1+x))`, `\ln(1+x) \sim x`],
         [`simInfQ(\log_a(1+x))`, `\log_a(1+x) \sim \frac{x}{\ln(a)}`],
@@ -361,12 +370,12 @@ export default {
         ],
 
         [
-            `有限个无穷小的积=?`,
+            `*(有限个)无穷小的积=?`,
             `无穷小`
         ],
 
         [
-            `有限个无穷小相加=?`,
+            `*(有限个)无穷小相加=?`,
             `无穷小`
         ],
 
@@ -402,11 +411,16 @@ export default {
         ],
 
         [
-            `\lim[1+$a(x)]^{$b(x)}=?`,
-            `对于\lim[1+$a(x)]^{$b(x)} \\ 若是\lim $a(x)=0 \\ \lim $b(x)=\infty \\
-            且\lim $a(x)$b(x)=A
+            `\lim[1+$a(x)]^{$b(x)}=? \\\\
+            其中\lim $a(x)=0 \\
+            \lim $b(x)=\infty
             `,
-            `那么\lim[1+$a(x)]^{$b(x)}=e^A`,
+            `
+                \lim[1+$a(x)]^{$b(x)}=e^A \\\\
+                其中\lim $a(x)$b(x)=A \\
+                \lim $a(x)=0 \\
+                \lim $b(x)=\infty
+            `,
         ],
 
         [
@@ -420,7 +434,10 @@ export default {
 
         [
             `lims(0)\frac{a^x-1}{x}=?`,
-            `lims(0)\frac{a^x-1}{x}=\ln a \\ (凑导数法求极限)`,
+            `lims(0)\frac{a^x-1}{x}=\ln a
+            \\ (凑导数法求极限) \\\\
+            *(等价无穷小): a^x \sim x\ln a
+            `,
         ],
 
         [
@@ -428,10 +445,16 @@ export default {
             `lims(\infty)(1+inv(x))^x=e \\ 1^\infty 形式`,
         ],
 
-        [
-            `lims(0)(1+x)^{inv(x)}=?`,
-            `lims(0)(1+x)^{inv(x)}=e \\ 1^\infty 形式`,
-        ],
+        getRandomItem([
+            [
+                `lims(0)(1-x)^{inv(x)}=?`,
+                `lims(0)(1-x)^{inv(x)}=inv(e) \\ 1^\infty 形式`,
+            ],
+            [
+                `lims(0)(1+x)^{inv(x)}=?`,
+                `lims(0)(1+x)^{inv(x)}=e \\ 1^\infty 形式`,
+            ],
+        ]),
 
         [
             `lims(0)\frac{\sin x}{x}=?`,

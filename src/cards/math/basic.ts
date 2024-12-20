@@ -7,6 +7,71 @@ export default {
 
     cards: [
         [
+            `(a+b)^3=?`,
+            `(a+b)^3=a^3+b^3+3a^2b+3ab^2`,
+        ],
+        [
+            getRandomItem([
+                `伯努利双纽线的草图`,
+                `a^2\cos 2$th 的草图`,
+            ]),
+
+            `image:shuangniu.png(
+                双$t(niu)线,两波
+            )`,
+        ],
+        [
+            `心摆线的草图?`,
+            `image:xinpai.png(
+                心摆一心一意，一对一人 \\
+                所以是1\pm \cos 或 1\pm \sin \\
+                \cos 关于x， 负往在、正往右 \\
+                \sin 关于y， 负往下、正往上 \\
+                猴屁永远在原点
+            )`,
+        ],
+        [
+            `如何将图像左、右平移?`,
+            `令f(x)向左平移: f(x+c)=g(x) \\
+            这样g(x-c)=f(x), 就把图像左移了 \\\\
+            f(x)向右平衡: f(x-c)=g(x) \\
+            g(x+c)=f(x), 图像就向右走了
+            `,
+
+            `*(左加右减，上加下减)`,
+            `如何将f(x)对称变换  \\
+            关于x轴、y轴
+            `,
+            `image:duichen.png(
+                关于y轴: f(x) $mr-2 \Rightarrow -f(x) \\
+                关于x轴: f(x) $mr-2 \Rightarrow f(-x) \\
+            )`,
+
+            `y=f(kx), 水平伸缩, 怎么画图?`,
+            `y=f(kx) \\
+            横坐标: 缩到原来的inv(k)倍 \\
+            纵坐标: 不变
+            `,
+        ],
+
+        [
+            `令r为公比, 等比数列无穷项和S_\infty=?`,
+            `等比数列求和公式: \\
+            \begin{cases}
+                \frac{a(1-r^n)}{1-r} & r\neq 1 \\
+                an & r=1
+            \end{cases} \\\\
+            当|r|<1时 lims(\infty,n)r^n=0 \\\\
+            S_\infty=\frac{a}{1-r}
+            `,
+        ],
+        [
+            `在反常积分中, 奇点是什么?`,
+            `奇点: \infty(端点)和瑕点 \\
+            瑕点: 无界点
+            `,
+        ],
+        [
             `\sin x 在[0,2\pi]上的反函数是?`,
             `image:inverse_sin.png(
                 在[0,2\pi]上\sin 通不过水平线测试,没有反函数 \\
@@ -84,12 +149,12 @@ export default {
                 `a\sin x +b\cos x=\sqrt{a^2+b^2}\sin(x+$phi)`,
             ],
 
-            [
-                `辅助角公式: \\
-                    \sqrt{a^2+b^2}\sin(x+$phi)=?
-                `,
-                `\sqrt{a^2+b^2}\sin(x+$phi)=a\sin x +b\cos x`,
-            ],
+            // [
+            //     `辅助角公式: \\
+            //         \sqrt{a^2+b^2}\sin(x+$phi)=?
+            //     `,
+            //     `\sqrt{a^2+b^2}\sin(x+$phi)=a\sin x +b\cos x`,
+            // ],
         ]),
 
         [

@@ -5,72 +5,196 @@ export default {
     label: "知悉即可",
 
     cards: [
-        [
-            `lims(\infty,n)(1+inv(n))^n=? (推导过程)`,
-            `
-                原极限中有变化的指数,尝试用\ln解决 \\
-                lims(\infty,n)n\ln(1+inv(n)) \\
-                令t=inv(n),n\to\infty,t\to 0 \\
-                lims(0,t)inv(t)\ln(1+t), 配成\ln(x)的导数形式 \\
-                =lims(0,t)\frac{\ln(1+t)+\ln(1)}{t}=inv(dt,d) \ln t|_{t=1} \\
-                lims(\infty,n)n\ln(1+inv(n))=inv(t)|_{t=1}=1 \\
-                lims(\infty,n)(1+inv(n))^n=e^{lims(\infty,n)n\ln(1+inv(n))}=e
-            `
-        ],
-        [
-            `$ddx x^x=? (推导过程)`,
-            `u=x^x, \:\: (\ln u)'=\frac{u'}{u} \\
-            \ln u=\ln x^x=x\ln x \\
-            (\ln u)'=\ln x+1=\frac{u'}{u} \\
-            u'=(x^x)'=u(\ln x+1)=x^x(\ln x+1) \\
-            (x^x)'=x^x(\ln x+1)`
-        ],
-
-        [
-            `如何推导出 $ddx \ln x?`,
-            `u=\ln x \\ e^u=x \\ $ddx e^u=$ddx x \\ \frac{d}{du}e^u $ddx u=1 \\ $ddx \ln x=\frac{1}{e^u}=\frac{1}{x}`
-        ],
-
-        [
-            `$ddx a^x=?`, `$ddx a^x=\ln(a)a^x \\ 如何推导出$ddx a^x?`,
-            `a^x=e^{\ln a^x}=e^{x\ln a} \\
-            $ddx a^x=$ddx e^{x\ln a} \\
-            对右侧使用链式法则($t(Chain Rule)) \\
-            $ddx e^{x\ln a}=\ln(a)e^{x\ln a}=\ln(a)a^x`
-        ],
-        [
-            `列出商的极限的情况 \\ lim(a,L), lim(a,M,g) \\\\ lims(a)\frac{f(x)}{g(x)}=?`,
-            `lim(a,L), lim(a,M,g) \\
-            lims(a)\frac{f(x)}{g(x)}=case2c(
-                0, L=0 $t( and ) M\neq0,
-                DNE, M=0 \textrm{ and } L\neq0,
-                \textrm{看情况}, M=0 \textrm{ and } L=0
-            )`,
-        ],
 [
-            `image:non_derivative.png(点-1处，为什么导数不存在?)`,
-            `image:non_derivative.png(在x=-1的左边,斜率是正的)`,
-            `image:non_derivative.png(在x=-1的右边,斜率是负的)`,
-            `image:non_derivative.png(想像一下导函数的图像)`,
-            `image:non_derivative_2.png(导函数x=-1处的极限都不存在)`,
-        ],
-        [
-            `不用计算器 \\ \sin(\arctan(\frac{3}{4}))=?`,
-            `image:sin_arctan.png(\arctan要求的是(\frac{对边}{邻边}=\frac{3}{4}的角$th))`,
-            `image:sin_arctan.png(\sin要求的是角$th对应的\frac{对边}{斜边}, 也就是\frac{3}{5})`,
-        ],
-        [
-            `如何通过反函数导数公式: \\ g'(x)=\frac{1}{f'(g(x))}, 推导出\arcsin'(x)`,
-            `\arcsin'(x)=\frac{1}{\sin'(\arcsin(x))} \\
-                =\frac{1}{\cos(\arcsin(x))} \\
-                \sin 函数输入一个角度$th, 得到一个比值 \\
-                \sin($th)=x (比值) \\
-                其反函数\arcsin输入一个比值, 得到一个角度$th \\
-                \arcsin(x)=$th
-            `,
-            `image:arcsin_derivative_process.png(\sin($th)=x, 构造出一个三角形 \\ \cos($th)=\sqrt{1-x^2})`,
-            `\arcsin'(x)=\frac{1}{\sqrt{1-x^2}} \\ x\in (-1, 1) \\ \arcsin的定义域为 [-1, 1] \\ 为什么端点上没有导数?`,
-            `image:arcsin_no_deriva.png(端点处切线为垂直于x轴)`
-        ],
+	`马克思主义基本特征`,
+	`科学性与革命性的统一 (科比的命也是命)`,
+],
+[
+	`认识世界的目的`,
+	`改变世界`,
+],
+[
+	`社会再生产的核心问题：`,
+	`两个补偿`,
+],
+[
+	`资本主义->帝国主义中起决定作用的：`,
+	`垄断组织`,
+],
+[
+	`《论十大关系》根本思想：`,
+	`根据本国情况走自己的道路`,
+],
+[
+	`《论十大关系》基本方针：`,
+	`调动一切为社会主义`,
+],
+[
+	`符合中国国情的改革方法：`,
+	`摸着石头过河`,
+],
+[
+	`中国式现代化与西方现代的*区别*`,
+	`全体人民共同富裕`,
+],
+[
+	`社会主义市场经济基石：`,
+	`产权保护制度`,
+],
+[
+	`五四前新文化的武器：`,
+	`个性解放思想；进化论观点`,
+],
+[
+	`八七会议：`,
+	`确定土地革命和武装起义`,
+],
+[
+	`三湾改编`,
+	`新型人民军队的重要开端`,
+	`确定了党对军队的领导`,
+],
+[
+	`古田会议：`,
+	`纠正错误思想，政治建军`,
+	`定型了党对军队的领导`,
+],
+[
+	`探月精神`,
+	`追梦、探索、攻坚、合作`,
+],
+[
+	`载人精神`,
+	`四特别：吃苦、战斗、攻关、奉献`,
+],
+[
+	`G20十九次峰会：`,
+	`星球杯->消除饥饿`,
+	`主题：可持续星球、`,
+	`要成立：抗饥饿全球联盟`,
+	`首要议题：消除饥饿贫困`,
+],
+[
+	`价值评价是主观的，但不是主观随意的`,
+	`评价结果也分*正错*`,
+],
+[
+	`事物发展是螺旋式上升的`,
+],
+[
+	`两点论和重点论的统一：问题要全面的看，又要看主流`,
+],
+[
+	`驾驭：价值寓于使用`,
+	`碧玉：必然寓于偶然`,
+	`斗同：斗争寓于同一`,
+	`绝相：绝对寓于相对`,
+	`普遍寓于特殊`,
+	`共性寓于个性`,
+],
+[
+	`毛泽东思想无改革，（邓）特色社会主义无革命`,
+],
+[
+	`出发点和落脚点：与人相关`,
+],
+[
+	`高质量就业方针：(老师傅)`,
+	`劳动者自主就业`,
+	`市场调解就业`,
+	`政府促进就业`,
+],
+[
+	`(新质生产力)基本内涵`,
+	`优化质变`,
+	`(新质生产力)核心标志`,
+	`生产率提升`,
+	`(新质生产力)特征`,
+	`三高`,
+	`(新质生产力)特点`,
+	`创新`,
+	`(新质生产力)主阵地`,
+	`新兴产业、未来产业`,
+	`(新质生产力)重点任务`,
+	`培育新产业`,
+	`(新质生产力)核心要素、动力`,
+	`科技创新`,
+],
+[
+	`林则徐：四洲志，睁眼看世界`,
+	`魏源：海国图志、师夷长技`,
+	`郑观应：盛世危言：君民共主 （是公主）`,
+],
+[
+	`一大建党二大纲`,
+	`三大国共要合作`,
+],
+//         [
+//             `lims(\infty,n)(1+inv(n))^n=? (推导过程)`,
+//             `
+//                 原极限中有变化的指数,尝试用\ln解决 \\
+//                 lims(\infty,n)n\ln(1+inv(n)) \\
+//                 令t=inv(n),n\to\infty,t\to 0 \\
+//                 lims(0,t)inv(t)\ln(1+t), 配成\ln(x)的导数形式 \\
+//                 =lims(0,t)\frac{\ln(1+t)+\ln(1)}{t}=inv(dt,d) \ln t|_{t=1} \\
+//                 lims(\infty,n)n\ln(1+inv(n))=inv(t)|_{t=1}=1 \\
+//                 lims(\infty,n)(1+inv(n))^n=e^{lims(\infty,n)n\ln(1+inv(n))}=e
+//             `
+//         ],
+//         [
+//             `$ddx x^x=? (推导过程)`,
+//             `u=x^x, \:\: (\ln u)'=\frac{u'}{u} \\
+//             \ln u=\ln x^x=x\ln x \\
+//             (\ln u)'=\ln x+1=\frac{u'}{u} \\
+//             u'=(x^x)'=u(\ln x+1)=x^x(\ln x+1) \\
+//             (x^x)'=x^x(\ln x+1)`
+//         ],
+//
+//         [
+//             `如何推导出 $ddx \ln x?`,
+//             `u=\ln x \\ e^u=x \\ $ddx e^u=$ddx x \\ \frac{d}{du}e^u $ddx u=1 \\ $ddx \ln x=\frac{1}{e^u}=\frac{1}{x}`
+//         ],
+//
+//         [
+//             `$ddx a^x=?`, `$ddx a^x=\ln(a)a^x \\ 如何推导出$ddx a^x?`,
+//             `a^x=e^{\ln a^x}=e^{x\ln a} \\
+//             $ddx a^x=$ddx e^{x\ln a} \\
+//             对右侧使用链式法则($t(Chain Rule)) \\
+//             $ddx e^{x\ln a}=\ln(a)e^{x\ln a}=\ln(a)a^x`
+//         ],
+//         [
+//             `列出商的极限的情况 \\ lim(a,L), lim(a,M,g) \\\\ lims(a)\frac{f(x)}{g(x)}=?`,
+//             `lim(a,L), lim(a,M,g) \\
+//             lims(a)\frac{f(x)}{g(x)}=case2c(
+//                 0, L=0 $t( and ) M\neq0,
+//                 DNE, M=0 \textrm{ and } L\neq0,
+//                 \textrm{看情况}, M=0 \textrm{ and } L=0
+//             )`,
+//         ],
+// [
+//             `image:non_derivative.png(点-1处，为什么导数不存在?)`,
+//             `image:non_derivative.png(在x=-1的左边,斜率是正的)`,
+//             `image:non_derivative.png(在x=-1的右边,斜率是负的)`,
+//             `image:non_derivative.png(想像一下导函数的图像)`,
+//             `image:non_derivative_2.png(导函数x=-1处的极限都不存在)`,
+//         ],
+//         [
+//             `不用计算器 \\ \sin(\arctan(\frac{3}{4}))=?`,
+//             `image:sin_arctan.png(\arctan要求的是(\frac{对边}{邻边}=\frac{3}{4}的角$th))`,
+//             `image:sin_arctan.png(\sin要求的是角$th对应的\frac{对边}{斜边}, 也就是\frac{3}{5})`,
+//         ],
+//         [
+//             `如何通过反函数导数公式: \\ g'(x)=\frac{1}{f'(g(x))}, 推导出\arcsin'(x)`,
+//             `\arcsin'(x)=\frac{1}{\sin'(\arcsin(x))} \\
+//                 =\frac{1}{\cos(\arcsin(x))} \\
+//                 \sin 函数输入一个角度$th, 得到一个比值 \\
+//                 \sin($th)=x (比值) \\
+//                 其反函数\arcsin输入一个比值, 得到一个角度$th \\
+//                 \arcsin(x)=$th
+//             `,
+//             `image:arcsin_derivative_process.png(\sin($th)=x, 构造出一个三角形 \\ \cos($th)=\sqrt{1-x^2})`,
+//             `\arcsin'(x)=\frac{1}{\sqrt{1-x^2}} \\ x\in (-1, 1) \\ \arcsin的定义域为 [-1, 1] \\ 为什么端点上没有导数?`,
+//             `image:arcsin_no_deriva.png(端点处切线为垂直于x轴)`
+//         ],
     ]
 } as ICardStack;

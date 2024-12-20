@@ -21,6 +21,13 @@ export function injectLimit(rule) {
             return `\\frac{\\partial ${ sym }}{\\partial ${ low_sym }}`;
         }
     };
+
+    rule["ddx_func"] = {
+        reg: getReg("ddx", 2),
+        to: (sym="y", low_sym="x") => {
+            return `\\frac{d ${ sym }}{d ${ low_sym }}`;
+        }
+    };
     rule["limdo"] = {
         reg: getReg("limdo", 4),
         to: (to_1="x_0", to_2="y_0", var_1="x", var_2="y") => {
@@ -160,6 +167,13 @@ export function injectLimit(rule) {
         reg: getReg("int", 2),
         to: (base="a", to="b") => {
             return `\\int_{${base}}^{${ to }}`;
+        }
+    };
+
+    rule["color"] = {
+        reg: getReg("color", 2),
+        to: (base="a", color="red") => {
+            return `{\\color{${ color }}${ base }}`;
         }
     };
 }

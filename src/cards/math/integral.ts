@@ -1,11 +1,540 @@
 import { ICardStack } from "../../types/card-type";
-import { withGap, withLineBreak } from "../../utils/array";
+import { getRandomItem, intQues, withGap, withLineBreak } from "../../utils/array";
 
 export default {
    id: "math_integral",
    label: "积分",
 
    cards: [
+      [
+         `积分侧面积公式`,
+         `侧面积: A=\int_a^b 2\pi f(x)ds \\
+            =\int_a^b 2\pi f(x)\sqrt{1+(y')^2}|dx| \\\\
+            确保b*(大于)a, dx的*(绝对值就可以去掉)
+         `,
+         `image:cemian.png(
+
+         )`,
+      ],
+      [
+         `积分弧长公式:`,
+         `S=\int_a^b \sqrt{1+(y')^2}|dx| \\
+         只要确保b*(大于)a,就可把*(绝对值去掉) \\\\
+         wtw呜呼(弧长): 根下宜家y'2
+         `,
+
+         `image:huchang.png(
+            ds=\sqrt{dx^2+dy^2}=\sqrt{[1+(\frac{dy}{dx})^2]dx^2} \\
+            =\sqrt{1+(y')^2}|dx|
+         )`,
+      ],
+      [
+         `平面图形的*(形心)公式是?`,
+         `
+            设区域D=\{(x,y) \mid 0\leq y\leq f(x), a\leq x\leq b\} \\
+            y=f(x)在[a,b]上连续 \\
+            
+            \bar{x}=\frac{
+               dint(D)xd$sig
+            }{
+               dint(D)d$sig
+            }=\frac{
+               \int_a^b xf(x)dx
+            } {
+               \int_a^b f(x)dx
+            }
+
+            \\ 
+            \bar{y}=\frac{
+               dint(D)yd$sig
+            }{
+               dint(D)d$sig
+            }=\frac{
+               inv(2)\int_a^b f^2(x)dx
+            } {
+               \int_a^b f(x)dx
+            }
+         `,
+
+         `image:xinxing.png`,
+      ],
+      [
+         `对于平面*(曲线) y=f(x) $mr-4 a\leq x\leq b, $mr-4 且f(x)*(可导)  \\
+         直线L: $mr-4 Ax+By+C=0 \\\\
+         求曲线绕着直线L*(旋转一周)的*(体积)
+         `,
+         `
+         V=\frac{\pi}{(A^2+B^2)^{\frac{3}{2}}} \int_a^b [Ax+Bf(x)+C]^2\left| Af'(x)-B \right |dx \\\\
+         蛋黄派,(AB放)三比二 \\
+         直线方程抄一遍 \\
+         Ay'减B!, 绝对值
+         `,
+
+         `image:asd.png(
+            需要注意: 直线L_0的*(垂线)与曲线*(至多)只能有*(一个交点) \\
+            *(图中是有问题的!!)
+         )`
+      ],
+      [
+         `曲线y=y(x)和x=a,x=b围成的*(曲边梯形) \\
+         (0\leq a\leq b) \\
+         绕*(y轴旋转一周)的*(体积)=?`,
+         `image:rotate_y.png(
+            切分出一个圆环, 展开成一个长方体 \\
+            高: y(x) $mr-4  宽: dx \\
+            长: 2\pi x(圆环周长) \\
+            V_y=2\pi \int_a^b x|y(x)|dx
+         )`,
+      ],
+      [
+         `y=y(x)与x=a,x=b \\
+         绕*(x轴旋转一周)的*(体积)=?`,
+         `image:rotate_x.png(
+            V_x=\int_a^b \pi y^2(x) dx \\
+            其中y(x)是切分的小圆的半径
+         )`,
+      ],
+      [
+         `\begin{cases}
+            x=a(t-\sin t) \\
+            y=a(1-\cos t)
+         \end{cases} \\\\
+         求该参数方程与x轴围成的面积
+         `,
+         `\begin{cases}
+            x=a(t-\sin t) \\
+            y=a(1-\cos t)
+         \end{cases} \\\\
+         积分区域是曲线与x轴的交点 \\
+         令y=0, t=0或2\pi \\
+         t=0时, x=0 $mr-4 t=2\pi时, x=2\pi a \\
+         
+         \int_0^{2\pi a}f(x)dx $mr-4 (其中f是参数方程确定的) \\
+         但是f不好表示,用*(换元法)规避f
+         `,
+
+         `
+            \int_0^{2\pi a}f(x)dx $mr-4 令x=a(t-\sin t) \\
+            \int_0^{2\pi}y(t)x'(t)dt=\int_0^{2\pi}a^2(1-\cos t)^2dt \\\\
+            简单积分，直接算即可
+         `,
+      ],
+      [
+         `*(如何求)参数方程的*(面积) \\
+         \begin{cases}
+            x=x(t) \\
+            y=y(t)
+         \end{cases} \Rightarrow $mr-4 y=f(x) \\\\
+
+         参数方程对应一个f(x)方程 \\
+         但它的形式可能会*(很复杂) \\
+        `,
+         `
+         \begin{cases}
+            x=x(t) \\
+            y=y(t)
+         \end{cases} \Rightarrow $mr-4 y=f(x) \\
+         
+         面积A=\int_a^b f(x)dx \\
+         所以*(做换元), 令x=x(t) \\
+         (自变量)x=x(t)(关于t的方程) \\
+         A=\int_{x^{-1}(a)}^{x^{-1}(b)} f(x(t))x'(t)dt =
+        \int_{$a}^$b y(t)x'(t)dt
+         `,
+      ],
+      [
+         `image:ji_area.png(
+            极坐标系下由r=r_1($th),r=r_2($th) \\
+            和射线$th=$a,$th=$b围成的面积
+         )`,
+         `image:ji_area.png(
+            A=inv(2)\int_$a^$b |r_1^2($th)-r_2^2($th)|d$th \\
+            扇形面积: inv(2)r^2 $D $th \\
+            公式是用*(大扇形减小扇形)
+         )`,
+      ],
+      [
+         `image:integral_area.png(
+            计算y_1(x),y_2(x)和x=a,x=b围成的面积
+         )`,
+         `image:integral_area.png(
+            A=\int_a^b |y_1(x)-y_2(x)|dx
+         )`,
+      ],
+      [
+         `\int_0^{+\infty} e^{-x^2}dx=?`,
+         `image:gauss_integral.png(
+            \int_0^{+\infty} e^{-x^2}dx=\frac{\sqrt{\pi}}{2} $mr-4 (高斯积分)
+         )`,
+      ],
+      [
+         `什么是 $G($a)?`,
+         `$G($a)=\int_0^{+\infty}x^{$a-1}e^{-x}dx $mr-4 (第一种写法) \\
+         $G($a)=2\int_0^{+\infty}t^{2$a-1}e^{-t^2}dt  $mr-4 (x=t^2)
+
+          \\\\
+         $G($a+1)=$a$G($a)
+         `,
+         `$G(1)=?`,
+         `$G(1)=\int_0^{+\infty}e^{-x}dx=1`,
+
+         `$G(2)=? $mr-4 $G(3)=?`,
+         `$G(2)=$G(1+1)=1\cdot $G(1)=1 \\\\
+         $G(3)=$G(2+1)=2\cdot $G(2)=2
+         `,
+
+         `$G(inv(2))=? $mr-4 $G(\frac{3}{2})=?`,
+         `
+            $G($a)=2\int_0^{+\infty}t^{2$a-1}e^{-t^2}dt \\
+            $G(inv(2))=2\int_0^{+\infty}e^{-t^2}dt=\sqrt{\pi} $mr-4 (高斯积分) \\\\
+            $G(\frac{3}{2})=$G(inv(2)+1)=inv(2)$G(inv(2))
+
+         `,
+
+         `$G(n+1)=? \\\\ 其中n为*(非负整数)`,
+         `$G(n+1)=n! \\\\ (见例9.28, P184)`,
+
+         // https://youtu.be/NoE2AmRwx1I?list=PLkqMHcP63alkH174-O8dxZPaRqbvSrNIf&t=1558
+      ],
+      [
+         `\int_0^{+\infty}e^{-x}dx=?`,
+         `image:ex_area.png(
+            \int_0^{+\infty}e^{-x}dx=\int_0^{-\infty}e^xdx=1
+         )`,
+      ],
+      [
+         `已知f(x)以T为*(周期), $mr-4 F(x)=\int_a^x f(t)dt \\
+         F(x)-\frac{x}{T} \int_0^T f(x)dx $mr-2 的*(周期为什么是T)?
+         `,
+         `令$phi(x)=F(x)-\frac{x}{T} \int_0^T f(x)dx \\
+         证明: $phi(x+T)=$phi(x) \\
+         也就是:  $phi(x+T)-$phi(x)=0 \\\\
+          *(重要): 要证明复杂式子相等时*(会比较难) \\
+          而证明两者相减=0, 可以做些化简, *(相对简单)
+         `,
+
+         `
+         $phi(x)={\color{red} \int_a^x f(t)dt} -{\color{blue}\frac{x}{T} \int_0^T f(x)dx} \\
+         $phi(x+T)=\int_a^{x+T} f(t)dt-\frac{x+T}{T} \int_0^T f(x)dx \\
+         ={\color{red}\int_a^x f(t)dt}
+         +\int_x^{x+T} f(t)dt-\frac{color(x,blue)+T}{T} \int_0^T f(x)dx \\
+         (同色项可以消掉) \\\\
+         $phi(x+T)-$phi(x)=\int_x^{x+T} f(t)dt-\int_0^T f(x)dx=0 \\
+         `,
+      ],
+      [
+         `已知f(x)*(可积)且以T为*(周期) \\\\
+         \int_0^x f(t)dt 的*(周期性)是?
+         `,
+         `
+            前提: f(x)*(可积)且以T为*(周期), $mr-4 F(x)=\int_0^x f(t)dt \\\\
+            F(x)*(以T为周期) $mr-2 \iff \int_0^T f(x)dx=0 \\
+            (*(充要条件): *(一个周期)上的*(积分等于0))
+         `,
+         `
+         利用周期性求定积分 \\
+         \int_a^{a+nT} f(x)dx=? \\\\
+         (注意这里是求定积分, 不是*(变上限积分)) \\
+         (不要混淆概念)
+         `,
+         `
+         \int_a^{a+nT} f(x)dx=n\int_0^T f(x)dx \\\\
+         其中f(x)是以T为*(周期)的*(连续函数)
+         `,
+         `image:def_zhouqi.png(
+            其中*(被积函数)f(x)以T为*(周期)
+         )`,
+         `证明: \\
+         \int_a^{a+T} f(x)dx=\int_a^0+\int_0^T+\int_T^{a+T} \\
+         利用*(积分可拆性), 把要证的式子变出来 \\
+         接下来只需证明\int_a^0=-\int_T^{a+T} \\
+         \int_T^{a+T}f(x)dx $mr-2 ceq(x-T=u) \int_0^{a}f(u+T)du $mr-2 = \int_0^{a}f(x)dx \\\\
+         上下限颠倒，所以是相反的，证毕
+         `,
+      ],
+      [
+         `若f(x)是*(奇函数), 其*(变上限积分): \\\\
+
+          \int_a^x f(t)dt的*(奇偶性为)?
+         `,
+
+         `
+            1. 若f(x)*(可积) \\
+            2. 且f(x)是*(奇函数) \\\\
+            则\int_a^x f(t)dt是*(偶函数) \\
+            (只是*(可积), 变上限积分不一定是*(原函数)) \\
+            (可积: 可能有*(跳跃间断点)、可去间断点)
+         `,
+
+         `之前说f(x)是*(可积的),要是f(x)是*(连续)的呢?`,
+
+         `1. 若f(x)*(连续) \\
+         2. 且f(x)是*(奇函数) \\\\
+         则\int_a^x f(t)dt+C是*(偶函数) \\
+         (注意这里多个了*(任意常数), 代表*(全体原函数)) \\
+         `,
+
+         `f(x)*(可积), 就有*(变上限积分)的性质 \\\\
+         f(x)*(连续), 才谈*(原函数)的性质 
+         `,
+
+         `若f(x)是*(偶函数), 其*(变上限积分)的*(奇偶性)为?`,
+
+         `1. 若f(x)是*(可积)的*(偶函数) \\
+         \int_0^x f(t)dt 是*(奇函数) $mr-4 (*(注意这里下限是0)) \\\\
+         *(下限)如果*(换成常数)a呢? 
+         `,
+
+         `
+            \int_a^x f(t)dt={\color{red} \int_a^0 f(t)dt}+\int_0^x f(t)dt \\\\
+            其中 color(第一部分)是个常数, $mr-4  奇函数+常数=*(非奇非偶) \\ \\
+
+            但如果\int_a^x f(t)dt=\int_0^x f(t)dt $mr-4 (也就是 color(a到0) 上的*(积分是零)) \\
+            则(在上述条件都满足的情况下):\int_a^x f(t)dt是奇函数
+
+         `,
+
+         `image:integral_odd.png(
+            \int_a^x f(t)dt=\int_0^x 的情况 \\
+            a到0上的*(积分抵消了)
+         )`,
+
+         // https://youtu.be/pKdQY4tiBAQ?list=PLkqMHcP63alkH174-O8dxZPaRqbvSrNIf&t=2285
+
+         ` *(奇偶性互换) \\
+         f(x)是奇函数(偶函数), 则\int_0^x f(t)dt是偶函数(奇函数) \\\\
+         令F(x)=\int_0^x f(t)dt,\:\:\: F(-x)=\int_0^{-x} f(t)dt \\
+         ceq(令t=-u)\int_0^{x} f(-u)\cdot-du \:\: *(这里使用了换元), t=-u \\
+         也就是t=\phi(u)=-u, 新的上限$b满足\phi($b)=-x \\
+         -$b=-x \Rightarrow $b=x \\
+         也就是: F(-x)=\int_0^{x} f(-u)\cdot-du=\int_0^{x} f(u)du=F(x)
+         `,
+         `已知, f(x) 与 \int_0^x f(t)dt 的奇偶性相反 \\\\
+         这里为什么用的是 0到x? \\ a到x不可以吗?`,
+
+         `\int_a^x f(t)dt=\int_a^0 f(t)dt+\int_0^x f(t)dt \\\\
+         其中a到0的定积分*(就是个数)(只用讨论\neq0的情况) \\
+         所以,如果f(x)*(是奇函数), 其变上限积分就是偶函数 \\
+         那么 \int_a^x f(t)dt这是偶函数, (偶+偶)=偶  \\
+         但如果f(x)是偶函数,变上限积分就是奇函数,*(这时就不成立了) \\
+         (偶+奇)= 非奇非偶
+         `,
+      ],
+
+      [
+         getRandomItem([
+            `\int_0^{2\pi}\sin^n xdx=?`,
+            `\int_0^{2\pi}\cos^n xdx=?`,
+         ]),
+
+         `\int_0^{2\pi}\cos^n xdx=\int_0^{2\pi}\sin^n xdx=\\
+
+         \begin{cases}
+            0 & n为正奇数 \\
+            4 \int_0^{pinv(2)}\sin^n xdx & n为偶数 \\
+         \end{cases}
+         `
+      ],
+
+      [
+         `\int_0^{\pi}\cos^n xdx=?`,
+         `\int_0^{\pi}\cos^n xdx=
+
+         \begin{cases}
+            0 & n为正奇数 \\
+            2 \int_0^{pinv(2)}\cos^n xdx & n为偶数 \\
+         \end{cases}
+         `,
+      ],
+
+      [
+         `\int_0^{\pi}\sin^n xdx=?`,
+         `\int_0^{\pi}\sin^n xdx=2\int_0^{pinv(2)}\sin^n xdx=?`,
+      ],
+      [
+         getRandomItem([
+            `\int_0^{pinv(2)}\sin^n xdx=?`,
+            `\int_0^{pinv(2)}\cos^n xdx=?`,
+         ]),
+
+         `
+            \int_0^{pinv(2)}\sin^n xdx=\int_0^{pinv(2)}\cos^n xdx= \\\\
+            \begin{cases}
+               \frac{n-1}{n}\frac{n-3}{n-2}\dotsb\frac{2}{3} & n为>1的奇数 \\
+               \frac{n-1}{n}\frac{n-3}{n-2}\dotsb\frac{1}{2}pinv(2) & n为偶数 \\
+            \end{cases}
+         `,
+
+         `有关n次\sin, \cos的定积分公式`,
+         `image:def_equation.png`,
+         `证明: \int_0^\pi xf(\sin x)dx=pinv(2)\int_0^\pi f(\sin x)dx \\\\
+         \int_0^\pi xf(\sin x)dxceq(区间再现)\int_0^\pi (\pi-x)f(\sin (\pi-x))dx \\
+         (原式)=\pi\int_0^\pi f(\sin x)dx-\int_0^\pi xf(\sin x)dx \\
+         2\int_0^\pi xf(\sin x)dx=\pi\int_0^\pi f(\sin x)dx \\
+         \int_0^\pi xf(\sin x)dx=pinv(2)\int_0^\pi f(\sin x)dx \\
+         `
+      ],
+      [
+         `什么是f(x)在区间[a,b]上的平均值?`,
+         `f(x)在区间[a,b]上的*(平均值): \\\\
+          \bar{f} = inv(b-a)\int_a^b f(x)dx=f($xi)`,
+      ],
+      [
+         `牛顿莱布尼茨公式的*(使用条件)`,
+         `1. 若f(x)在[a,b]上有原函数 \\
+         \int_a^b f(x)dx=F(x)\Big|_a^b=F(b)-F(a) \\\\
+
+         2.若f(x)在[a,b]上分段有原函数  \\
+         在[a,c), (c,b]上*(分别有原函数) \\
+
+         \int_a^b f(x)dx=\int_a^c f(x)dx+\int_c^b f(x)dx \\
+         =lims(c^-)F_1(x) - F_1(a)+F_2(b)-lims(c^+)F_2(x) \\
+         在不连续点要*(取极限)
+         `,
+         `请*(证明)牛顿莱布尼茨公式 \\
+         \int_a^b f(x)dx=F(x)\Big|_a^b=F(b)-F(a)
+         `,
+
+         `设F(x)是连续函数f(x)在[a,b]上的*(一个原函数) \\
+         令G(x)=\int_a^x f(t)dt, G(x)也是f(x)的*(一个原函数) \\
+         F(x)+C=G(x) $mr-4 *(原函数之间差一个常数) \\
+         \int_a^b f(t)dt=G(b)-G(a)=F(b)+C-F(a)-C \\
+         =F(b)-F(a) $mr-4 证毕 \\\\
+         证明重点: 用变上限积分的性质
+         `,
+      ],
+      [
+         `如何把有理函数拆成最简分式? \\
+         (ax+b)(px^2+qx+r) \\\\
+         \frac{P_n(x)}{Q_m(x)}=?
+         `,
+         `image:chai.png`,
+
+         `如: \frac{4x^2-6x-1}{(x+1)(2x-1)^2} \\
+         就可以拆成: $mr-4 \frac{A}{x+1}+\frac{B}{2x-1}+\frac{C}{(2x-1)^2} \\
+         `,
+
+         `
+         A(2x-1)^2+B(x+1)(2x-1)+C(x+1)=4x^2-6x-1 \\\\
+         *(简化计算): 令x=-1 把B和C*(消掉), 可以得到A
+         `,
+      ],
+      [
+         `\int e^{$a x}\sin bx=? \\
+         (用公式算)
+         `,
+         `
+         \int e^{$a x}\sin bx=\frac{
+            \begin{vmatrix}
+               (e^{$a x})' & (\sin bx)' \\
+               e^{$a x} & \sin bx \\
+            \end{vmatrix}
+         }{$a^2+b^2} \\\\
+         公式对\cos也成立, (把\sin 换成\cos 即可)
+
+         `,
+      ],
+      [
+         `\sqrt{x}dx凑微分?`,
+         `\sqrt{x}dx=\frac{2}{3}d(x^{\frac{3}{2}})`,
+      ],
+      getRandomItem([
+         [
+            `$ddx inv(2a)\ln \left| \frac{x-a}{x+a} \right|=?`,
+            `$ddx inv(2a)\ln \left| \frac{x-a}{x+a} \right|=inv(x^2-a^2)`
+         ],
+
+         [
+            `$ddx inv(2a)\ln \left| \frac{x+a}{x-a} \right|=?`,
+            `$ddx inv(2a)\ln \left| \frac{x+a}{x-a} \right|=inv(a^2-x^2)`
+         ],
+      ]),
+
+      [
+         `什么样的函数*(必定没有)原函数? \\
+         (用间断点判断)
+         `,
+         `
+            若f(x)在区间I上有*(第一类间断点)和*(无穷间断点) \\
+            则f(x)在I上*(一定没有)原函数 \\\\
+            *(振荡间断点)可能有,可能没有
+         `
+      ],
+
+      [
+         `*(证明)原函数存在定理(不定积分) \\\\ 
+         连续函数f(x)必有原函数F(x) \\
+         F=\int_a^x f(t)dt
+         `,
+         `
+         F=\int_a^x f(t)dt, $mr-4 F'(x)=lims(0,$D x)\frac{$D F}{$D x} \\
+         其中$D F=F(x+$D x)-F(x) \\
+         =\int_a^{x+$D x} f(t)dt-\int_a^x f(t)dt \\
+         =\int_a^{x} f(t)dt+\int_{x}^{x+$D x} f(t)dt-\int_a^x f(t)dt=\int_{x}^{x+$D x} f(t)dt \\
+         根据*(积分中值定理): \int_{x}^{x+$D x} f(t)dt=f($xi)$D x $mr-4 (其中$xi 介于x与x+$D x) \\
+         F'(x)=lims(0,$D x)\frac{$D F}{$D x}=lims(0,$D x)f($xi)=f(x)
+         `,
+      ],
+      intQues(`\cos^2x`, `\frac{x}{2}+\frac{\sin 2x}{4}`),
+      intQues(`\sin^2x`, `\frac{x}{2}-\frac{\sin 2x}{4}`),
+      intQues(`\cot x`, `\ln |\sin x|`),
+      intQues(`\tan x`, `-\ln |\cos x|`),
+
+      [
+
+         ...getRandomItem([
+            [
+               `积分中值定理`,
+               `若f(x)在[a,b]上连续, 则 \\
+               \int_a^b f(x)dx=f($xi)(b-a) \\
+               a < $xi < b
+               `,
+            ],
+
+            [
+               `使用积分中值定理的*(前提)是? \\
+               \int_a^b f(x)dx=f($xi)(b-a)
+               `,
+               `f(x)在[a,b]上*(连续)
+               `,
+            ]
+         ]),
+
+            `若f(x), g(x)在[a,b]上连续 \\
+            g(x)不变号 (在[a,b]上恒大于零或恒小于零) \\
+            \int_a^b f(x)g(x)dx=f($xi)\int_a^b g(x)dx \\
+            a\leq $xi \leq b`,
+      ],
+
+      [
+         `二重积分的中值定理?`,
+         `若f(x,y)在有界闭区域D上连续 \\
+         则至少存在一点($xi,n)\in D, 使得: \\
+         dint(D)f(x,y)d$sig = f($xi,n)A $mr-4 (A为D的面积 )
+         `,
+      ],
+
+      getRandomItem([
+         [
+            `\int inv(x^2)dx=?`,
+            `\int inv(x^2)dx=-inv(x)+C`,
+         ],
+         [
+            `(inv(x))'=?`,
+            `(inv(x))'=-inv(x^2)`,
+         ],
+      ]),
+
+      getRandomItem([
+         [
+            `\int inv(\sqrt{x})dx=?`,
+            `\int inv(\sqrt{x})dx=2\sqrt{x}+C`,
+         ],
+         [
+            `(\sqrt{x})'=?`,
+            `(\sqrt{x})'=inv(2\sqrt{x})`,
+         ],
+      ]),
       [
          `重积分换元,积分区域计算 \\\\
          D=\{(x,y) \mid 0\leq x \leq 1-y, $mr-2 0\leq y\leq 1\} \\
@@ -39,12 +568,6 @@ export default {
          \end{vmatrix} \\\\
          换元时,计算雅可比行列式+*(绝对值)
          `,
-      ],
-      [
-         `\int_0^{+\infty} e^{-x^2}dx=?`,
-         `image:gauss_integral.png(
-            \int_0^{+\infty} e^{-x^2}dx=\frac{\sqrt{\pi}}{2} $mr-4 (高斯积分)
-         )`,
       ],
       [
          `
@@ -105,7 +628,7 @@ export default {
          `,
       ],
       [
-         `有哪些积不出函数? \\
+         `有哪些*(积不出函数)? \\
          (在二重积分交换积分次序)
          `,
 
@@ -170,7 +693,7 @@ export default {
          其中D_1是D在y=a的上半部分 \\
          特别的,当a=0时, 区域关于x轴对称 
          `,
-         
+
          `若区域D关于原点对称, dint(D)f(x,y)d$sig=?`,
          `D关于原点对称: \\
          dint(D)f(x,y)d$sig=\begin{cases}
@@ -188,23 +711,6 @@ export default {
          `,
       ],
       [
-         `积分中值定理`,
-         `若f(x)在[a,b]上连续, 则 \\
-         \int_a^b f(x)dx=f($xi)(b-a) \\
-         a < $xi < b
-         `,
-
-         `若f(x), g(x)在[a,b]上连续 \\
-         g(x)不变号 (在[a,b]上恒大于零或恒小于零) \\
-         \int_a^b f(x)g(x)dx=f($xi)\int_a^b g(x)dx \\
-         a\leq $xi \leq b`,
-         `二重积分的中值定理?`,
-         `若f(x,y)在有界闭区域D上连续 \\
-         则至少存在一点($xi,n)\in D, 使得: \\
-         dint(D)f(x,y)d$sig = f($xi,n)A $mr-4 (A为D的面积 )
-         `,
-      ],
-      [
          `f(x)原函数的符号?`,
          `f(x)一个原函数: \int_a^x f(t)dt \\
          f(x)的所有函数: \int f(x)dx \\
@@ -214,16 +720,18 @@ export default {
       ],
       [
          `F(x)=\int_a^x f(t)dt \\
-         f(t)在[a,b]上可积性与F(x)的关系
+         f(t)在[a,b]上*(可积性)与F(x)的关系
          `,
          `F(x)=\int_a^x f(t)dt \\\\
-         1. 若f(t)在[a,b]上可积, F(x)在[a,b]上连续 \\\\
-         2. 若f(t)在[a,b]上连续 \\ F(x)在[a,b]上可导, 且F'(x)=f(x)
+         1. 若f(t)在[a,b]上*(可积), F(x)在[a,b]上*(连续) \\\\
+         2. 若f(t)在[a,b]上*(连续) \\ F(x)在[a,b]上*(可导), 且F'(x)=f(x)
          `,
-         `若f(x)在x_0处不连续,F(x)在x_0处可导吗?`,
-         `x_0是f(x)是*(可去间断点), F(x)在x_0处可导 \\
-         F'(x_0)=lims(x_0)f(x) \\\\
-         若x_0是f(x)的跳跃间断点, F(x)在x_0处不可导`,
+         `若f(x)在x_0处*(不连续),F(x)在x_0处*(可导)吗?`,
+         `x_0是f(x)是*(可去间断点), F(x)在x_0处*(可导) \\
+         F'(x_0)=lims(x_0)f(x) \\
+         这让这个*(极限存在), 则必须是可去间断点
+          \\\\
+         若x_0是f(x)的*(跳跃间断点), F(x)在x_0处*(不可导)`,
       ],
       [
          `image:dint_y.png(
@@ -233,7 +741,7 @@ export default {
             dint(D)f(x,y)dxdy=int(c,d)dy \int_{$phi_1(x)}^{$phi_2(x)}f(x,y)dx \\
             从左往右的射线,确定进入点, $phi_1(x)到$phi_2(x)
          )`,
-         `*(先对y求),再对x求积分 \\
+         `*(先对x求),再对y求积分 \\
          dint(D)f(x,y)dxdy=int(c,d)dy \int_{$phi_1(x)}^{$phi_2(x)}f(x,y)dx \\\\
          =int(c,d)\left [  \int_{$phi_1(x)}^{$phi_2(x)}f(x,y)dx \right ]dy 
          `,
@@ -305,7 +813,7 @@ export default {
             `,
          `
          \int_a^bf(x)dx=\int_a^c f(x)dx+\int_c^bf(x)dx \\\\
-         拆出来的两个都收敛,则整体收敛
+         拆出来的*(两个都收敛),则*(整体收敛)
          `,
       ],
 
@@ -317,9 +825,9 @@ export default {
       ],
 
       [
-         `反常积分敛散性判断 \\ (比较判别法的*(极限形式))`,
+         `反常积分*(敛散性)判断 \\ (比较判别法的*(极限形式))`,
          `设f(x),g(x)在[a,+\infty)上*(非负连续), 且lims(+\infty)\frac{f(x)}{g(x)}=\lambda \\
-            若\lambda \neq 0, \int_a^{+\infty}f(x)dx与\int_a^{+\infty}g(x)dx同敛散 \\\\
+            若\lambda \neq 0, \int_a^{+\infty}f(x)dx与\int_a^{+\infty}g(x)dx*(同敛散) \\\\
             若\lambda = 0, \int_a^{+\infty}g(x)dx收敛\Rightarrow \int_a^{+\infty}f(x)dx收敛 \\
             \lambda=0 *(说明g比f大), x\to+\infty时 \\\\
             若\lambda = +\infty, \int_a^{+\infty}g(x)dx发散\Rightarrow \int_a^{+\infty}f(x)dx 发散 \\
@@ -327,7 +835,7 @@ export default {
       ],
 
       [
-         `反常积分敛散性判断 \\ (比较判别法)`,
+         `反常积分*(敛散性)判断 \\ (比较判别法)`,
          `设f(x),g(x)在[a,+\infty]上连续 \\ 且(0\leq f(x)\leq g(x)) \\\\
          \int_a^{+\infty}g(x)dx 收敛 \Rightarrow \int_a^{+\infty}f(x)dx收敛 \\
          *(大的收敛,小的也收敛) \\\\
@@ -350,29 +858,6 @@ export default {
          `\int_{-\infty}^{+\infty} f(x)dx=\int_{-\infty}^0 f(x)dx+\int_0^{+\infty} f(x)dx \\\\
          拆成两个积分后,*(都收敛)才是收敛
          `,
-      ],
-
-      [
-         `牛顿莱布尼茨公式的*(使用条件)`,
-         `1. 若f(x)在[a,b]上*(连续),F(x)是f(x)的一个原函数 \\
-         则I=\int_a^b f(x)dx=F(x)\Big|_a^b=F(b)-F(a) \\\\
-
-         2.若f(x)在[a,b]上*(可积)(有界,有限个间断点)  \\
-         I=F(b)-F(a) \\ \\
-
-         3.若f(x)在[a,b]上可积, 但f(x)在a或b*(没定义) \\
-         只要保证lims(b^-)F(x)或lims(a^+)F(x)存在 \\ \\
-         I=lims(b^-)F(x)-lims(a^+)F(x)
-         `
-      ],
-
-      [
-         `1+\cos x \\
-         (想办法三角代换)`,
-         `1+\cos x=2\cos^2 \frac{x}{2} \\\\
-         1+\cos x=1+\cos (2 \cdot \frac{x}{2}) \\
-         =1+2\cos^2(\frac{x}{2})-1=2\cos^2 \frac{x}{2} 
-         `
       ],
 
       [
@@ -456,34 +941,14 @@ export default {
       ],
 
       [
-         `有关n次\sin, \cos的定积分公式`,
-         `image:def_equation.png`,
-         `证明: \int_0^\pi xf(\sin x)dx=pinv(2)\int_0^\pi f(\sin x)dx \\\\
-         \int_0^\pi xf(\sin x)dxceq(区间再现)\int_0^\pi (\pi-x)f(\sin (\pi-x))dx \\
-         (原式)=\pi\int_0^\pi f(\sin x)dx-\int_0^\pi xf(\sin x)dx \\
-         2\int_0^\pi xf(\sin x)dx=\pi\int_0^\pi f(\sin x)dx \\
-         \int_0^\pi xf(\sin x)dx=pinv(2)\int_0^\pi f(\sin x)dx \\
-         `
-      ],
-
-      [
-         `利用奇偶性求定积分: \int_{-a}^{a}f(x)dx=?`,
-         `如果f(x)是奇函数的话，积分值等于0 \\
+         `利用奇偶性求定积分 \\\\
+          \int_{-a}^{a}f(x)dx=?`,
+         `*(偶倍奇零) \\\\ 如果f(x)是奇函数的话，积分值等于0 \\
           如果f(x)是偶函数，积分等于2\int_0^{a}f(x)dx \\\\
           想象一下函数的图像, 奇函数就抵消了 \\
           偶函数就是翻倍
           `,
       ],
-
-      [
-         `利用周期性求定积分`,
-         `image:def_zhouqi.png(F(x)=\int_a^b f(x)dx, 若F(x+T)=F(x) \\
-         变上限积分以T为周期, 则 \\
-
-         \int_a^{a+T} f(x)dx=\int_0^T f(x)dx
-         )`
-      ],
-
 
       [
          `定积分*(分部积分法)`,
@@ -500,29 +965,6 @@ export default {
          其中g($a)=a, \:\: g($b)=b \\ \\
          *(上下限不要忘了换!)
          `
-      ],
-
-      [
-         `若f(x)有奇偶性, 则\int_0^x f(t)dt的奇偶性为?`,
-         `
-         *(奇偶性互换) \\
-         f(x)是奇函数(偶函数), 则\int_0^x f(t)dt是偶函数(奇函数) \\\\
-         令F(x)=\int_0^x f(t)dt,\:\:\: F(-x)=\int_0^{-x} f(t)dt \\
-         ceq(令t=-u)\int_0^{x} f(-u)\cdot-du \:\: *(这里使用了换元), t=-u \\
-         也就是t=\phi(u)=-u, 新的上限$b满足\phi($b)=-x \\
-         -$b=-x \Rightarrow $b=x \\
-         也就是: F(-x)=\int_0^{x} f(-u)\cdot-du=\int_0^{x} f(u)du=F(x)
-         `,
-         `已知, f(x) 与 \int_0^x f(t)dt 的奇偶性相反 \\\\
-         这里为什么用的是 0到x? \\ a到x不可以吗?`,
-
-         `\int_a^x f(t)dt=\int_a^0 f(t)dt+\int_0^x f(t)dt \\\\
-         其中a到0的定积分*(就是个数)(只用讨论\neq0的情况) \\
-         所以,如果f(x)*(是奇函数), 其变上限积分就是偶函数 \\
-         那么 \int_a^x f(t)dt这是偶函数, (偶+偶)=偶  \\
-         但如果f(x)是偶函数,变上限积分就是奇函数,*(这时就不成立了) \\
-         (偶+奇)= 非奇非偶
-         `,
       ],
 
       [
@@ -562,7 +1004,10 @@ export default {
       ],
 
       [
-         `定积分的不等式`,
+         `定积分的不等式 \\\\
+         若f(x)\leq g(x), 其中(a\leq b) \\
+         其定积分*(不等式)为?
+         `,
          `若f(x)\leq g(x), 其中(a\leq b) \\
          则\int_a^b f(x)dx \leq \int_a^b g(x)dx `,
          `image:def_integral_compare.png(
@@ -587,21 +1032,19 @@ export default {
       ],
 
       [
+         `可积的定义`,
+         `\int_a^b f(x)dx=lims(0,\lambda) \sum_{i=1}^n f($xi_i)\Delta x_i \\ \\
+              不论小区间怎么分, 不论$xi_i怎么取 \\
+              极限值都一样,就称f(x)在[a,b]上可积 \\
+              极限存在=可积
+              `,
          `定积分存在的充分条件`,
          `1. f(x)在[a,b]上连续 \\\\
            2. f(x)在[a,b]上有界,且只有*(有限)个间断点 \\
            第一、二类间断点都可以 \\ (在[a,b]上有界,不可能出现无穷间断点) \\\\
            3. f(x)在[a,b]上仅有有限个第一类间断点
               `
-      ],
 
-      [
-         `可积的定义`,
-         `\int_a^b f(x)dx=lims(0,\lambda) \sum_{i=1}^n f($xi_i)\Delta x_i \\ \\
-              不论小区间怎么分, 不论$xi_i怎么取 \\
-              极限值都一样,就称f(x)在[a,b]上可积 \\
-              极限存在=可积
-              `
       ],
 
       [
@@ -653,14 +1096,6 @@ export default {
          dx=d(2\arctan t)=\frac{2}{1+t^2}dt
          `,
       ],
-      [
-         `常见的可积函数`,
-         `有理函数R(x) \\ 有理函數是通過*(多項式)的加減乘除得到的函數 \\
-          (1) 部分分式法 \\
-          (2) 加项减项凑微分
-          `
-      ],
-
       [
          `\sqrt{x^2-a^2}, 求积分三角换元`,
          `对\sqrt{x^2-a^2}换元 \\
@@ -774,18 +1209,5 @@ export default {
          `(\int f(x)dx)'=f(x)`,
       ],
 
-      [
-         `f(x)的*(间断点)和*(原函数)存在性关系`,
-         `若f(x)在区间I上有*(第一类间断点) \\
-            则f(x)在I上*(一定没有原函数) \\\\
-            (有第二类间断点*(可能)有原函数)
-            `
-      ],
-
-      [
-         `什么样的函数有原函数?(积分)`,
-         `若f(x)在区间I上连续 \\
-            则f(x)在区间I上一定存在原函数`
-      ],
    ]
 } as ICardStack;

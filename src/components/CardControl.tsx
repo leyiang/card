@@ -20,6 +20,9 @@ export function CardControl({}: ICardControlProps) {
         if (e.key === " ")          next();
         if (e.key === "ArrowLeft")  prev();
         if (e.key === "ArrowRight") next();
+
+        if (e.key === "a")  prev();
+        if (e.key === "s") next();
     });
 
     useEffect(() => {

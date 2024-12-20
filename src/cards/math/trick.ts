@@ -6,6 +6,110 @@ export default {
 
     cards: [
         [
+            `求曲线y=e^{-x}\sin x (x\ge 0)与x轴围成的面积`,
+            `image:g_1.png(
+                y=e^{-x}\sin x和x轴会围出无限多个图形
+            )`,
+
+            `所以面积A=\int_0^{+\infty}e^{-x}|\sin x|dx \\
+            这里是在*(无穷区间)上求积分 \\
+            且一定要注意加*(绝对值),\sin有正有负 \\\\
+
+            要怎么计算这个积分?*(怎么去掉绝对值)?
+            `,
+
+            `
+                A=\int_0^{+\infty}e^{-x}|\sin x|dx \\
+                A=lims(\infty,n)\sum_{k=0}^n\left| \int_{k\pi}^{(k+1)\pi}e^{-x}\sin x dx \right| \\\\
+                直接考虑每一块小面积, $mr-4 k\pi到(k+1) \pi \\
+                绝对值放外面就好算了
+            `,
+        ],
+        [
+            `已知D关于y=x对称, 判断 \\
+            dint(D)(|xy|+y^2)dxdy和dint(D)(2x^2)dxdy的大小
+            `,
+            `
+                *(重要不等式): a^2+b^2\geq 2|ab| \\
+                dint(D)(|xy|+y^2)dxdy \leq dint(D)(\frac{x^2+y^2}{2}+y^2)dxdy  \\
+                =dint(D)(\frac{y^2+x^2}{2}+x^2)dxdy $mr-4 *(使用轮换对称性) \\
+                =dint(D)(\frac{x^2+x^2}{2}+x^2)dxdy $mr-4 (把\frac{y^2}{2}*(拆出去)用轮换对称) \\
+                =dint(D)(2x^2)dxdy  \\
+            `,
+        ],
+        [
+            `设平面域D由x+y=inv(2)和x+y=1及两条坐标轴围成 \\
+            dint(D)\ln(x+y)^3dxdy $mr-4 dint(D)(x+y)^3dxdy $mr-4 dint(D)\sin(x+y)^3dxdy \\
+            判断这三个积分的*(大小关系)
+            `,
+            `image:dint_compare.png(
+                确定积分区域 \\
+                *(重点):inv(2)<x+y<1
+            )`,
+
+            `
+                inv(8)<(x+y)^3<1 \\
+                -\ln(8)<\ln(x+y)^3<0 \\
+                \sin inv(8)<\sin(x+y)^3<\sin 1 \\\\
+                \sin 在0,pinv(2)上*(是正的),所以\ln是三个积分中最小的 \\
+                且在0,pinv(2)上\sin x < x <\tan x \\
+                所以大小关系就出来了
+            `,
+        ],
+        [
+            `\int_0^{\frac{3}{4}\pi}inv(1+\cos^2x)dx \\\\
+            它的原函数是: F(x)=inv(\sqrt{2})\arctan\left (\frac{\tan x}{\sqrt{2}}\right )+C \\
+            为什么它的*(定积分不是)F(\frac{3\pi}{4})-F(0)? \\
+            (牛-莱公式)
+            `,
+            `
+            \int_0^{\frac{3}{4}\pi}inv(1+\cos^2x)dx $mr-8
+            F(x)=inv(\sqrt{2})\arctan\left (\frac{\tan x}{\sqrt{2}}\right )+C \\
+
+            *(仔细看: ) 积分区间在(0, \frac{3\pi}{4})上, 其中包括pinv(2), \tan x*(在此无定义!) \\
+            所以被积函数在(0, \frac{3\pi}{4})上*(没有原函数!!!) \\
+            *(必须分段写: ) \int_0^{\frac{3}{4}\pi}inv(1+\cos^2x)dx =
+            \int_0^{pinv(2)} \dotsb dx + \int_{pinv(2)}^{\frac{3}{4}\pi} \dotsb dx \\
+            =lims(\frac{\pi}{2}^-)F(x)-F(0)+F(\frac{3}{4}\pi)-lims(\frac{\pi}{2}^+)F(x)
+            `,
+        ],
+        [
+            `1+\cos x \\
+         (想办法三角代换,并成一项)`,
+            `1+\cos x=2\cos^2 \frac{x}{2} \\\\
+         1+\cos x=1+\cos (2 \cdot \frac{x}{2}) \\
+         =1+2\cos^2(\frac{x}{2})-1=2\cos^2 \frac{x}{2} 
+         `
+        ],
+        [
+            `对于微分方程: $mr-2 x^2y''+pxy'+qy=f(x) \\
+            令x=e^t, $mr-4 y'=? $mr-4 y''=?
+            `,
+            `y'=\frac{dy}{dx}, 现在写成对t的导数: \\
+            ddx(y)=ddx(y,t)ddx(t,x) $mr-4 (其中ddx(t)=inv(x)) \\
+            y'=ddx(y)=inv(x)ddx(y,t)
+            `,
+
+            `
+            y'=ddx(y)=inv(x)ddx(y,t) \\
+            y''=ddx(^2y,x^2)= $ddx (ddx(y))=$ddx (inv(x)ddx(y,t))  \\
+            ceq(分部积分)-inv(x^2)ddx(y)+inv(x) $ddx (ddx(y,t)) \\\\
+            其中 $ddx (ddx(y,t))=ddx(\frac{dy}{dt})=ddx(\frac{dy}{dt},t)ddx(t,x)
+            `,
+        ],
+        [
+            `L是平面上一条曲线, 其上任意一点P*(到原点的距离) \\
+            *(恒等于)该点处切线方程在*(y轴上的截距) \\\\
+            请建立数学关系式
+            `,
+            `L是平面上一条曲线, 其上任意一点P*(到原点的距离) \\
+            *(恒等于)该点处切线方程在*(y轴上的截距) \\\\
+            P到原点的距离: \sqrt{x^2+y^2} \\
+            在(x,y)点的切线方程: Y-y=y'(X-x) \\
+            截距: Y=y-xy' $mr-4 (令X=0后Y的值)
+            `,
+        ],
+        [
             `\int_0^pinv(2)d$th \int_0^{2\sin $th}f(r\cos $th,r \sin$th)rdr \\\\
             如何转换成直角坐标系的二重积分?
             `,

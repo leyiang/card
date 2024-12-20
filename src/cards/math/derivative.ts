@@ -56,7 +56,7 @@ export default {
 
         [
             `(uv)^{(n)}=?`,
-            `(uv)^{(n)}=\sum_{k=0}^\pi C_n^ku^{(k)}v^{(n-k)}`,
+            `(uv)^{(n)}=\sum_{k=0}^n C_n^ku^{(k)}v^{(n-k)}`,
         ],
 
         [
