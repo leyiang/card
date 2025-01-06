@@ -1,15 +1,18 @@
+import { useNavigate } from "@tanstack/react-router";
 import Search, { SearchProps } from "antd/es/input/Search";
-import { useNavigate } from "react-router-dom";
 
 interface ISearchInput {
     inputValue?: string;
 }
 
 export function SearchInput({ inputValue = "" }: ISearchInput ) {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+	const navigate = useNavigate();
 
     const onSearch: SearchProps['onSearch'] = (value) => {
-        navigate("/search?v=" + value);
+		navigate({
+			to: "/search",
+		});
     }
 
     return (

@@ -3,16 +3,15 @@ import { StackSelector } from "./StackSelector";
 import { SearchInput } from "./SearchInput";
 import { useCardStore } from "../stores/CardStore";
 import { Button } from "antd";
-import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function ControlHeader() {
     const cardStore = useCardStore();
-    const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
+    // const navigate = useNavigate();
+    // const [searchParams] = useSearchParams();
     
-    function clearSearchParams() {
-        navigate("/");
-    }
+    // function clearSearchParams() {
+    //     navigate("/");
+    // }
 
     function getRandomSeed() {
         const num = Math.floor(
@@ -40,14 +39,14 @@ export function ControlHeader() {
             <Button onClick={getRandomSeed}>Random Seed</Button>
 
             <div className="ml-auto">
-                {
+                {/* {
                     (searchParams.size > 0) &&
 
                     <Button
                         className="mr-2"
                         onClick={ clearSearchParams }
                     >Clear Search</Button>
-                }
+                } */}
 
                 <SearchInput />
             </div>

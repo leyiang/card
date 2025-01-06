@@ -44,7 +44,7 @@ export function CardGroup({}: ICardGroupProps) {
     return (
         <div className="card-group">
             <ControlHeader />
-            <GetInfoFromSearchParams />
+            {/* <GetInfoFromSearchParams /> */}
 
             { card && <Card card={ card } /> }
             <FooterControl />

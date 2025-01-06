@@ -100,6 +100,11 @@ body, html {
   min-height: 500px;
 }
 
+#card {
+	width: 600px;
+	max-width: 600px;
+}
+
 #card.render-image {
   width: 700px;
   height: 500px;

@@ -17,12 +17,16 @@ export function CardControl({}: ICardControlProps) {
     }
 
     useEventListener("keydown", e => {
+		if( ["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName ?? "") ) {
+			return;
+		}
+
         if (e.key === " ")          next();
         if (e.key === "ArrowLeft")  prev();
         if (e.key === "ArrowRight") next();
 
-        if (e.key === "a")  prev();
-        if (e.key === "s") next();
+        // if (e.key === "a")  prev();
+        // if (e.key === "s") next();
     });
 
     useEffect(() => {

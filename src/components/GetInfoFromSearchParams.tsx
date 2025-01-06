@@ -1,4 +1,3 @@
-import { useSearchParams } from "react-router-dom";
 import { useGroupStore } from "../stores/GroupStore";
 import { useEffect } from "react";
 import { useCardStore } from "../stores/CardStore";
@@ -6,79 +5,78 @@ import { useSettingStore } from "../stores/SettingStore";
 import { usePersistStore } from "../stores/PersistStore";
 
 export function GetInfoFromSearchParams() {
-    const [search] = useSearchParams();
     const groupStore = useGroupStore();
     const cardStore = useCardStore();
     const settingStore = useSettingStore();
     const persistStore = usePersistStore();
 
-    function loadPersist(group: string | null, stack: string | null, card: string | null, content: string | null) {
-        if( group ) {
-            groupStore.changeGroup( group );
-        }
+    // function loadPersist(group: string | null, stack: string | null, card: string | null, content: string | null) {
+    //     if( group ) {
+    //         groupStore.changeGroup( group );
+    //     }
 
-        if( stack ) {
-            const group = groupStore.group();
-            const id_list = group.map(stack => stack.id);
-            const index = id_list.indexOf( stack );
+    //     if( stack ) {
+    //         const group = groupStore.group();
+    //         const id_list = group.map(stack => stack.id);
+    //         const index = id_list.indexOf( stack );
 
-            if( index > -1 ) {
-                groupStore.changeStack( index );
-            }
-        }
+    //         if( index > -1 ) {
+    //             groupStore.changeStack( index );
+    //         }
+    //     }
 
-        if( card ) {
-            const cardPtr = Number( card );
-            cardStore.setCardPtr( cardPtr );
-        }
+    //     if( card ) {
+    //         const cardPtr = Number( card );
+    //         cardStore.setCardPtr( cardPtr );
+    //     }
 
-        if( content ) {
-            const contentPtr = Number( content );
-            cardStore.setContentPtr( contentPtr );
-        }
-    }
+    //     if( content ) {
+    //         const contentPtr = Number( content );
+    //         cardStore.setContentPtr( contentPtr );
+    //     }
+    // }
 
-    useEffect(() => {
-        if( search.size > 0 ) {
-            loadPersist(
-                search.get("group"),
-                search.get("stack"),
-                search.get("card"),
-                search.get("content")
-            );
+    // useEffect(() => {
+    //     if( search.size > 0 ) {
+    //         loadPersist(
+    //             search.get("group"),
+    //             search.get("stack"),
+    //             search.get("card"),
+    //             search.get("content")
+    //         );
 
-            return;
-        }
+    //         return;
+    //     }
         
-        if( settingStore.persist ) { 
-            const raw = settingStore.persistID;
-            // console.log( raw );
+    //     if( settingStore.persist ) { 
+    //         const raw = settingStore.persistID;
+    //         // console.log( raw );
             
-            const info = raw.split("-");
+    //         const info = raw.split("-");
 
-            console.log( info );
+    //         console.log( info );
             
-            loadPersist(
-                info[0],
-                info[1],
-                info[2],
-                info[3],
-            );
+    //         loadPersist(
+    //             info[0],
+    //             info[1],
+    //             info[2],
+    //             info[3],
+    //         );
 
-            return;
-        }
+    //         return;
+    //     }
 
-        // Recover from previous groupID
-        if( persistStore.groupID ) {
-            // Set store
-            groupStore.changeGroup( persistStore.groupID );
-        }
+    //     // Recover from previous groupID
+    //     if( persistStore.groupID ) {
+    //         // Set store
+    //         groupStore.changeGroup( persistStore.groupID );
+    //     }
 
-        if( persistStore.stackID ) {
-            // Set store
-            groupStore.changeStack( Number( persistStore.stackID ));
-        }
-    }, [ search ] );
+    //     if( persistStore.stackID ) {
+    //         // Set store
+    //         groupStore.changeStack( Number( persistStore.stackID ));
+    //     }
+    // }, [ search ] );
 
     return null;
 }
