@@ -3,39 +3,40 @@ import { RenderCard } from "./RenderCard";
 import { CardControl } from "./CardControl";
 import { joinClass } from "../utils/component";
 import { useCardStore } from "../stores/CardStore";
+import { Content } from "../models/Content";
 
 export interface ICardProps {
-    card: string[];
+	content: Content
     noInteraction?: boolean;
     startIndex?: number;
 
     compact?: boolean;
 }
 
-export function Card({ card, noInteraction=false, startIndex = -1, compact = false}: ICardProps) {
+export function Card({ content, noInteraction=false, compact = false}: ICardProps) {
     const [index, setIndex] = useState(0);
     const cardEl = useRef(null);
     const cardStore = useCardStore();
 
-    const style = {
-        "--total": card.length,
-        "--current": cardStore.contentPtr + 1,
-    } as React.CSSProperties;
+    // const style = {
+    //     "--total": card.length,
+    //     "--current": cardStore.contentPtr + 1,
+    // } as React.CSSProperties;
 
-    useEffect(() => {
-        if( startIndex > -1 && startIndex < card.length && noInteraction ) {
-            setIndex( startIndex );
-        } else {
-            setIndex( cardStore.contentPtr );
-        }
-    }, [ cardStore.contentPtr ]);
+    // useEffect(() => {
+    //     if( startIndex > -1 && startIndex < card.length && noInteraction ) {
+    //         setIndex( startIndex );
+    //     } else {
+    //         setIndex( cardStore.contentPtr );
+    //     }
+    // }, [ cardStore.contentPtr ]);
 
     return (
         <>
-            {
+            {/* {
                 (! noInteraction) &&
                 <CardControl />
-            }
+            } */}
 
             <div
                 id="card"
@@ -43,11 +44,10 @@ export function Card({ card, noInteraction=false, startIndex = -1, compact = fal
                     cardStore.contentPtr === 0 ? "" : "answer",
                     compact ? "card-compact" : ""
                 ])}
-                style={style}
                 ref={ cardEl }
             >
                 {/* { index } */}
-                { card[index] && <RenderCard data={card[ index ]} /> }
+                <RenderCard content={ content } />
             </div>
         </>
     );

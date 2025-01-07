@@ -1,9 +1,11 @@
-export type ICard = string[];
+import { iCard } from "../models/Card";
+
+export type id = string | number;
 
 export interface ICardStack {
     id: string;
     label: string;
-    cards: ICard[];
+    cards: iCard[];
 }
 
 export type ICardGroup = ICardStack[];
