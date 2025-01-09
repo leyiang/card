@@ -37,24 +37,137 @@ export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
 		}
 	}
 
-	function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-		const { value } = e.target;
+	// Helper function to generate type declaration line
+	function getTypeDeclarationLine(type: ContentType): string {
+		return `// type=${type}`;
+	}
 
-		const newCard = Card.GetNewCard();
-		Object.assign(newCard, card);
-		newCard.updateContent(pointer, value);
-		
-		content.content = value;
-		setContent(content);
-		setCard(newCard);
+	// Helper to combine type line and content
+	function getCombinedContent(content: Content): string {
+		return `${getTypeDeclarationLine(content.content_type)}\n${content.content}`;
+	}
+	// Helper to extract and validate type from type line
+	function extractType(typeLine: string): ContentType | null {
+		const match = typeLine.match(/^\/\/ type=(\w+)$/);
+		if (!match) return null;
+
+		const type = match[1].toLowerCase();
+		if (Object.values(ContentType).includes(type as ContentType)) {
+			return type as ContentType;
+		}
+		return null;
 	}
 
 	useEffect(() => {
-		const content = card.getContent(pointer);
-		if( content ) {
-			setContent(content);
+		const currentContent = card.getContent(pointer);
+		if (currentContent) {
+			setContent(currentContent);
 		}
 	}, [pointer, card]);
+
+	// Update textarea value when content changes
+	useEffect(() => {
+		if (content) {
+			setTextareaValue(getCombinedContent(content));
+		}
+	}, [content]);
+
+	const [textareaValue, setTextareaValue] = useState("");
+
+	function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+		const newValue = e.target.value;
+		setTextareaValue(newValue);
+
+		const lines = newValue.split('\n');
+		const firstLine = lines[0];
+		
+		// Check if first line is a type declaration
+		const isTypeLine = /^\/\/ type=\w+$/.test(firstLine);
+		
+		// Get content based on whether first line is type declaration
+		const newContent = isTypeLine 
+			? lines.slice(1).join('\n')
+			: newValue;
+
+		// Check if real content changed
+		if (newContent !== content.content) {
+			// Update content regardless of type validity
+			const updatedContent = Content.GetNewContent(newContent);
+			Object.assign(updatedContent, content);
+			updatedContent.content = newContent;
+			setContent(updatedContent);
+
+			const newCard = Card.GetNewCard();
+			Object.assign(newCard, card);
+			newCard.updateContentById(content.id, updatedContent);
+			setCard(newCard);
+
+			// Update content on server
+			try {
+				api.patch(`/content/${content.id}`, {
+					content: newContent
+				});
+			} catch (error) {
+				console.error('Failed to update content:', error);
+			}
+		}
+
+		// Only check type if first line is a type declaration
+		if (isTypeLine) {
+			const currentTypeLine = getTypeDeclarationLine(content.content_type);
+			if (firstLine !== currentTypeLine) {
+				const newType = extractType(firstLine);
+				if (newType && newType !== content.content_type) {
+					// Only update type if it's valid and different
+					const updatedContent = Content.GetNewContent(content.content);
+					Object.assign(updatedContent, content);
+					updatedContent.content_type = newType;
+					setContent(updatedContent);
+
+					const newCard = Card.GetNewCard();
+					Object.assign(newCard, card);
+					newCard.updateContentById(content.id, updatedContent);
+					setCard(newCard);
+
+					// Update type on server
+					try {
+						api.patch(`/content/${content.id}`, {
+							content_type: newType
+						});
+					} catch (error) {
+						console.error('Failed to update content type:', error);
+					}
+				}
+			}
+		}
+	}
+
+	// Update select handler to also update textarea
+	function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
+		const type = e.target.value as ContentType;
+		const contentId = content.id;
+
+		const newContent = Content.GetNewContent(content.content);
+		Object.assign(newContent, content);
+		newContent.content_type = type;
+		setContent(newContent);
+
+		const newCard = Card.GetNewCard();
+		Object.assign(newCard, card);
+		newCard.updateContentById(content.id, newContent);
+		setCard(newCard);
+
+		// Update textarea with new type line
+		setTextareaValue(getCombinedContent(newContent));
+
+		try {
+			api.patch(`/content/${contentId}`, {
+				content_type: type
+			});
+		} catch (error) {
+			console.error('Failed to update content type:', error);
+		}
+	}
 
 	useEventListener("keydown", e => {
 		if (e.altKey) {
@@ -73,30 +186,6 @@ export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
 			}
 		}
 	});
-
-	function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
-		const type = e.target.value as ContentType;
-		const contentId = content.id;
-
-
-		const newContent = Content.GetNewContent(content.content);
-		Object.assign(newContent, content);
-		newContent.content_type = type;
-		setContent(newContent);
-
-		const newCard = Card.GetNewCard();
-		Object.assign(newCard, card);
-		newCard.updateContentById(content.id, newContent);
-		setCard(newCard);
-
-		try {
-			api.patch(`/content/${contentId}`, {
-				content_type: type
-			});
-		} catch (error) {
-			console.error('Failed to update content type:', error);
-		}
-	}
 
 	return (
 		<div>
@@ -122,7 +211,7 @@ export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
 						width: "600px",
 						height: "500px"
 					}}
-					value={content.content}
+					value={textareaValue}
 					onChange={handleChange}
 					onKeyDown={handleKeydown}
 				/>
