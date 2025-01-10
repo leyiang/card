@@ -1,9 +1,9 @@
 import { useGroupStore } from '../stores/GroupStore'
-import { ICard } from '../types/card-type'
-import { Card } from '../components/Card'
+import { RenderCard } from '../components/RenderCard'
 import { SearchInput } from '../components/SearchInput'
 
 import { createFileRoute, Link, useSearch } from '@tanstack/react-router'
+import { iCard } from '../models/Card'
 
 export const Route = createFileRoute('/search')({
 	component: RouteComponent,
@@ -20,7 +20,7 @@ function RouteComponent() {
 	// console.log( needle );
 
 	interface Search {
-		card: ICard
+		card: iCard
 		index: number
 		link: string
 
@@ -70,7 +70,7 @@ function RouteComponent() {
 					<div key={'search-result-' + i} className="flex flex-col">
 						<span>{result.id}</span>
 						<Link to={'/?' + result.link}>
-							<Card
+							<RenderCard
 								card={result.card}
 								noInteraction
 								compact

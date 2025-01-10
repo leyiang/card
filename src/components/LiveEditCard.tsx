@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Card as CardDisplay } from "./Card";
+import { Card as CardDisplay } from "./RenderCard";
 import { useEventListener } from "ahooks";
 import { Card, iCard } from "../models/Card";
 import { Content, ContentType } from "../models/Content";
 import { api } from "../axios-instrance";
+import { RenderContent } from "./RenderContent";
 
 interface LiveEditCardProps {
 	onSave(card: iCard): void;
@@ -301,7 +302,7 @@ export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
 				</div>
 
 				<div className={`flex-1 ${showEditor ? 'hidden md:block' : ''}`}>
-					<CardDisplay content={content} />
+					<RenderContent content={content} />
 				</div>
 			</div>
 		</div>

@@ -3,27 +3,22 @@ import { useEffect } from "react";
 import { useCardStore } from "../stores/CardStore";
 
 interface ICardControlProps {
+	next?: () => void;
+	prev?: () => void;
 }
 
-export function CardControl({}: ICardControlProps) {
-    const cardStore = useCardStore();
-
-    function prev() {
-        cardStore.prevContent();
-    }
-
-    function next() {
-        cardStore.nextContent();
-    }
+export function CardControl({
+	next, prev
+}: ICardControlProps) {
 
     useEventListener("keydown", e => {
 		if( ["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName ?? "") ) {
 			return;
 		}
 
-        if (e.key === " ")          next();
-        if (e.key === "ArrowLeft")  prev();
-        if (e.key === "ArrowRight") next();
+        if (e.key === " ")          next?.();
+        if (e.key === "ArrowLeft")  prev?.();
+        if (e.key === "ArrowRight") next?.();
 
         // if (e.key === "a")  prev();
         // if (e.key === "s") next();
@@ -37,7 +32,7 @@ export function CardControl({}: ICardControlProps) {
                 //@ts-ignore
                 document.activeElement?.blur();
 
-                next();
+                next?.();
             }
         }
 
@@ -48,11 +43,11 @@ export function CardControl({}: ICardControlProps) {
         }
     }, []);
 
-    useEventListener("click", e => {
-        if( e.target instanceof HTMLElement && e.target.closest("#card") ) {
-            next();
-        }
-    });
+    // useEventListener("click", e => {
+    //     if( e.target instanceof HTMLElement && e.target.closest("#card") ) {
+    //         next();
+    //     }
+    // });
     
     return null;
 }

@@ -9,7 +9,7 @@ export const Route = createFileRoute('/')({
 function Index() {
 	return (
 		<div className="page main-page">
-			<ImportCards />
+			{/* <ImportCards /> */}
 			<CardGroup />
 		</div>
 	)
