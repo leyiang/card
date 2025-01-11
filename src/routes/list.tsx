@@ -83,7 +83,7 @@ function ListRoute() {
             </div>
             
             <div className="flex-1 overflow-auto px-4 pb-8">
-                <div className="flex gap-8 flex-wrap">
+                <div className="flex gap-2 flex-wrap justify-center">
                     {cards.map((card, _index) => (
 						<Link
 							to="/edit/$id"
@@ -95,6 +95,7 @@ function ListRoute() {
 							<RenderCard 
 								card={card}
 								noInteraction
+								compact
 							/>
 						</Link>
                     ))}
