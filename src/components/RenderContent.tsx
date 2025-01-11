@@ -13,19 +13,20 @@ export function RenderContent({ content }: RenderContentProps) {
 
 	if( content.content.startsWith("image:") ) {
 		render = <RenderImage data={content.content} />;
+	} else {
+		if( content.content_type === ContentType.Image ) {
+			render = <RenderImage data={content.content} />;
+		}
+
+		if( content.content_type === ContentType.Text ) {
+			render = <RenderText text={ content.content } />
+		}
+	
+		if( content.content_type === ContentType.Latex ) {
+			render = <RenderLatex data={content.content}/>
+		}
 	}
 
-	if( content.content_type === ContentType.Image ) {
-		render = <RenderImage data={content.content} />;
-	}
-
-    if( content.content_type === ContentType.Text ) {
-		render = <RenderText text={ content.content } />
-    }
- 
-	if( content.content_type === ContentType.Latex ) {
-		render = <RenderLatex data={content.content}/>
-	}
 
 	if( render ) {
 		return (
