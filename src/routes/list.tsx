@@ -5,46 +5,110 @@ import { Card } from '../models/Card';
 import { RenderCard } from '../components/RenderCard';
 import { Group } from '../models/Group';
 import { Stack } from '../models/Stack';
+import { useNavigate, useSearch } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/list')({
-    component: ListRoute
+    component: ListRoute,
+    validateSearch: (search: Record<string, unknown>) => {
+        return {
+            group: search.group as string,
+            stack: search.stack as string,
+        };
+    }
 });
 
 function ListRoute() {
+    const navigate = useNavigate();
+    const search = useSearch({ from: '/list' });
+    
     const [cards, setCards] = useState<Card[]>([]);
     const [groups, setGroups] = useState<Group[]>([]);
     const [stacks, setStacks] = useState<Stack[]>([]);
     
     const [groupPointer, setGroupPointer] = useState<number>(0);
     const [stackPointer, setStackPointer] = useState<number>(0);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-    // Load groups
+    // Initial load with combined data
     useEffect(() => {
-        api.get("/group").then(res => {
-            const groupList = res.data.data.map((raw: any) => Group.Load(raw));
-            setGroups(groupList);
-            setGroupPointer(0);  // Set to first group by default
-        });
-    }, []);
+        if (!isInitialLoad) return;
 
-    // Load stacks when group changes
+        const params = new URLSearchParams();
+        if (search.group) params.append('group', search.group);
+        if (search.stack) params.append('stack', search.stack);
+
+        api.get(`/list?${params}`).then(res => {
+            const { groups, stacks, cards} = res.data;
+			console.log( groups, stacks, cards );
+			
+            const loadedGroups = groups.map((raw: any) => Group.Load(raw));
+            const loadedStacks = stacks.map((raw: any) => Stack.Load(raw));
+            const loadedCards = cards.map((raw: any) => Card.Load(raw)).slice(0, 10);
+
+            setGroups(loadedGroups);
+            setStacks(loadedStacks);
+            setCards(loadedCards);
+
+            // Set pointers based on URL params
+            if (search.group) {
+                const index = loadedGroups.findIndex(g => g.slug === search.group);
+                setGroupPointer(index >= 0 ? index : 0);
+            }
+            if (search.stack) {
+                const index = loadedStacks.findIndex(s => s.slug === search.stack);
+                setStackPointer(index >= 0 ? index : 0);
+            }
+
+            setIsInitialLoad(false);
+        });
+    }, [search.group, search.stack]);
+
+    // Load stacks and restore selection from URL
     useEffect(() => {
         if (groups[groupPointer]) {
             const group = groups[groupPointer];
-            api.get(`/group/${ group.id }/stack`).then(res => {
-                setStacks(res.data.data);
-                setStackPointer(0);  // Reset stack pointer when group changes
+            api.get(`/group/${group.id}/stack`).then(res => {
+				const rawStackList = res.data.data;
+
+				if( ! Array.isArray(rawStackList) ) {
+					return;
+				}
+
+				const stackList = rawStackList.map((raw: any) => Stack.Load(raw));
+				setStacks(stackList);
+                
+                if (search.stack) {
+                    const index = stackList.findIndex(s => s.slug === search.stack);
+                    setStackPointer(index >= 0 ? index : 0);
+                } else {
+                    setStackPointer(0);
+                }
             });
         }
-    }, [groups, groupPointer]);
+    }, [groups, groupPointer, search.stack]);
 
-    // Load cards when group or stack changes
+    // Update URL when selection changes
+    useEffect(() => {
+        const group = groups[groupPointer];
+        const stack = stacks[stackPointer];
+        
+        if (group && stack) {
+            navigate({
+                search: {
+                    group: group.slug,
+                    stack: stack.slug
+                }
+            });
+        }
+    }, [groupPointer, stackPointer, groups, stacks]);
+
+    // Load cards
     useEffect(() => {
         if (groups[groupPointer] && stacks[stackPointer]) {
             const stack = stacks[stackPointer];
-			if( ! stack ) return;
+            if (!stack) return;
 
-            api.get(`/stack/${ stack.id }/card`).then(res => {
+            api.get(`/stack/${stack.id}/card`).then(res => {
                 const cardList = res.data.data
                     .map((raw: any) => Card.Load(raw))
                     .slice(0, 10);

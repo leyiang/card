@@ -11,7 +11,6 @@ export function RenderImage({ data }: IRenderImage) {
     let mode = "math" as "math" | "text";
     let raw = data.substring(6);
 
-    console.log( data );
     
     if (/^image:.*\([\s\S]*\)$/.test(data)) {
         raw = raw.replace(/\(([\s\S]*)\)$/g, (_, text) => {
@@ -19,8 +18,6 @@ export function RenderImage({ data }: IRenderImage) {
             mode = "math";
             return "";
         });
-        console.log( raw );
-        
     }
 
     if (/^image:.*\[.*\]$/.test(data)) {
