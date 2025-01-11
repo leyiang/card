@@ -9,25 +9,36 @@ interface RenderContentProps {
 
 export function RenderContent({ content }: RenderContentProps) {
 
+	let render = null;
+
 	if( content.content.startsWith("image:") ) {
-		return <RenderImage data={content.content} />;
+		render = <RenderImage data={content.content} />;
 	}
 
 	if( content.content_type === ContentType.Image ) {
-		return <RenderImage data={content.content} />;
+		render = <RenderImage data={content.content} />;
 	}
 
     if( content.content_type === ContentType.Text ) {
-        return <RenderText text={ content.content } />
+		render = <RenderText text={ content.content } />
     }
  
 	if( content.content_type === ContentType.Latex ) {
-		return <RenderLatex data={content.content}/>
+		render = <RenderLatex data={content.content}/>
 	}
 
-    return (
-		<div>
-			<span>Unknown content type: {content.content_type}</span>
-		</div>
-    );
+	if( render ) {
+		return (
+			<div className="card-content">
+				{ render }
+			</div>
+		);
+	} else {
+		return (
+			<div>
+				<span>Unknown content type: {content.content_type}</span>
+			</div>
+		);
+	}
+
 }

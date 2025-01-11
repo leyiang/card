@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { api } from '../axios-instrance';
 import { Card } from '../models/Card';
@@ -84,12 +84,19 @@ function ListRoute() {
             
             <div className="flex-1 overflow-auto px-4 pb-8">
                 <div className="flex gap-8 flex-wrap">
-                    {cards.map((card, index) => (
-                        <RenderCard 
-                            key={card.id} 
-                            card={card}
-                            noInteraction
-                        />
+                    {cards.map((card, _index) => (
+						<Link
+							to="/edit/$id"
+							params={{
+								id: card.id.toString()
+							}}
+							key={card.id}
+						>
+							<RenderCard 
+								card={card}
+								noInteraction
+							/>
+						</Link>
                     ))}
                 </div>
             </div>
