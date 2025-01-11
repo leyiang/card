@@ -43,10 +43,10 @@ export class Card {
 		return card;
 	}
 
-	static toJSON(card: Card): iCard {
+	toJSON(): iCard {
 		return {
-			id: card.id,
-			contents: card.contents.map(
+			id: this.id,
+			contents: this.contents.map(
 				content => content.toJSON()
 			)
 		};

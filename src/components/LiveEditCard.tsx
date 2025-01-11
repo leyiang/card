@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { Card as CardDisplay } from "./RenderCard";
+import { useEffect, useState, useRef } from "react";
 import { useEventListener } from "ahooks";
 import { Card, iCard } from "../models/Card";
-import { Content, ContentType } from "../models/Content";
+import { Content, ContentType, iContent } from "../models/Content";
 import { api } from "../axios-instrance";
 import { RenderContent } from "./RenderContent";
+import { Spinner } from "./Spinner";
 
 interface LiveEditCardProps {
-	onSave(card: iCard): void;
 	defaultCard?: iCard;
+	defaultContentIndex?: number;
 }
 
 // Add type for WebSocket messages
@@ -17,14 +17,59 @@ interface WSMessage {
 	content: string;
 }
 
-export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
+function StatusIndicator({ status }: { status: 'idle' | 'saving' | 'saved' | 'error' }) {
+	if (status === 'idle') return null;
+
+	const statusConfig = {
+		saving: {
+			icon: <Spinner className="w-4 h-4" />,
+			text: 'Saving',
+			color: 'text-blue-600'
+		},
+		saved: {
+			icon: (
+				<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+				</svg>
+			),
+			text: 'Saved!',
+			color: 'text-green-600'
+		},
+		error: {
+			icon: (
+				<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+				</svg>
+			),
+			text: 'Failed to save',
+			color: 'text-red-600'
+		}
+	};
+
+	const config = statusConfig[status];
+	if (!config) return null;
+
+	return (
+		<div className={`flex items-center gap-2 ${config.color}`}>
+			{config.icon}
+			<span>{config.text}</span>
+		</div>
+	);
+}
+
+export function LiveEditCard({ 
+	defaultCard,
+	defaultContentIndex = 0
+}: LiveEditCardProps) {
 	const [showEditor, setShowEditor] = useState(false);
 	const [card, setCard] = useState<Card>(Card.GetNewCard());
 	const [content, setContent] = useState<Content>(Content.GetNewContent(""));
-	const [pointer, setPointer] = useState(0);
+	const [pointer, setPointer] = useState(defaultContentIndex);
 	const [showWsStatus, setShowWsStatus] = useState(false);
 	const [wsStatus, setWsStatus] = useState<'disconnected' | 'connected' | 'error'>('disconnected');
 	const [ws, setWs] = useState<WebSocket | null>(null);
+	const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+	const statusTimeoutRef = useRef<number>();
 
 	useEffect(() => {
 		if (!defaultCard) return;
@@ -68,6 +113,10 @@ export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
 		}
 		return null;
 	}
+
+	useEffect(() => {
+		setPointer(defaultContentIndex);
+	}, [defaultContentIndex]);
 
 	useEffect(() => {
 		const currentContent = card.getContent(pointer);
@@ -121,18 +170,12 @@ export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
 		setCard(newCard);
 
 		// Update on server
-		return api.patch(`/content/${content.id}`, {
-			content: newContent,
-			content_type: updatedContent.content_type
-		});
+		return handleSave(updatedContent.toJSON());
 	}
 
-	function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-		const newValue = e.target.value;
-		updateContentFromText(newValue).catch(error => {
-			console.error('Failed to update content:', error);
-		});
-	}
+	// function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+	// 	const newValue = e.target.value;
+	// 	(newValue)	}
 
 	// Update select handler to also update textarea
 	function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -223,12 +266,47 @@ export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
 		return ws;
 	}
 
-	useEventListener("keydown", e => {
-		if (e.altKey) {
-			if (e.key === "s") {
-				onSave(Card.toJSON(card));
-			}
+	async function handleSave(content: iContent) {
+		// Clear any existing timeout
+		if (statusTimeoutRef.current) {
+			clearTimeout(statusTimeoutRef.current);
+		}
 
+		setSaveStatus('saving');
+		try {
+			await api.patch(`/content/${content.id}`, content);
+			setSaveStatus('saved');
+			
+			statusTimeoutRef.current = setTimeout(() => {
+				setSaveStatus('idle');
+			}, 2000);
+		} catch (error) {
+			console.error('Failed to save content:', error);
+			setSaveStatus('error');
+			
+			statusTimeoutRef.current = setTimeout(() => {
+				setSaveStatus('idle');
+			}, 3000);
+		}
+	}
+
+	useEventListener("keydown", e => {
+		if( e.key === "s" ) {
+			if( e.altKey || e.ctrlKey ) { 
+				e.preventDefault();
+				e.stopPropagation();
+
+				const content = card.getContent(pointer);
+
+				if( content ) {
+					handleSave(content.toJSON());
+				}
+
+				return false;
+			}
+		}
+
+		if (e.altKey) {
 			if (e.key === "h") {
 				if (pointer <= 0) return;
 				setPointer(pointer - 1);
@@ -253,8 +331,21 @@ export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
 		}
 	});
 
+	// Clear timeout on unmount
+	useEffect(() => {
+		return () => {
+			if (statusTimeoutRef.current) {
+				clearTimeout(statusTimeoutRef.current);
+			}
+		};
+	}, []);
+
 	return (
-		<div className="container px-4">
+		<div className="container px-4 relative">
+			<div className="fixed top-4 right-4 flex items-center gap-2 z-50 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-lg shadow-sm">
+				<StatusIndicator status={saveStatus} />
+			</div>
+
 			<div className="flex items-center gap-4 mb-4">
 				<span>({pointer + 1} / {card.length})</span>
 				<select
@@ -296,7 +387,7 @@ export function LiveEditCard({ onSave, defaultCard }: LiveEditCardProps) {
 							height: "500px"
 						}}
 						value={textareaValue}
-						onChange={handleChange}
+						onChange={(e) => updateContentFromText(e.target.value)}
 						onKeyDown={handleKeydown}
 					/>
 				</div>

@@ -144,6 +144,19 @@ function ListRoute() {
                         </option>
                     ))}
                 </select>
+
+                {groups[groupPointer] && stacks[stackPointer] && (
+                    <Link
+                        to="/learn"
+                        search={{
+                            group: groups[groupPointer].slug,
+                            stack: stacks[stackPointer].slug
+                        }}
+                        className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    >
+                        Learn
+                    </Link>
+                )}
             </div>
             
             <div className="flex-1 overflow-auto px-4 pb-8">

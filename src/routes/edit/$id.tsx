@@ -1,45 +1,36 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { LiveEditCard } from '../../components/LiveEditCard';
 import { useEffect, useState } from 'react';
 import { api } from '../../axios-instrance';
-import { iCard } from '../../models/Card';
+import { Card} from '../../models/Card';
 
 export const Route = createFileRoute('/edit/$id')({
-	component: RouteComponent,
+	component: EditRoute,
+	validateSearch: (search: Record<string, unknown>) => {
+		return {
+			index: search.index ? parseInt(search.index as string) : 0
+		};
+	}
 });
 
-function RouteComponent() {
-	const { id } = Route.useParams()
-	const [card, setCard] = useState<iCard | null>(null);
-
-	function handleSave(card: iCard) {
-		return api.patch(`/card/${id}`, {
-			contents: card.contents
-		})
-			.then(response => {
-				console.log('Card updated successfully:', response.data);
-				return response.data;
-			})
-			.catch(error => {
-				console.error('Error updating card:', error);
-				throw error;
-			});
-	}
+function EditRoute() {
+	const { id } = Route.useParams();
+	const search = useSearch({ from: '/edit/$id' });
+	const [card, setCard] = useState<Card | null>(null);
 
 	useEffect(() => {
-		api.get("/card/" + id).then(r => {
-			setCard(r.data.data);
+		api.get(`/card/${id}`).then(res => {
+			const loadedCard = Card.Load(res.data.data);
+			setCard(loadedCard);
 		});
 	}, [id]);
 
+	if (!card) return null;
+
 	return (
-		<div>
-			<h1 className='text-4xl font-bold'>修改卡片</h1>
-			
-			<LiveEditCard
-				defaultCard={card}
-				onSave={handleSave}
-			/>
-		</div>
-	)
+		<LiveEditCard 
+			defaultCard={card} 
+			defaultContentIndex={search.index}
+		/>
+	);
 }
