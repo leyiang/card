@@ -32,7 +32,7 @@ export function RenderImage({ data }: IRenderImage) {
         });
     }
 
-    const src = `/images/${raw}`;
+    const src = raw;
 
     function zoomImage(e: React.MouseEvent) {
         // Ctrl + click to open image in new tag
@@ -40,8 +40,9 @@ export function RenderImage({ data }: IRenderImage) {
         
         e.stopPropagation();
 
-        const url = "http://" + window.location.host + src;
-        window.open( url );
+        // const url = "http://" + window.location.host + src;
+        // window.open( url );
+		window.open( src, "_blank" );
     }
 
     return (

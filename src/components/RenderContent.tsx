@@ -9,6 +9,10 @@ interface RenderContentProps {
 
 export function RenderContent({ content }: RenderContentProps) {
 
+	if( content.content.startsWith("image:") ) {
+		return <RenderImage data={content.content} />;
+	}
+
 	if( content.content_type === ContentType.Image ) {
 		return <RenderImage data={content.content} />;
 	}
