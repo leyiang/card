@@ -95,17 +95,20 @@ function findCardArray(sourceFile, inputPath) {
                     }
                 });
 
-                // Get folder name from path
                 const pathParts = inputPath.split('/');
                 const folderName = pathParts[pathParts.length - 2];
-
-                const fileName = pathParts.pop().replace('.ts', '.json');
-                const outputPath = join(outputDir, fileName);
+                const tsFileName = pathParts[pathParts.length - 1];
+                const stackName = tsFileName.replace('.ts', '');
+                
+                const jsonFileName = `${folderName}_${tsFileName.replace('.ts', '.json')}`;
+                const outputPath = join(outputDir, jsonFileName);
+                
                 writeFileSync(outputPath, JSON.stringify({ 
                     group: folderName,
+                    stack: stackName,
                     cards 
                 }, null, 2));
-                console.log(`Converted ${fileName} (group: ${folderName})`);
+                console.log(`Converted ${jsonFileName} (group: ${folderName}, stack: ${stackName})`);
             }
         }
 
