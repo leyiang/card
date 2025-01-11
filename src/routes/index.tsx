@@ -1,16 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { ImportCards } from '../components/ImportCards'
-import { CardGroup } from '../components/CardGroup'
+import { createFileRoute, Navigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
 	component: Index,
 })
 
 function Index() {
-	return (
-		<div className="page main-page">
-			{/* <ImportCards /> */}
-			<CardGroup />
-		</div>
-	)
+    return <Navigate
+		to="/list"
+	/>
 }
