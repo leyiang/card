@@ -1,23 +1,29 @@
 import typescript from 'typescript';
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from 'fs';
+import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Read the file
-const filePath = join(__dirname, '../src/cards/math/basic.ts');
-const fileContent = readFileSync(filePath, 'utf-8');
+// Create cards_json directory if it doesn't exist
+const outputDir = join(__dirname, '../src/cards_json');
+if (!existsSync(outputDir)) {
+    mkdirSync(outputDir);
+}
 
-// Create a source file
-const sourceFile = typescript.createSourceFile(
-    'basic.ts',
-    fileContent,
-    typescript.ScriptTarget.Latest,
-    true
-);
+// Process a single file
+function processFile(filePath) {
+    const fileContent = readFileSync(filePath, 'utf-8');
+    const sourceFile = typescript.createSourceFile(
+        filePath,
+        fileContent,
+        typescript.ScriptTarget.Latest,
+        true
+    );
+
+    findCardArray(sourceFile, filePath);
+}
 
 function getNodeType(node) {
     if (typescript.isStringLiteral(node)) return 'string';
@@ -33,7 +39,7 @@ function getNodeType(node) {
         if (typescript.isArrayLiteralExpression(firstArg)) {
             const firstString = firstArg.elements[0];
             if (firstString) {
-                return `function call (${functionName}) -> ${getNodeText(firstString)}`;
+                return `function call (${functionName}) -> ${getNodeText(firstString, sourceFile)}`;
             }
         }
         return `function call (${functionName})`;
@@ -50,60 +56,79 @@ function convertTemplateToString(text) {
     return `"${text}"`;
 }
 
-function getNodeText(node) {
+function getNodeText(node, sourceFile) {
     if (typescript.isNoSubstitutionTemplateLiteral(node)) {
         return convertTemplateToString(node.getText(sourceFile));
     }
     if (typescript.isCallExpression(node)) {
         const firstArg = node.arguments[0];
         if (typescript.isArrayLiteralExpression(firstArg) && firstArg.elements[0]) {
-            return getNodeText(firstArg.elements[0]);
+            return getNodeText(firstArg.elements[0], sourceFile);
         }
     }
-    // Clean up the text by removing newlines and extra spaces
     const text = node.getText(sourceFile)
-        .replace(/\n/g, ' ')  // Replace newlines with spaces
-        .replace(/\s+/g, ' ') // Replace multiple spaces with single space
-        .trim();              // Remove leading/trailing spaces
+        .replace(/\n/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
     return text;
 }
 
-function findCardArray(node) {
-    if (typescript.isPropertyAssignment(node) && 
-        typescript.isIdentifier(node.name) && 
-        node.name.text === 'cards') {
-        // Found the cards property
-        if (typescript.isArrayLiteralExpression(node.initializer)) {
-            const cards = [];
-            
-            // Loop through each card
-            node.initializer.elements.forEach((cardElement) => {
-                if (typescript.isArrayLiteralExpression(cardElement)) {
-                    const card = cardElement.elements.map(item => {
-                        const text = getNodeText(item);
-                        try {
-                            return JSON.parse(text);
-                        } catch (e) {
-                            // If parsing fails, return the raw text
-                            return text.replace(/^['"`]|['"`]$/g, ''); // Remove quotes
-                        }
-                    });
-                    cards.push(card);
-                }
-            });
+function findCardArray(sourceFile, inputPath) {
+    function visit(node) {
+        if (typescript.isPropertyAssignment(node) && 
+            typescript.isIdentifier(node.name) && 
+            node.name.text === 'cards') {
+            if (typescript.isArrayLiteralExpression(node.initializer)) {
+                const cards = [];
+                
+                node.initializer.elements.forEach((cardElement) => {
+                    if (typescript.isArrayLiteralExpression(cardElement)) {
+                        const card = cardElement.elements.map(item => {
+                            const text = getNodeText(item, sourceFile);
+                            try {
+                                return JSON.parse(text);
+                            } catch (e) {
+                                return text.replace(/^['"`]|['"`]$/g, '');
+                            }
+                        });
+                        cards.push(card);
+                    }
+                });
 
-            // Write to JSON file
-            const outputPath = join(__dirname, '../src/cards/math/basic.json');
-            writeFileSync(outputPath, JSON.stringify({ cards }, null, 2));
-            console.log(`JSON file written to ${outputPath}`);
-            
-            return true;
+                // Get folder name from path
+                const pathParts = inputPath.split('/');
+                const folderName = pathParts[pathParts.length - 2];
+
+                const fileName = pathParts.pop().replace('.ts', '.json');
+                const outputPath = join(outputDir, fileName);
+                writeFileSync(outputPath, JSON.stringify({ 
+                    group: folderName,
+                    cards 
+                }, null, 2));
+                console.log(`Converted ${fileName} (group: ${folderName})`);
+            }
         }
+
+        typescript.forEachChild(node, visit);
     }
 
-    // Recursively search children
-    return typescript.forEachChild(node, findCardArray);
+    visit(sourceFile);
 }
 
-// Find and convert the cards array
-findCardArray(sourceFile); 
+// Process all ts files in cards directory
+const cardsDir = join(__dirname, '../src/cards');
+function processDirectory(dir) {
+    const files = readdirSync(dir, { withFileTypes: true });
+    
+    files.forEach(file => {
+        const fullPath = join(dir, file.name);
+        if (file.isDirectory()) {
+            processDirectory(fullPath);
+        } else if (file.name.endsWith('.ts')) {
+            processFile(fullPath);
+        }
+    });
+}
+
+// Start processing
+processDirectory(cardsDir); 
