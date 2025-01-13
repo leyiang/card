@@ -67,6 +67,8 @@ function ListRoute() {
     const [errorCount, setErrorCount] = useState(0);
     const MAX_RETRIES = 3;
     const [totalCards, setTotalCards] = useState<number>(0);
+    const [consecutiveErrors, setConsecutiveErrors] = useState(0);
+    const MAX_CONSECUTIVE_ERRORS = 3;
 
 	/**
 	 * 获取所有Group
@@ -183,8 +185,9 @@ function ListRoute() {
 
     async function loadMoreCards() {
         if (loading || !hasMore || !stackSlug) return;
-        if (errorCount >= MAX_RETRIES) {
-            setHasMore(false);  // Stop trying after max retries
+        if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+            console.error('Too many consecutive errors, stopping pagination');
+            setHasMore(false);  // Stop trying after max consecutive errors
             return;
         }
 
@@ -213,11 +216,11 @@ function ListRoute() {
             setMeta(res.data.cards.meta);
             setTotalCards(res.data.total_cards);
             setPage(p => p + 1);
-            setHasMore((page + 1) < res.data.meta.last_page);
-            setErrorCount(0);  // Reset error count on success
+            setHasMore((page + 1) < res.data.cards.meta.last_page);
+            setConsecutiveErrors(0);  // Reset consecutive errors on success
         } catch (error) {
             console.error('Failed to load more cards:', error);
-            setErrorCount(count => count + 1);  // Increment error count
+            setConsecutiveErrors(count => count + 1);  // Increment consecutive errors
         } finally {
             setLoading(false);
         }
@@ -225,7 +228,7 @@ function ListRoute() {
 
     // Reset error count when stack changes
     useEffect(() => {
-        setErrorCount(0);
+        setConsecutiveErrors(0);
     }, [stackSlug]);
 
     return (
