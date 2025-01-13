@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { LiveEditCard } from '../../components/LiveEditCard';
 import { useEffect, useState } from 'react';
 import { api } from '../../axios-instrance';
-import { Card} from '../../models/Card';
+import { Card, iCard} from '../../models/Card';
 
 export const Route = createFileRoute('/edit/$id')({
 	component: EditRoute,
@@ -27,10 +27,18 @@ function EditRoute() {
 
 	if (!card) return null;
 
+	function handleSave(card: iCard) {
+		return api.patch(`/card/${id}`, {
+			contents: card.contents
+		});
+	}
+
 	return (
 		<LiveEditCard 
 			defaultCard={card} 
 			defaultContentIndex={search.index}
+			onSave={handleSave}
+			editMode="edit"
 		/>
 	);
 }

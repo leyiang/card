@@ -14,6 +14,8 @@ import { Spinner } from "./Spinner";
 interface LiveEditCardProps {
 	defaultCard?: iCard;
 	defaultContentIndex?: number;
+	onSave: (card: iCard) => Promise<void>;
+	editMode?: 'create' | 'edit';
 }
 
 // Add type for WebSocket messages
@@ -64,7 +66,9 @@ function StatusIndicator({ status }: { status: 'idle' | 'saving' | 'saved' | 'er
 
 export function LiveEditCard({ 
 	defaultCard,
-	defaultContentIndex = 0
+	defaultContentIndex = 0,
+	onSave,
+	editMode = 'edit'
 }: LiveEditCardProps) {
 	const [showEditor, setShowEditor] = useState(false);
 	const [card, setCard] = useState<Card>(Card.GetNewCard());
@@ -146,20 +150,16 @@ export function LiveEditCard({
 		const lines = newValue.split('\n');
 		const firstLine = lines[0];
 		
-		// Check if first line is a type declaration
 		const isTypeLine = /^\/\/ type=\w+$/.test(firstLine);
 		
-		// Get content based on whether first line is type declaration
 		const newContent = isTypeLine 
 			? lines.slice(1).join('\n')
 			: newValue;
 
-		// Update content
 		const updatedContent = Content.GetNewContent(newContent);
 		Object.assign(updatedContent, content);
 		updatedContent.content = newContent;
 
-		// If type line exists and is valid, update the type
 		if (isTypeLine) {
 			const newType = extractType(firstLine);
 			if (newType) {
@@ -174,8 +174,10 @@ export function LiveEditCard({
 		newCard.updateContentById(content.id, updatedContent);
 		setCard(newCard);
 
-		// Update on server
-		return handleSave(updatedContent.toJSON());
+		// Only auto-save in edit mode
+		if (editMode === 'edit') {
+			return handleSave();
+		}
 	}
 
 	// function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -185,8 +187,7 @@ export function LiveEditCard({
 	// Update select handler to also update textarea
 	function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
 		const type = e.target.value as ContentType;
-		const contentId = content.id;
-
+		
 		const newContent = Content.GetNewContent(content.content);
 		Object.assign(newContent, content);
 		newContent.content_type = type;
@@ -197,12 +198,9 @@ export function LiveEditCard({
 		newCard.updateContentById(content.id, newContent);
 		setCard(newCard);
 
-		try {
-			api.patch(`/content/${contentId}`, {
-				content_type: type
-			});
-		} catch (error) {
-			console.error('Failed to update content type:', error);
+		// Only auto-save in edit mode
+		if (editMode === 'edit') {
+			handleSave();
 		}
 	}
 
@@ -271,15 +269,16 @@ export function LiveEditCard({
 		return ws;
 	}
 
-	async function handleSave(content: iContent) {
+	async function handleSave() {
 		// Clear any existing timeout
 		if (statusTimeoutRef.current) {
 			clearTimeout(statusTimeoutRef.current);
 		}
 
 		setSaveStatus('saving');
+
 		try {
-			await api.patch(`/content/${content.id}`, content);
+			await onSave?.(card);  // Wait for the promise to resolve
 			setSaveStatus('saved');
 			
 			statusTimeoutRef.current = setTimeout(() => {
@@ -292,6 +291,7 @@ export function LiveEditCard({
 			statusTimeoutRef.current = setTimeout(() => {
 				setSaveStatus('idle');
 			}, 3000);
+			throw error;  // Re-throw the error to propagate it
 		}
 	}
 
@@ -394,6 +394,7 @@ export function LiveEditCard({
 						value={textareaValue}
 						onChange={(e) => updateContentFromText(e.target.value)}
 						onKeyDown={handleKeydown}
+						data-cy="live-edit-textarea"
 					/>
 				</div>
 

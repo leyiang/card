@@ -12,7 +12,7 @@ function RouteComponent() {
 	const navigate = useNavigate();
 
 	function handleSave( card: iCard ) {
-		api.post("/card", {
+		return api.post("/card", {
 			contents: card.contents
 		}).then(res => {
 			const id = res.data.id;
@@ -26,14 +26,12 @@ function RouteComponent() {
 		});
 	}
 
-	useEventListener("keydown", e => {
-	});
-
 	return (
 		<div>
 			<h1 className='text-4xl font-bold'>创建卡片</h1>
 			<LiveEditCard
 				onSave={ handleSave }
+				editMode="create"
 			/>
 		</div>
 	)
