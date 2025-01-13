@@ -81,7 +81,12 @@ function ListRoute() {
             const groupList = rawGroupList.map((raw: any) => Group.Load(raw));
             setGroups(groupList);
 			
-			// 在这设置Poniter?
+			/**
+			 * 根据当前 gropuSlug 更新 pointer
+			 * 在select正确显示
+			 */
+			setIsUserAction(false);
+			setGroupPointer(groupList.findIndex(group => group.slug === groupSlug));
         });
 
         return () => {
@@ -105,6 +110,14 @@ function ListRoute() {
 			const rawStackList = res.data.data;
 			const stackList = rawStackList.map((raw: any) => Stack.Load(raw));
 			setStacks(stackList);
+
+
+			/**
+			 * 根据当前 gropuSlug 更新 pointer
+			 * 在select正确显示
+			 */
+			setIsUserAction(false);
+			setStackPointer(stackList.findIndex(stack => stack.slug === stackSlug));
 		});
 
         return () => {
