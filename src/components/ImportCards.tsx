@@ -10,19 +10,19 @@ export function ImportCards() {
     const groupStore = useGroupStore();
 
 
-    useEffect(() => {
-        const stack = groupStore.stack();
-        let cards = stack.cards.slice(0);
+    // useEffect(() => {
+    //     const stack = groupStore.stack();
+    //     let cards = stack.cards.slice(0);
 
-        if( settingStore.order === "backward" ) {
-            cards = cards.reverse();
-        } else if ( settingStore.order === "random" ) {
-            shuffle( cards );
-        }
+    //     if( settingStore.order === "backward" ) {
+    //         cards = cards.reverse();
+    //     } else if ( settingStore.order === "random" ) {
+    //         shuffle( cards );
+    //     }
 
-        cardStore.importCards( cards );
+    //     cardStore.importCards( cards );
 
-    }, [ settingStore.order, groupStore.stackPtr, groupStore.groupPtr ]);
+    // }, [ settingStore.order, groupStore.stackPtr, groupStore.groupPtr ]);
 
     // if( settingStore.order)
     // console.log( settingStore.order );

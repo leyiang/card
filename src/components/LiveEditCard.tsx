@@ -6,6 +6,11 @@ import { api } from "../axios-instrance";
 import { RenderContent } from "./RenderContent";
 import { Spinner } from "./Spinner";
 
+/**
+ * TODO: 添加 onSave
+ * onSave 因为 创建、编辑 都用了这个组件
+ * 它们的保存是不同的
+ */
 interface LiveEditCardProps {
 	defaultCard?: iCard;
 	defaultContentIndex?: number;

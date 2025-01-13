@@ -46,14 +46,14 @@ export function RenderCard({
     }
 
     // Add focus event listener
-    useEffect(() => {
-        function handleFocus() {
-            refreshCard();
-        }
+    // useEffect(() => {
+    //     function handleFocus() {
+    //         refreshCard();
+    //     }
 
-        window.addEventListener('focus', handleFocus);
-        return () => window.removeEventListener('focus', handleFocus);
-    }, [card.id]); // Only recreate listener when card ID changes
+    //     window.addEventListener('focus', handleFocus);
+    //     return () => window.removeEventListener('focus', handleFocus);
+    // }, [card.id]); // Only recreate listener when card ID changes
 
     function nextContent() {
         if (pointer < card.contents.length - 1) {
