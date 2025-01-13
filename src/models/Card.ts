@@ -4,15 +4,18 @@ import { Content, iContent } from "./Content";
 export interface iCard {
 	id: id;
 	contents: iContent[];
+	stack: string;
 }
 
 export class Card {
 	id: id;
 	contents: Content[];
+	stack: string;
 
-	constructor(id: id) {
+	constructor(id: id, stack: string) {
 		this.id = id;
 		this.contents = [];
+		this.stack = stack;
 	}
 
 	addContent(content: string = "") {
@@ -22,7 +25,7 @@ export class Card {
 	}
 
 	static Load(raw: any): Card {
-		const card = new Card(raw.id);
+		const card = new Card(raw.id, raw.stack);
 
 		if( Array.isArray(raw.contents) ) {
 			card.contents = raw.contents.map(
@@ -35,7 +38,8 @@ export class Card {
 
 	static GetNewCard(): Card {
 		const card = new Card(
-			crypto.randomUUID()
+			crypto.randomUUID(),
+			"",
 		);
 
 		card.contents.push(Content.GetNewContent(""));
@@ -46,6 +50,7 @@ export class Card {
 	toJSON(): iCard {
 		return {
 			id: this.id,
+			stack: this.stack,
 			contents: this.contents.map(
 				content => content.toJSON()
 			)
