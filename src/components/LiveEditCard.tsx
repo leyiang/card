@@ -134,6 +134,19 @@ export function LiveEditCard({
 		}
 	}, [pointer, card]);
 
+	useEffect(() => {
+		console.log("GGG", editMode);
+		
+		if( editMode == "edit" ) {
+			const location = window.location;
+			const search = new URLSearchParams( location.search );
+			search.set("index", pointer.toString());
+
+			var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + search.toString();
+			window.history.pushState({path:newurl},'',newurl);
+		}
+	}, [ pointer ]);
+
 	// Update textarea value when content changes
 	useEffect(() => {
 		if (content) {

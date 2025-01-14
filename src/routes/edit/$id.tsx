@@ -18,7 +18,7 @@ export const Route = createFileRoute('/edit/$id')({
 
 function EditRoute() {
 	const { id } = Route.useParams();
-	const search = useSearch({ from: '/edit/$id' });
+	const search = new URLSearchParams( window.location.search );
 	const [card, setCard] = useState<Card | null>(null);
 	const [groups, setGroups] = useState<Group[]>([]);
 	const [stacks, setStacks] = useState<Stack[]>([]);
@@ -163,7 +163,7 @@ function EditRoute() {
 
 			<LiveEditCard 
 				defaultCard={card}
-				defaultContentIndex={search.index}
+				defaultContentIndex={ Number(search.get("index") ?? 0) }
 				onSave={handleSave}
 				editMode="edit"
 			/>
