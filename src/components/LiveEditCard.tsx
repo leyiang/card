@@ -14,7 +14,7 @@ import { Spinner } from "./Spinner";
 interface LiveEditCardProps {
 	defaultCard?: iCard;
 	defaultContentIndex?: number;
-	onSave: (card: iCard) => Promise<void>;
+	onSave: (card: iCard) => Promise<any>;
 	editMode?: 'create' | 'edit';
 }
 
