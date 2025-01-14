@@ -169,6 +169,8 @@ function ListRoute() {
         const observer = new IntersectionObserver(
             entries => {
                 const first = entries[0];
+				console.log("Has More", hasMore);
+				
                 if (first.isIntersecting && hasMore && !loading) {
                     loadMoreCards();
                 }
@@ -216,7 +218,9 @@ function ListRoute() {
             setMeta(res.data.cards.meta);
             setTotalCards(res.data.total_cards);
             setPage(p => p + 1);
-            setHasMore((page + 1) < res.data.cards.meta.last_page);
+            setHasMore((page + 1) <= res.data.cards.meta.last_page);
+			console.log( (page + 1) <= res.data.cards.meta.last_page , "set set set ");
+			
             setConsecutiveErrors(0);  // Reset consecutive errors on success
         } catch (error) {
             console.error('Failed to load more cards:', error);
@@ -234,6 +238,7 @@ function ListRoute() {
     return (
         <div className="h-screen overflow-hidden flex flex-col">
 			{ cards.length  }
+			{ hasMore ? "true" : "false" }
             <div className="p-4 flex items-center gap-4">
                 <h1 className="text-3xl font-bold">Card List</h1>
                 <span className="text-gray-600">
