@@ -1,10 +1,10 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useEventListener } from "ahooks";
-import { Card, iCard } from "../models/Card";
-import { Content, ContentType, iContent } from "../models/Content";
-import { api } from "../axios-instrance";
+import { Card } from "../models/Card";
+import { Content, ContentType } from "../models/Content";
 import { RenderContent } from "./RenderContent";
 import { Spinner } from "./Spinner";
+import debounce from 'lodash/debounce';
 
 /**
  * TODO: 添加 onSave
@@ -12,9 +12,9 @@ import { Spinner } from "./Spinner";
  * 它们的保存是不同的
  */
 interface LiveEditCardProps {
-	defaultCard?: iCard;
+	defaultCard?: Card;
 	defaultContentIndex?: number;
-	onSave: (card: iCard) => Promise<any>;
+	onSave: (card: Card) => Promise<any>;
 	editMode?: 'create' | 'edit';
 }
 
@@ -77,8 +77,6 @@ export function LiveEditCard({
 	const [showWsStatus, setShowWsStatus] = useState(false);
 	const [wsStatus, setWsStatus] = useState<'disconnected' | 'connected' | 'error'>('disconnected');
 	const [ws, setWs] = useState<WebSocket | null>(null);
-	const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
-	const statusTimeoutRef = useRef<number>();
 
 	useEffect(() => {
 		if (!defaultCard) return;
@@ -157,6 +155,26 @@ export function LiveEditCard({
 
 	const [textareaValue, setTextareaValue] = useState("");
 
+	// Create debounced save function
+	const debouncedSave = useCallback(
+		debounce(async (cardToSave: Card) => {
+			try {
+				await onSave?.(cardToSave);
+			} catch (error) {
+				console.error('Failed to save content:', error);
+				throw error;
+			}
+		}, 500),  // 1 second delay
+		[onSave]
+	);
+
+	// Cleanup debounce on unmount
+	useEffect(() => {
+		return () => {
+			debouncedSave.cancel();
+		};
+	}, [debouncedSave]);
+
 	function updateContentFromText(newValue: string) {
 		setTextareaValue(newValue);
 
@@ -187,9 +205,9 @@ export function LiveEditCard({
 		newCard.updateContentById(content.id, updatedContent);
 		setCard(newCard);
 
-		// Only auto-save in edit mode
+		// Only auto-save in edit mode with debounce
 		if (editMode === 'edit') {
-			return handleSave();
+			debouncedSave(newCard);
 		}
 	}
 
@@ -282,29 +300,14 @@ export function LiveEditCard({
 		return ws;
 	}
 
+	// Update handleSave for manual saves (like keyboard shortcuts)
 	async function handleSave() {
-		// Clear any existing timeout
-		if (statusTimeoutRef.current) {
-			clearTimeout(statusTimeoutRef.current);
-		}
-
-		setSaveStatus('saving');
-
+		debouncedSave.cancel();  // Cancel any pending debounced saves
 		try {
-			await onSave?.(card);  // Wait for the promise to resolve
-			setSaveStatus('saved');
-			
-			statusTimeoutRef.current = setTimeout(() => {
-				setSaveStatus('idle');
-			}, 2000);
+			await onSave?.(card);
 		} catch (error) {
 			console.error('Failed to save content:', error);
-			setSaveStatus('error');
-			
-			statusTimeoutRef.current = setTimeout(() => {
-				setSaveStatus('idle');
-			}, 3000);
-			throw error;  // Re-throw the error to propagate it
+			throw error;
 		}
 	}
 
@@ -349,21 +352,8 @@ export function LiveEditCard({
 		}
 	});
 
-	// Clear timeout on unmount
-	useEffect(() => {
-		return () => {
-			if (statusTimeoutRef.current) {
-				clearTimeout(statusTimeoutRef.current);
-			}
-		};
-	}, []);
-
 	return (
 		<div className="container px-4 relative">
-			<div className="fixed top-4 right-4 flex items-center gap-2 z-50 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-lg shadow-sm">
-				<StatusIndicator status={saveStatus} />
-			</div>
-
 			<div className="flex items-center gap-4 mb-4">
 				<span>({pointer + 1} / {card.length})</span>
 				<select

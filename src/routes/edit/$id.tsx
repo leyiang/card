@@ -16,6 +16,46 @@ export const Route = createFileRoute('/edit/$id')({
 	}
 });
 
+function StatusIndicator({ status }: { status: 'idle' | 'saving' | 'saved' | 'error' }) {
+	if (status === 'idle') return null;
+
+	const statusConfig = {
+		saving: {
+			icon: <Spinner className="w-4 h-4" />,
+			text: 'Saving',
+			color: 'text-blue-600'
+		},
+		saved: {
+			icon: (
+				<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+				</svg>
+			),
+			text: 'Saved!',
+			color: 'text-green-600'
+		},
+		error: {
+			icon: (
+				<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+				</svg>
+			),
+			text: 'Failed to save',
+			color: 'text-red-600'
+		}
+	};
+
+	const config = statusConfig[status];
+	if (!config) return null;
+
+	return (
+		<div className={`flex items-center bg-white p-2 rounded-md gap-2 ${config.color}`}>
+			{config.icon}
+			<span>{config.text}</span>
+		</div>
+	);
+}
+
 function EditRoute() {
 	const { id } = Route.useParams();
 	const search = new URLSearchParams( window.location.search );
@@ -24,12 +64,15 @@ function EditRoute() {
 	const [stacks, setStacks] = useState<Stack[]>([]);
 	const [groupPointer, setGroupPointer] = useState<number>(0);
 	const [stackPointer, setStackPointer] = useState<number>(0);
-	const [stackChangeStatus, setStackChangeStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
-	const stackStatusTimeoutRef = useRef<number>();
+	const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+	const statusTimeoutRef = useRef<number>();
 
 	useEffect(() => {
 		api.get(`/card/${id}`).then(res => {
 			const loadedCard = Card.Load(res.data.data);
+
+			console.log( "load", loadedCard );
+			
 			setCard(loadedCard);
 		});
 	}, [id]);
@@ -72,70 +115,91 @@ function EditRoute() {
 		
 		const newStack = stacks[newStackPointer];
 		if (id && newStack) {
-			setStackChangeStatus('saving');
+			setSaveStatus('saving');
 			
 			try {
 				await api.patch(`/card/${id}/stack`, {
 					stack: newStack.slug
 				});
-				
-				setStackChangeStatus('saved');
+				setSaveStatus('saved');
 				
 				// Clear previous timeout
-				if (stackStatusTimeoutRef.current) {
-					clearTimeout(stackStatusTimeoutRef.current);
+				if (statusTimeoutRef.current) {
+					clearTimeout(statusTimeoutRef.current);
 				}
 				
-				// Reset status after 2 seconds
-				stackStatusTimeoutRef.current = window.setTimeout(() => {
-					setStackChangeStatus('idle');
+				statusTimeoutRef.current = window.setTimeout(() => {
+					setSaveStatus('idle');
 				}, 2000);
-				
 			} catch (error) {
 				console.error('Failed to update stack:', error);
-				setStackChangeStatus('error');
+				setSaveStatus('error');
 				
-				// Reset error status after 3 seconds
-				stackStatusTimeoutRef.current = window.setTimeout(() => {
-					setStackChangeStatus('idle');
+				statusTimeoutRef.current = window.setTimeout(() => {
+					setSaveStatus('idle');
 				}, 3000);
 			}
+		}
+	}
+
+	async function handleSave(updatedCard: Card) {
+		// Clear any existing timeout
+		if (statusTimeoutRef.current) {
+			clearTimeout(statusTimeoutRef.current);
+		}
+
+		debugger
+		setSaveStatus('saving');
+		try {
+			await api.patch(`/card/${id}`, {
+				content: updatedCard.rawContent
+			});
+			setSaveStatus('saved');
+			
+			statusTimeoutRef.current = window.setTimeout(() => {
+				setSaveStatus('idle');
+			}, 2000);
+		} catch (error) {
+			console.error('Failed to save card:', error);
+			setSaveStatus('error');
+			
+			statusTimeoutRef.current = window.setTimeout(() => {
+				setSaveStatus('idle');
+			}, 3000);
+			throw error;
 		}
 	}
 
 	// Cleanup timeout on unmount
 	useEffect(() => {
 		return () => {
-			if (stackStatusTimeoutRef.current) {
-				clearTimeout(stackStatusTimeoutRef.current);
+			if (statusTimeoutRef.current) {
+				clearTimeout(statusTimeoutRef.current);
 			}
 		};
 	}, []);
 
 	if (!card) return null;
 
-	function handleSave(card: iCard) {
-		return api.patch(`/card/${id}`, {
-			contents: card.contents
-		});
-	}
-
 	return (
-		<div>
-			<div className="flex items-center gap-4 mb-4">
-				<select
-					value={groupPointer}
-					onChange={e => setGroupPointer(Number(e.target.value))}
-					className="border rounded px-2 py-1"
-				>
-					{groups.map((group, index) => (
-						<option key={group.id} value={index}>
-							{group.name}
-						</option>
-					))}
-				</select>
+		<div className="container mx-auto px-4">
+			<div className="fixed top-4 right-4 flex items-center gap-2 z-50 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-lg shadow-sm">
+			</div>
 
-				<div className="flex items-center gap-2">
+			<div className="flex items-center mb-4">
+				<div className="flex items-center gap-4 mr-2">
+					<select
+						value={groupPointer}
+						onChange={e => setGroupPointer(Number(e.target.value))}
+						className="border rounded px-2 py-1"
+					>
+						{groups.map((group, index) => (
+							<option key={group.id} value={index}>
+								{group.name}
+							</option>
+						))}
+					</select>
+
 					<select
 						value={stackPointer}
 						onChange={handleStackChange}
@@ -147,19 +211,10 @@ function EditRoute() {
 							</option>
 						))}
 					</select>
-
-					{/* Stack change status indicator */}
-					{stackChangeStatus === 'saving' && (
-						<Spinner className="w-4 h-4 text-blue-500" />
-					)}
-					{stackChangeStatus === 'saved' && (
-						<span className="text-green-500">✓</span>
-					)}
-					{stackChangeStatus === 'error' && (
-						<span className="text-red-500">×</span>
-					)}
 				</div>
+				<StatusIndicator status={saveStatus} />
 			</div>
+
 
 			<LiveEditCard 
 				defaultCard={card}

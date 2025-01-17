@@ -3,6 +3,7 @@ import { id } from "../types/card-type";
 export interface iContent {
 	id: id;
 	content: string;
+	content_type: ContentType;
 }
 
 export enum ContentType {
@@ -47,7 +48,8 @@ export class Content {
 	toJSON() : iContent {
 		return {
 			id: this.id,
-			content: this.content
+			content: this.content,
+			content_type: this.content_type
 		};
 	}
 }

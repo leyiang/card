@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEventListener } from 'ahooks';
 import { api } from '../axios-instrance';
 import { LiveEditCard } from '../components/LiveEditCard';
-import { iCard } from '../models/Card';
+import { Card, iCard } from '../models/Card';
 
 export const Route = createFileRoute('/new')({
 	component: RouteComponent,
@@ -11,11 +11,11 @@ export const Route = createFileRoute('/new')({
 function RouteComponent() {
 	const navigate = useNavigate();
 
-	function handleSave( card: iCard ) {
+	function handleSave( card: Card ) {
 		return api.post("/card", {
-			contents: card.contents
+			content: card.rawContent
 		}).then(res => {
-			const id = res.data.id;
+			const id = res.data.data.id;
 
 			navigate({
 				to: "/edit/$id",

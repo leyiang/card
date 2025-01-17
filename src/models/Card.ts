@@ -1,21 +1,39 @@
 import { id } from "../types/card-type";
-import { Content, iContent } from "./Content";
+import { Content } from "./Content";
 
 export interface iCard {
 	id: id;
-	contents: iContent[];
+	content: string;
 	stack: string;
 }
 
 export class Card {
 	id: id;
+	rawContent: string;
 	contents: Content[];
 	stack: string;
 
-	constructor(id: id, stack: string) {
+	constructor(id: id, stack: string, rawContent: string) {
 		this.id = id;
-		this.contents = [];
+		this.rawContent = rawContent;
+		this.contents = Card.ParseContent(rawContent);
 		this.stack = stack;
+	}
+
+	static ParseContent( content: string  = "[]") : Content[] {
+		const rawList = JSON.parse( content );
+
+		if( Array.isArray(rawList) ) {
+			rawList.forEach( content => {
+				console.log( content );
+			});
+
+			return rawList.map(
+				(content: any) => Content.Load(content)
+			);
+		}
+
+		return [];
 	}
 
 	addContent(content: string = "") {
@@ -25,7 +43,7 @@ export class Card {
 	}
 
 	static Load(raw: any): Card {
-		const card = new Card(raw.id, raw.stack);
+		const card = new Card(raw.id, raw.stack, raw.content);
 
 		if( Array.isArray(raw.contents) ) {
 			card.contents = raw.contents.map(
@@ -40,6 +58,7 @@ export class Card {
 		const card = new Card(
 			crypto.randomUUID(),
 			"",
+			"[]"
 		);
 
 		card.contents.push(Content.GetNewContent(""));
@@ -47,13 +66,19 @@ export class Card {
 		return card;
 	}
 
+	getRawContent() {
+		const list = this.contents.map(
+			content => content.toJSON()
+		);
+
+		return JSON.stringify(list);
+	}
+
 	toJSON(): iCard {
 		return {
 			id: this.id,
 			stack: this.stack,
-			contents: this.contents.map(
-				content => content.toJSON()
-			)
+			content: this.getRawContent()
 		};
 	}
 
@@ -73,8 +98,11 @@ export class Card {
 
 	updateContentById(contentId: id, newContent: Content) {
 		const index = this.contents.findIndex(c => c.id === contentId);
+
 		if (index !== -1) {
 			this.contents[index] = newContent;
 		}
+
+		this.rawContent = this.getRawContent();
 	}
 }
