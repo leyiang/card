@@ -10,6 +10,7 @@ declare namespace Cypress {
         _get(id: string, options?: { timeout?: number }): Chainable<any>
         _find(id: string, options?: { timeout?: number }): Chainable<any>
         pathShouldContain(title: string): Chainable<any>;
+		addCard(content?: string): Chainable<{ content: string }>;
     }
 }
 
@@ -30,4 +31,27 @@ Cypress.Commands.add('pathShouldContain', (id) => {
     return cy.location().should((location) => {
         expect(location.pathname).to.contain(id)
     });
+});
+
+function getRandomText() {
+	return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
+
+Cypress.Commands.add('addCard', (content = getRandomText()) => {
+	cy.visit('/new')
+	cy._get('live-edit-textarea').type(content);
+
+	cy._get('live-edit-textarea')
+		.trigger('keydown', { 
+			key: 's',
+			altKey: true,
+			bubbles: true,
+			cancelable: true 
+		});
+	
+	cy.pathShouldContain('edit');
+
+	return cy.wrap({
+		content
+	});
 });
